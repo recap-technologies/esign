@@ -19,42 +19,26 @@
 // - Member Management
 // - Company Settings
 //
-// ## Roles in Rooms v5
+// Rooms enables you to configure custom roles containing permissions that make sense for your company. Because each new member is assigned a role, you must set up these roles before you can invite members to join your account.
 //
-// Rooms v5 has three predefined roles:
-//
-// - **Admin**: This role can manage all members and company settings.
-// - **Manager**: This role is designed to manage rooms in one or more offices or regions. Depending on the permissions that you set for the individual member in the `ClassicManagerPermissions`, managers can also perform additional tasks, such as managing member accounts and company account information.
-// - **Agent**: This role is for contributors who only have access to rooms that they create or that are created for them. Agents cannot manage company settings or other members.
-//
-// However, you can reconfigure the `permissions` for these roles in the `Members` object.
-//
-// [members]: ./Members. h t m l Fix this when we can link to objects.
-// [ClassicMemberPermissions]: ./definition/ClassicManagerPermissions. h t m l
-//
-// ## Roles in Rooms v6
-//
-// Rooms v6 enables you to fully configure custom roles containing permissions that make sense for your company. Because each new member is assigned a role, you must set up these roles before you can invite members to join your account.
-//
-// In Rooms v6, permissions for roles are tied to the `roleId` property and not yet exposed. You can learn more about these permission types and configure them in the console.
+// Permissions for roles are tied to the `roleId` property and not yet exposed. You can learn more about these permission types and configure them in the web application.
 //
 // ### Internal and External Roles
 //
-// In Rooms v6, a role can be either internal or external. You assign internal roles to people inside your company. You assign external roles to people outside your company when you invite them to a room.
+// In Rooms, a role can be either internal or external. You assign internal roles to people inside your company. You assign external roles to people outside your company when you invite them to a room.
 //
 // Each member inside your company has a default company role. However, they can also be assigned additional roles with different permissions on a per-room basis. Regardless of the member's default company role, what they can do in a room is entirely controlled by their role in that particular room.
-//
 //
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/rooms-api/reference/Roles
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/rooms"
-//   )
-//   ...
-//   rolesService := roles.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/rooms"
+//	)
+//	...
+//	rolesService := roles.New(esignCredential)
 package roles // import "github.com/jfcote87/esignrooms//roles"
 
 import (
@@ -88,7 +72,7 @@ func (s *Service) CreateRole(body *rooms.RoleForCreate) *CreateRoleOp {
 		Method:     "POST",
 		Path:       "roles",
 		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
+		Accept:     "application/json-patch+json, application/json, text/json, application/*+json, application/xml, text/xml, application/*+xml",
 		QueryOpts:  make(url.Values),
 		Version:    esign.RoomsV2,
 	}
@@ -151,7 +135,7 @@ func (op *GetRoleOp) Do(ctx context.Context) (*rooms.Role, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// IncludeIsAssigned (Optional) When set to **true**, the response includes the `isAssigned` property, which specifies whether the role is currently assigned to any users. The default is **false**.
+// IncludeIsAssigned when **true,** the response includes the `isAssigned` property, which specifies whether the role is currently assigned to any users. The default is **false.**
 func (op *GetRoleOp) IncludeIsAssigned() *GetRoleOp {
 	if op != nil {
 		op.QueryOpts.Set("includeIsAssigned", "true")
@@ -184,7 +168,7 @@ func (op *GetRolesOp) Do(ctx context.Context) (*rooms.RoleSummaryList, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// OnlyAssignable (Optional) When set to **true**, returns only the roles that the current user can assign to someone else. The default value is **false**.
+// OnlyAssignable this parameter is deprecated. Use `filterContext` instead. Note that `filterContext=AssignableRolesBasedOnCompanyPermissions` is equivalent to `onlyAssignable=true`.
 func (op *GetRolesOp) OnlyAssignable() *GetRolesOp {
 	if op != nil {
 		op.QueryOpts.Set("onlyAssignable", "true")
@@ -192,11 +176,23 @@ func (op *GetRolesOp) OnlyAssignable() *GetRolesOp {
 	return op
 }
 
-// Filter (Optional) A search filter that returns roles by the beginning of the role name. You can enter the beginning of the role name only to return all of the roles that begin with the text that you entered.
+// FilterContext filters the roles by the calling user's permissions. Valid values are:
+//
+// - `AllRoles` (default): All roles are returned.
+// - `AssignableRolesBasedOnAllPermissions`: Only roles that the current user can assign to someone else are returned. In other words, given the permission set of the current user, only roles with a subset of those permissions (including the same exact permissions) will be returned.
+// - `AssignableRolesBasedOnCompanyPermissions`: Only roles that the current user can assign to someone else based on company permissions are returned. Other permissions are not taken into account. In other words, given the company permissions of the current user, only roles with a subset of those company permissions (including the same exact company permissions) will be returned.
+func (op *GetRolesOp) FilterContext(val string) *GetRolesOp {
+	if op != nil {
+		op.QueryOpts.Set("filterContext", val)
+	}
+	return op
+}
+
+// Filter is a search filter that returns roles by the beginning of the role name. You can enter the beginning of the role name only to return all of the roles that begin with the text that you entered.
 //
 // For example, if your company has set up roles such as Manager Beginner, Manager Pro, Agent Expert, and Agent Superstar, you could enter `Manager` to return all of the Manager roles (Manager Beginner and Manager Pro).
 //
-// **Note**: You do not enter a wildcard (*) at the end of the name fragment.
+// **Note:** You do not enter a wildcard (*) at the end of the name fragment.
 func (op *GetRolesOp) Filter(val string) *GetRolesOp {
 	if op != nil {
 		op.QueryOpts.Set("filter", val)
@@ -204,7 +200,7 @@ func (op *GetRolesOp) Filter(val string) *GetRolesOp {
 	return op
 }
 
-// StartPosition (Optional) The starting zero-based index position of the result set. The default value is 0.
+// StartPosition is the starting zero-based index position of the result set. The default value is 0.
 func (op *GetRolesOp) StartPosition(val int) *GetRolesOp {
 	if op != nil {
 		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))
@@ -212,7 +208,7 @@ func (op *GetRolesOp) StartPosition(val int) *GetRolesOp {
 	return op
 }
 
-// Count (Optional) The number of results to return. This value must be a number between `1` and `100` (default).
+// Count is the number of results to return. This value must be a number between `1` and `100` (default).
 func (op *GetRolesOp) Count(val int) *GetRolesOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))

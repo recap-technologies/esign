@@ -14,17 +14,16 @@
 //
 // To create and send envelopes, see the [Envelopes resource](Envelopes).
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/v2/reference/Envelopes
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2/model"
-//   )
-//   ...
-//   envelopesService := envelopes.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2/model"
+//	)
+//	...
+//	envelopesService := envelopes.New(esignCredential)
 package envelopes // import "github.com/jfcote87/esignv2/envelopes"
 
 import (
@@ -1269,8 +1268,6 @@ func (op *RecipientTabsListOp) IncludeMetadata(val string) *RecipientTabsListOp 
 }
 
 // RecipientTabsUpdate updates the tabs for a recipient.
-//
-//
 //
 // https://developers.docusign.com/docs/esign-rest-api/v2/reference/envelopes/enveloperecipienttabs/update
 //

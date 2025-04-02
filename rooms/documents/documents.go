@@ -10,17 +10,16 @@
 //
 // Information about documents.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/rooms-api/reference/Documents
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/rooms"
-//   )
-//   ...
-//   documentsService := documents.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/rooms"
+//	)
+//	...
+//	documentsService := documents.New(esignCredential)
 package documents // import "github.com/jfcote87/esignrooms//documents"
 
 import (
@@ -53,7 +52,7 @@ func (s *Service) CreateDocumentUser(documentID string, body *rooms.DocumentUser
 		Method:     "POST",
 		Path:       strings.Join([]string{"documents", documentID, "users"}, "/"),
 		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
+		Accept:     "application/json-patch+json, application/json, text/json, application/*+json, application/xml, text/xml, application/*+xml",
 		QueryOpts:  make(url.Values),
 		Version:    esign.RoomsV2,
 	}
@@ -116,7 +115,7 @@ func (op *GetDocumentOp) Do(ctx context.Context) (*rooms.Document, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// IncludeContents (Optional) When set to **true**, includes the contents of the document in the `base64Contents` property of the response. The default value is **false**.
+// IncludeContents when **true,** includes the contents of the document in the `base64Contents` property of the response. The default value is **false.**
 func (op *GetDocumentOp) IncludeContents() *GetDocumentOp {
 	if op != nil {
 		op.QueryOpts.Set("includeContents", "true")

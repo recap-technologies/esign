@@ -17,17 +17,16 @@
 // * Add delete users.
 // * Add and delete the initials and signature images for a user.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/Users
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   usersService := users.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	usersService := users.New(esignCredential)
 package users // import "github.com/jfcote87/esignv2.1/users"
 
 import (
@@ -519,17 +518,16 @@ func (op *SignaturesUpdateOp) CloseExistingSignature() *SignaturesUpdateOp {
 }
 
 // SignaturesUpdateImage updates the user signature image or user initials image for the specified user.
-// If media is an io.ReadCloser, Do() will close media.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/users/usersignatures/updateimage
 //
 // SDK Method Users::updateSignatureImage
-func (s *Service) SignaturesUpdateImage(imageType string, signatureID string, userID string, media io.Reader, mimeType string) *SignaturesUpdateImageOp {
+func (s *Service) SignaturesUpdateImage(imageType string, signatureID string, userID string, imageBytes []byte) *SignaturesUpdateImageOp {
 	return &SignaturesUpdateImageOp{
 		Credential: s.credential,
 		Method:     "PUT",
 		Path:       strings.Join([]string{"users", userID, "signatures", signatureID, imageType}, "/"),
-		Payload:    &esign.UploadFile{Reader: media, ContentType: mimeType},
+		Payload:    imageBytes,
 		Accept:     "application/json",
 		QueryOpts:  make(url.Values),
 		Version:    esign.APIv21,
@@ -604,7 +602,7 @@ func (op *CreateOp) Do(ctx context.Context) (*model.NewUsersSummary, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Delete removes users account privileges.
+// Delete closes one or more users in the account.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/users/users/delete
 //
@@ -630,7 +628,12 @@ func (op *DeleteOp) Do(ctx context.Context) (*model.UsersResponse, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Delete iD of the user to delete. This parameter takes a comma-separated list of values in the format: `Groups,PermissionSet,SigningGroupsEmail`.
+// Delete is a list of groups to remove the user from.
+// A comma-separated list of the following:
+//
+// - `Groups`
+// - `PermissionSet`
+// - `SigningGroupsEmail`
 func (op *DeleteOp) Delete(val string) *DeleteOp {
 	if op != nil {
 		op.QueryOpts.Set("delete", val)
@@ -661,7 +664,7 @@ func (op *DeleteProfileImageOp) Do(ctx context.Context) error {
 	return ((*esign.Op)(op)).Do(ctx, nil)
 }
 
-// Get gets the user information for a specified user.
+// Get gets the user information for a specified user using a userId (GUID). To find a user based on their email address, use the list endpoint.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/users/users/get
 //
@@ -726,7 +729,7 @@ func (op *GetProfileImageOp) Do(ctx context.Context) (*esign.Download, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Encoding reserved for DocuSign.
+// Encoding reserved for Docusign.
 func (op *GetProfileImageOp) Encoding(val string) *GetProfileImageOp {
 	if op != nil {
 		op.QueryOpts.Set("encoding", val)
@@ -759,7 +762,7 @@ func (op *GetSettingsOp) Do(ctx context.Context) (*model.UserSettingsInformation
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// List retrieves the list of users for the specified account.
+// List retrieves the list of users for the specified account. You can filter the users list to get specific users.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/users/users/list
 //
@@ -792,7 +795,7 @@ func (op *ListOp) AdditionalInfo() *ListOp {
 	return op
 }
 
-// AlternateAdminsOnly set the call query parameter alternate_admins_only
+// AlternateAdminsOnly when **true,** returns only alternate administrators. These users are not administrators but will be set as such if all administrator memberships are closed. The default value is **false.**
 func (op *ListOp) AlternateAdminsOnly(val string) *ListOp {
 	if op != nil {
 		op.QueryOpts.Set("alternate_admins_only", val)
@@ -812,7 +815,7 @@ func (op *ListOp) Count(val int) *ListOp {
 	return op
 }
 
-// DomainUsersOnly set the call query parameter domain_users_only
+// DomainUsersOnly when **true,** return only users in [domains](https://support.docusign.com/s/document-item?rsc_301=&bundleId=rrf1583359212854&topicId=jub1589318086105.html) claimed by your organization. The default value is **false.**
 func (op *ListOp) DomainUsersOnly(val string) *ListOp {
 	if op != nil {
 		op.QueryOpts.Set("domain_users_only", val)
@@ -830,7 +833,7 @@ func (op *ListOp) Email(val string) *ListOp {
 	return op
 }
 
-// EmailSubstring filters results based on a fragment of an email address. For example, you could enter `gmail` to return all users who have Gmail addresses.
+// EmailSubstring filters results based on a fragment of an email address. For example, you could enter `gmail.com` to return all users who have Gmail addresses.
 //
 // **Note:** You do not use a wildcard character with this parameter. You can use either this parameter or the `email` parameter, but not both.
 func (op *ListOp) EmailSubstring(val string) *ListOp {
@@ -886,7 +889,8 @@ func (op *ListOp) StartPosition(val int) *ListOp {
 	return op
 }
 
-// Status filters results by user account status. Possible values are:
+// Status filters results by user account status.
+// A comma-separated list of any of the following:
 //
 // * `ActivationRequired`
 // * `ActivationSent`
@@ -900,9 +904,7 @@ func (op *ListOp) Status(val ...string) *ListOp {
 	return op
 }
 
-// UserNameSubstring filters results based on a full or partial user name.
-//
-// **Note:** When you enter a partial user name, you do not use a wildcard character.
+// UserNameSubstring filters the user records returned by the user name or a sub-string of user name.
 func (op *ListOp) UserNameSubstring(val string) *ListOp {
 	if op != nil {
 		op.QueryOpts.Set("user_name_substring", val)

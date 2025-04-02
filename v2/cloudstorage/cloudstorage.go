@@ -12,17 +12,16 @@
 //
 // It is also used to manage the user's authentication/accounts with cloud storage service providers.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/v2/reference/CloudStorage
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2/model"
-//   )
-//   ...
-//   cloudstorageService := cloudstorage.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2/model"
+//	)
+//	...
+//	cloudstorageService := cloudstorage.New(esignCredential)
 package cloudstorage // import "github.com/jfcote87/esignv2/cloudstorage"
 
 import (

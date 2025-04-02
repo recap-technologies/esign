@@ -12,12 +12,12 @@
 // HTTPS when an event of interest occurs.
 //
 // Use the Connect service to "end the polling madness." With
-// Connect, there is no need for your application to poll DocuSign
+// Connect, there is no need for your application to poll Docusign
 // every 15 minutes to learn the latest about your envelopes.
 //
 // Instead, you register your interest in one or more types of
 // envelope or recipient events. Then, when an interesting event
-// occurs, the DocuSign platform will contact your application with
+// occurs, the Docusign platform will contact your application with
 // the event's details and data. You can register interest in
 // envelopes sent by particular users in your account, or for
 // envelopes sent by any user.
@@ -37,15 +37,15 @@
 // HTTPS URL that can be called from the public Internet. If your
 // application runs on a server behind your organization's firewall,
 // then you will need to create a "pinhole" in the firewall to allow
-// the incoming Connect calls from DocuSign to reach your
+// the incoming Connect calls from Docusign to reach your
 // application. You can also use other techniques such as proxy
 // servers and DMZ networking for receiving the incoming calls.
 //
 // Connect delivers events over HTTP requests in JSON or XML.
-// See [DocuSign Connect overview](/platform/webhooks/connect/).
+// See [Docusign Connect overview](/platform/webhooks/connect/).
 //
 // If your application is not configured to accept post messages,
-// DocuSign will NOT return an additional post error response to
+// Docusign will NOT return an additional post error response to
 // your listener application. If you've enabled logging on your
 // configuration, it will be logged in Admin under the configuration
 // failure log.
@@ -62,17 +62,16 @@
 //
 // To submit existing envelopes to an endpoint, use the [EnvelopePublish](/docs/esign-rest-api/reference/envelopes/envelopepublish/) resource.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/Connect
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   connectService := connect.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	connectService := connect.New(esignCredential)
 package connect // import "github.com/jfcote87/esignv2.1/connect"
 
 import (
@@ -559,7 +558,7 @@ func (op *EventsRetryForEnvelopesOp) Do(ctx context.Context) (*model.ConnectFail
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// ConfigurationsCreateConnectOAuthConfig sets the Connect OAuth Config for the account.
+// ConfigurationsCreateConnectOAuthConfig set up Connect OAuth for the specified account.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/connect/connectconfigurations/createconnectoauthconfig
 //
@@ -584,7 +583,7 @@ func (op *ConfigurationsCreateConnectOAuthConfigOp) Do(ctx context.Context) (*mo
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// ConfigurationsDeleteConnectOAuthConfig sets the Connect OAuth Config for the account.
+// ConfigurationsDeleteConnectOAuthConfig delete the Connect OAuth configuration.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/connect/connectconfigurations/deleteconnectoauthconfig
 //
@@ -682,7 +681,7 @@ func (op *ConfigurationsGetConnectAllUsersOp) UserNameSubstring(val string) *Con
 	return op
 }
 
-// ConfigurationsGetConnectOAuthConfig sets the Connect OAuth Config for the account.
+// ConfigurationsGetConnectOAuthConfig retrieves the Connect OAuth information for the account.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/connect/connectconfigurations/getconnectoauthconfig
 //
@@ -703,6 +702,32 @@ type ConfigurationsGetConnectOAuthConfigOp esign.Op
 
 // Do executes the op.  A nil context will return error.
 func (op *ConfigurationsGetConnectOAuthConfigOp) Do(ctx context.Context) (*model.ConnectOAuthConfig, error) {
+	var res *model.ConnectOAuthConfig
+	return res, ((*esign.Op)(op)).Do(ctx, &res)
+}
+
+// ConfigurationsUpdateConnectOAuthConfig updates the existing Connect OAuth configuration for the account.
+//
+// https://developers.docusign.com/docs/esign-rest-api/reference/connect/connectconfigurations/updateconnectoauthconfig
+//
+// SDK Method Connect::updateConnectOAuthConfig
+func (s *Service) ConfigurationsUpdateConnectOAuthConfig(connectOAuthConfig *model.ConnectOAuthConfig) *ConfigurationsUpdateConnectOAuthConfigOp {
+	return &ConfigurationsUpdateConnectOAuthConfigOp{
+		Credential: s.credential,
+		Method:     "PUT",
+		Path:       "connect/oauth",
+		Payload:    connectOAuthConfig,
+		Accept:     "application/json",
+		QueryOpts:  make(url.Values),
+		Version:    esign.APIv21,
+	}
+}
+
+// ConfigurationsUpdateConnectOAuthConfigOp implements DocuSign API SDK Connect::updateConnectOAuthConfig
+type ConfigurationsUpdateConnectOAuthConfigOp esign.Op
+
+// Do executes the op.  A nil context will return error.
+func (op *ConfigurationsUpdateConnectOAuthConfigOp) Do(ctx context.Context) (*model.ConnectOAuthConfig, error) {
 	var res *model.ConnectOAuthConfig
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }

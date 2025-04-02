@@ -10,17 +10,16 @@
 //
 // The PowerForms category enables you to create and manage PowerForms that you can use for self service and email forms.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/PowerForms
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   powerformsService := powerforms.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	powerformsService := powerforms.New(esignCredential)
 package powerforms // import "github.com/jfcote87/esignv2.1/powerforms"
 
 import (
@@ -69,12 +68,16 @@ func (op *DataListOp) Do(ctx context.Context) (*model.PowerFormsFormDataResponse
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// DataLayout is the layout in which to return the PowerForm data. Valid values are:
+// DataLayout is the layout in which to return the PowerForm data.
 //
-// - `Native`
-// - `Csv_Classic`
-// - `Csv_One_Envelope_Per_Line`
-// - `Xml_Classic`
+// For each of the following layouts, set the `Accept` header to the corresponding value.
+//
+// Valid values are:
+//
+// - `Native` (Set `Accept` header to `application/json`)
+// - `Csv_Classic` (Set `Accept` header to `application/csv`)
+// - `Csv_One_Envelope_Per_Line` (Set `Accept` header to `text/csv`)
+// - `Xml_Classic` (Set `Accept` header to `application/xml`)
 func (op *DataListOp) DataLayout(val string) *DataListOp {
 	if op != nil {
 		op.QueryOpts.Set("data_layout", val)
@@ -224,6 +227,14 @@ func (op *ListOp) Do(ctx context.Context) (*model.PowerFormsResponse, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
+// Count is the maximum number of results to return.
+func (op *ListOp) Count(val string) *ListOp {
+	if op != nil {
+		op.QueryOpts.Set("count", val)
+	}
+	return op
+}
+
 // FromDate is the start date for a date range.
 //
 // **Note:** If no value is provided, no date filtering is applied.
@@ -237,7 +248,6 @@ func (op *ListOp) FromDate(val time.Time) *ListOp {
 // Order is the order in which to sort the results.
 //
 // Valid values are:
-//
 //
 // * `asc`: Ascending order.
 // * `desc`: Descending order.
@@ -284,6 +294,14 @@ func (op *ListOp) SearchFields(val string) *ListOp {
 func (op *ListOp) SearchText(val string) *ListOp {
 	if op != nil {
 		op.QueryOpts.Set("search_text", val)
+	}
+	return op
+}
+
+// StartPosition is the position within the total result set from which to start returning values. The value **thumbnail** may be used to return the page image.
+func (op *ListOp) StartPosition(val string) *ListOp {
+	if op != nil {
+		op.QueryOpts.Set("start_position", val)
 	}
 	return op
 }

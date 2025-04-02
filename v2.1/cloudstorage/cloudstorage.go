@@ -12,17 +12,16 @@
 //
 // It is also used to manage the user's authentication/accounts with cloud storage service providers.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/CloudStorage
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   cloudstorageService := cloudstorage.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	cloudstorageService := cloudstorage.New(esignCredential)
 package cloudstorage // import "github.com/jfcote87/esignv2.1/cloudstorage"
 
 import (
@@ -102,7 +101,6 @@ func (op *ListOp) Count(val int) *ListOp {
 //
 // Valid values are:
 //
-//
 // * `asc`: Ascending order.
 // * `desc`: Descending order.
 func (op *ListOp) Order(val string) *ListOp {
@@ -129,6 +127,14 @@ func (op *ListOp) OrderBy(val string) *ListOp {
 func (op *ListOp) SearchText(val string) *ListOp {
 	if op != nil {
 		op.QueryOpts.Set("search_text", val)
+	}
+	return op
+}
+
+// SkyDriveSkipToken set the call query parameter sky_drive_skip_token
+func (op *ListOp) SkyDriveSkipToken(val string) *ListOp {
+	if op != nil {
+		op.QueryOpts.Set("sky_drive_skip_token", val)
 	}
 	return op
 }
@@ -195,7 +201,6 @@ func (op *ListFoldersOp) Count(val int) *ListFoldersOp {
 // Order is the order in which to sort the results.
 //
 // Valid values are:
-//
 //
 // * `asc`: Ascending order.
 // * `desc`: Descending order.

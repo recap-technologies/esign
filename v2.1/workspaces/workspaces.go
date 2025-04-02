@@ -8,7 +8,7 @@
 // Package workspaces implements the DocuSign SDK
 // category Workspaces.
 //
-// A workspace is a collaborative space for sharing documents and managing workflows. A workspace has a single owner who must be a DocuSign user. The owner can invite others to the workspace as collaborators. Individuals who are not DocuSign users must create a DocuSign account to join a workspace as a collaborator.
+// A workspace is a collaborative space for sharing documents and managing workflows. A workspace has a single owner who must be a Docusign user. The owner can invite others to the workspace as collaborators. Individuals who are not Docusign users must create a Docusign account to join a workspace as a collaborator.
 //
 // You can create an envelope directly from a workspace.
 //
@@ -21,17 +21,16 @@
 //
 // **Note:** Documents in a template are not individually listed as files.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/Workspaces
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   workspacesService := workspaces.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	workspacesService := workspaces.New(esignCredential)
 package workspaces // import "github.com/jfcote87/esignv2.1/workspaces"
 
 import (

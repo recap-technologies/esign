@@ -10,17 +10,16 @@
 //
 // This section shows you how to create and manage regions for a Rooms account.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/rooms-api/reference/Regions
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/rooms"
-//   )
-//   ...
-//   regionsService := regions.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/rooms"
+//	)
+//	...
+//	regionsService := regions.New(esignCredential)
 package regions // import "github.com/jfcote87/esignrooms//regions"
 
 import (
@@ -54,7 +53,7 @@ func (s *Service) CreateRegion(body *rooms.Region) *CreateRegionOp {
 		Method:     "POST",
 		Path:       "regions",
 		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
+		Accept:     "application/json-patch+json, application/json, text/json, application/*+json, application/xml, text/xml, application/*+xml",
 		QueryOpts:  make(url.Values),
 		Version:    esign.RoomsV2,
 	}
@@ -167,7 +166,7 @@ func (op *GetRegionsOp) Do(ctx context.Context) (*rooms.RegionSummaryList, error
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Count (Optional) The number of results to return. This value must be a number between `1` and `100` (default).
+// Count is the number of results to return. This value must be a number between `1` and `100` (default).
 func (op *GetRegionsOp) Count(val int) *GetRegionsOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
@@ -175,7 +174,7 @@ func (op *GetRegionsOp) Count(val int) *GetRegionsOp {
 	return op
 }
 
-// StartPosition (Optional) The starting zero-based index position of the results set from which to begin returning values. The default value is `0`.
+// StartPosition is the starting zero-based index position of the results set from which to begin returning values. The default value is `0`.
 func (op *GetRegionsOp) StartPosition(val int) *GetRegionsOp {
 	if op != nil {
 		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))
@@ -183,7 +182,7 @@ func (op *GetRegionsOp) StartPosition(val int) *GetRegionsOp {
 	return op
 }
 
-// ManagedOnly (Optional) When set to **true**, only the regions that the current user manages are returned. The default value is **false**.
+// ManagedOnly when **true,** only the regions that the current user manages are returned. The default value is **false.**
 func (op *GetRegionsOp) ManagedOnly() *GetRegionsOp {
 	if op != nil {
 		op.QueryOpts.Set("managedOnly", "true")

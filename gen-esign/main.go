@@ -249,7 +249,12 @@ func decodeSwaggerDocs(folderName string) (map[esign.APIVersion]swagger.Document
 		apikey := doc.Info.Title + ":" + doc.Info.Version
 		apiVersion, ok := definitionFileMap[apikey]
 		if !ok {
-			return nil, fmt.Errorf("no matching api version for %s", apikey)
+			mapKeys := make([]string, 0, len(definitionFileMap))
+			for k := range definitionFileMap {
+				mapKeys = append(mapKeys, k)
+			}
+			sort.Strings(mapKeys)
+			return nil, fmt.Errorf("no matching api version for %q, possible values: %q", apikey, mapKeys)
 		}
 		results[apiVersion] = *doc
 	}

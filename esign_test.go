@@ -37,7 +37,7 @@ type TestCred struct {
 	ctxclient.Func
 }
 
-//func (t *TestCred) AuthDo(ctx context.Context, req *http.Request, v esign.APIVersion) (*http.Response, error) {
+// func (t *TestCred) AuthDo(ctx context.Context, req *http.Request, v esign.APIVersion) (*http.Response, error) {
 func (t *TestCred) AuthDo(ctx context.Context, op *esign.Op) (*http.Response, error) {
 	req, err := op.CreateRequest()
 	if err != nil {

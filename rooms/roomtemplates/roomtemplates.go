@@ -10,17 +10,16 @@
 //
 // This section shows you how to retrieve room templates. You can perform additional room template tasks in the console.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/rooms-api/reference/RoomTemplates
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/rooms"
-//   )
-//   ...
-//   roomtemplatesService := roomtemplates.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/rooms"
+//	)
+//	...
+//	roomtemplatesService := roomtemplates.New(esignCredential)
 package roomtemplates // import "github.com/jfcote87/esignrooms//roomtemplates"
 
 import (
@@ -67,7 +66,7 @@ func (op *GetRoomTemplatesOp) Do(ctx context.Context) (*rooms.RoomTemplatesSumma
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// OfficeID (Optional) The ID of the office for which the user wants to create a room. When you pass in a value for this parameter, only room templates that are valid for that office appear in the results. For users who are not Admins, the default is the id of the user's default office.
+// OfficeID is the ID of the office for which the user wants to create a room. When you pass in a value for this parameter, only room templates that are valid for that office appear in the results. For users who are not Admins, the default is the ID of the user's default office.
 // However, you can specify a value if the user belongs to multiple offices.
 //
 // If the user is an Admin, set the `forAdmin` search parameter to **true** instead and omit the `officeId` parameter.
@@ -78,7 +77,7 @@ func (op *GetRoomTemplatesOp) OfficeID(val int) *GetRoomTemplatesOp {
 	return op
 }
 
-// OnlyAssignable (Optional) When set to **true**, returns only the roles that the current user can assign to someone else. The default value is **false**.
+// OnlyAssignable when **true,** returns only the roles that the current user can assign to someone else. The default value is **false.**
 func (op *GetRoomTemplatesOp) OnlyAssignable() *GetRoomTemplatesOp {
 	if op != nil {
 		op.QueryOpts.Set("onlyAssignable", "true")
@@ -86,7 +85,7 @@ func (op *GetRoomTemplatesOp) OnlyAssignable() *GetRoomTemplatesOp {
 	return op
 }
 
-// OnlyEnabled when set to true, only returns room templates that are not disabled.
+// OnlyEnabled when true, only returns room templates that are not disabled.
 func (op *GetRoomTemplatesOp) OnlyEnabled() *GetRoomTemplatesOp {
 	if op != nil {
 		op.QueryOpts.Set("onlyEnabled", "true")
@@ -94,7 +93,7 @@ func (op *GetRoomTemplatesOp) OnlyEnabled() *GetRoomTemplatesOp {
 	return op
 }
 
-// Count (Optional) The number of results to return. This value must be a number between `1` and `100` (default).
+// Count is the number of results. When this property is used as a request parameter specifying the number of results to return, the value must be a number between `1` and `100` (default).
 func (op *GetRoomTemplatesOp) Count(val int) *GetRoomTemplatesOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
@@ -102,7 +101,7 @@ func (op *GetRoomTemplatesOp) Count(val int) *GetRoomTemplatesOp {
 	return op
 }
 
-// StartPosition (Optional) The index position within the total result set from which to start returning values. The default value is `0`.
+// StartPosition is the index position within the total result set from which to start returning values. The default value is `0`.
 func (op *GetRoomTemplatesOp) StartPosition(val int) *GetRoomTemplatesOp {
 	if op != nil {
 		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))

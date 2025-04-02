@@ -10,17 +10,16 @@
 //
 // Your administrator may also have created custom task list templates that can be added to rooms. If your administrator created room templates, those room templates may include task lists for you to use.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/rooms-api/reference/TaskLists
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/rooms"
-//   )
-//   ...
-//   tasklistsService := tasklists.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/rooms"
+//	)
+//	...
+//	tasklistsService := tasklists.New(esignCredential)
 package tasklists // import "github.com/jfcote87/esignrooms//tasklists"
 
 import (
@@ -68,7 +67,7 @@ func (op *GetTaskListTemplatesOp) Do(ctx context.Context) (*rooms.TaskListTempla
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// StartPosition (Optional) The starting zero-based index position from which to start returning values. The default is `0`.
+// StartPosition is the starting zero-based index position from which to start returning values. The default is `0`.
 func (op *GetTaskListTemplatesOp) StartPosition(val int) *GetTaskListTemplatesOp {
 	if op != nil {
 		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))
@@ -76,7 +75,7 @@ func (op *GetTaskListTemplatesOp) StartPosition(val int) *GetTaskListTemplatesOp
 	return op
 }
 
-// Count (Optional) The number of results to return. This value must be a number between `1` and `100` (default).
+// Count is the number of results to return. This value must be a number between `1` and `100` (default).
 func (op *GetTaskListTemplatesOp) Count(val int) *GetTaskListTemplatesOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))

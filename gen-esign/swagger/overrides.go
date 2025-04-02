@@ -1319,10 +1319,11 @@ const (
 //
 // In the specification, DocuSign lists every field as a string.
 // I generated much of this list with the following rules.
-// - definition properties with **true** or Boolean on the top lines' description are
-//   assumed to be bools set to Bool
-// - fields containing base64 in the name are assumed to be []byte
-// - fields ending in DateTime are *time.Time//
+//   - definition properties with **true** or Boolean on the top lines' description are
+//     assumed to be bools set to Bool
+//   - fields containing base64 in the name are assumed to be []byte
+//   - fields ending in DateTime are *time.Time//
+//
 // I eyeballed the doc as best I could so please let me know of any additions
 // or corrections.
 func GetFieldOverrides() map[string]map[string]string {

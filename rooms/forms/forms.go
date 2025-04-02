@@ -14,21 +14,20 @@
 //
 // ## Permissions
 //
-// To manage forms, you must have the `canManageFormGroups` permission, which enables you to access the **Forms** tab in **Admin**. For all other roles, assign permissions based on how these users will be working with forms. If no form permissions are enabled for these roles, users cannot add forms to rooms.
+// To manage forms, you must have the `canManageFormGroups` permission, which enables you to access the **Forms** tab in **Admin.** For all other roles, assign permissions based on how these users will be working with forms. If no form permissions are enabled for these roles, users cannot add forms to rooms.
 //
-// Form administrators must have the `canManageFormGroups` permission assigned to their user role. This gives them access to the **Forms** tab in **Admin**. However, you should also consider the user's access level. For example, if the user has access to specific offices, they can only administer form groups for those offices.
-//
+// Form administrators must have the `canManageFormGroups` permission assigned to their user role. This gives them access to the **Forms** tab in **Admin.** However, you should also consider the user's access level. For example, if the user has access to specific offices, they can only administer form groups for those offices.
 //
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/rooms-api/reference/Forms
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/rooms"
-//   )
-//   ...
-//   formsService := forms.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/rooms"
+//	)
+//	...
+//	formsService := forms.New(esignCredential)
 package forms // import "github.com/jfcote87/esignrooms//forms"
 
 import (
@@ -63,7 +62,7 @@ func (s *Service) CreateExternalFormFillSession(body *rooms.ExternalFormFillSess
 		Method:     "POST",
 		Path:       "external_form_fill_sessions",
 		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
+		Accept:     "application/json-patch+json, application/json, text/json, application/*+json, application/xml, text/xml, application/*+xml",
 		QueryOpts:  make(url.Values),
 		Version:    esign.RoomsV2,
 	}
@@ -103,6 +102,48 @@ func (op *GetFormDetailsOp) Do(ctx context.Context) (*rooms.FormDetails, error) 
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
+// GetFormGroupForms gets the user's form group forms.
+//
+// https://developers.docusign.com/docs/rooms-api/reference/forms/formgroups/getformgroupforms
+//
+// SDK Method Forms::GetFormGroupForms
+func (s *Service) GetFormGroupForms(formGroupID string) *GetFormGroupFormsOp {
+	return &GetFormGroupFormsOp{
+		Credential: s.credential,
+		Method:     "GET",
+		Path:       strings.Join([]string{"form_groups", formGroupID, "forms"}, "/"),
+		Accept:     "application/json",
+		QueryOpts:  make(url.Values),
+		Version:    esign.RoomsV2,
+	}
+}
+
+// GetFormGroupFormsOp implements DocuSign API SDK Forms::GetFormGroupForms
+type GetFormGroupFormsOp esign.Op
+
+// Do executes the op.  A nil context will return error.
+func (op *GetFormGroupFormsOp) Do(ctx context.Context) (*rooms.FormGroupFormList, error) {
+	var res *rooms.FormGroupFormList
+	return res, ((*esign.Op)(op)).Do(ctx, &res)
+}
+
+// Count is the number of results to return.
+// Default value is 100 and max value is 100
+func (op *GetFormGroupFormsOp) Count(val int) *GetFormGroupFormsOp {
+	if op != nil {
+		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
+	}
+	return op
+}
+
+// StartPosition is the starting point of the list. The default is 0.
+func (op *GetFormGroupFormsOp) StartPosition(val int) *GetFormGroupFormsOp {
+	if op != nil {
+		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))
+	}
+	return op
+}
+
 // AssignFormGroupForm assigns a form to a form group.
 //
 // https://developers.docusign.com/docs/rooms-api/reference/forms/formgroups/assignformgroupform
@@ -114,7 +155,7 @@ func (s *Service) AssignFormGroupForm(formGroupID string, body *rooms.FormGroupF
 		Method:     "POST",
 		Path:       strings.Join([]string{"form_groups", formGroupID, "assign_form"}, "/"),
 		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
+		Accept:     "application/json-patch+json, application/json, text/json, application/*+json, application/xml, text/xml, application/*+xml",
 		QueryOpts:  make(url.Values),
 		Version:    esign.RoomsV2,
 	}
@@ -139,7 +180,7 @@ func (s *Service) CreateFormGroup(body *rooms.FormGroupForCreate) *CreateFormGro
 		Method:     "POST",
 		Path:       "form_groups",
 		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
+		Accept:     "application/json-patch+json, application/json, text/json, application/*+json, application/xml, text/xml, application/*+xml",
 		QueryOpts:  make(url.Values),
 		Version:    esign.RoomsV2,
 	}
@@ -227,7 +268,7 @@ func (op *GetFormGroupsOp) Do(ctx context.Context) (*rooms.FormGroupSummaryList,
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Count (Optional) The number of results to return. This value must be a number between `1` and `100` (default).
+// Count is the number of results to return. This value must be a number between `1` and `100` (default).
 func (op *GetFormGroupsOp) Count(val int) *GetFormGroupsOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
@@ -235,7 +276,7 @@ func (op *GetFormGroupsOp) Count(val int) *GetFormGroupsOp {
 	return op
 }
 
-// StartPosition (Optional) The starting zero-based index position of the results set. The default value is `0`.
+// StartPosition is the starting zero-based index position of the results set. The default value is `0`.
 func (op *GetFormGroupsOp) StartPosition(val int) *GetFormGroupsOp {
 	if op != nil {
 		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))
@@ -369,7 +410,7 @@ func (op *GetFormLibrariesOp) Do(ctx context.Context) (*rooms.FormLibrarySummary
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Count (Optional) The number of results to return. This value must be a number between `1` and `100` (default).
+// Count is the number of results to return. This value must be a number between `1` and `100` (default).
 func (op *GetFormLibrariesOp) Count(val int) *GetFormLibrariesOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
@@ -377,7 +418,7 @@ func (op *GetFormLibrariesOp) Count(val int) *GetFormLibrariesOp {
 	return op
 }
 
-// StartPosition (Optional) The starting zero-based index position of the results set. The default value is `0`.
+// StartPosition is the starting zero-based index position of the results set. The default value is `0`.
 func (op *GetFormLibrariesOp) StartPosition(val int) *GetFormLibrariesOp {
 	if op != nil {
 		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))
@@ -410,7 +451,7 @@ func (op *GetFormLibraryFormsOp) Do(ctx context.Context) (*rooms.FormSummaryList
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Count (Optional) The number of results to return. This value must be a number between `1` and `100` (default).
+// Count is the number of results to return. This value must be a number between `1` and `100` (default).
 func (op *GetFormLibraryFormsOp) Count(val int) *GetFormLibraryFormsOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))

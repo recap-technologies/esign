@@ -10,17 +10,16 @@
 //
 // This category includes resources for managing payment gateways. Payment information is added to envelopes via methods in the Envelopes category.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/Payments
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   paymentsService := payments.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	paymentsService := payments.New(esignCredential)
 package payments // import "github.com/jfcote87/esignv2.1/payments"
 
 import (

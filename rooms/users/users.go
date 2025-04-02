@@ -10,17 +10,16 @@
 //
 // A user is a person who is either added to a room (as a participant), or who is a member of a company. This section shows you how to manage users, including how to update and delete National Association of REALTORS® member numbers.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/rooms-api/reference/Users
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/rooms"
-//   )
-//   ...
-//   usersService := users.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/rooms"
+//	)
+//	...
+//	usersService := users.New(esignCredential)
 package users // import "github.com/jfcote87/esignrooms//users"
 
 import (
@@ -55,7 +54,7 @@ func (s *Service) AddUserToOffice(userID string, body *rooms.DesignatedOffice) *
 		Method:     "POST",
 		Path:       strings.Join([]string{"users", userID, "add_to_office"}, "/"),
 		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
+		Accept:     "application/json-patch+json, application/json, text/json, application/*+json, application/xml, text/xml, application/*+xml",
 		QueryOpts:  make(url.Values),
 		Version:    esign.RoomsV2,
 	}
@@ -80,7 +79,7 @@ func (s *Service) AddUserToRegion(userID string, body *rooms.DesignatedRegion) *
 		Method:     "POST",
 		Path:       strings.Join([]string{"users", userID, "add_to_region"}, "/"),
 		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
+		Accept:     "application/json-patch+json, application/json, text/json, application/*+json, application/xml, text/xml, application/*+xml",
 		QueryOpts:  make(url.Values),
 		Version:    esign.RoomsV2,
 	}
@@ -144,9 +143,9 @@ func (op *GetUsersOp) Do(ctx context.Context) (*rooms.UserSummaryList, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Filter (Optional) Filters results by name and email address. This is a  "starts with" filter, which means that you can enter only the beginning of a name or email address.
+// Filter filters results by name and email address. This is a  "starts with" filter, which means that you can enter only the beginning of a name or email address.
 //
-// **Note**: You do not use a wildcard with this filter.
+// **Note:** You do not use a wildcard with this filter.
 func (op *GetUsersOp) Filter(val string) *GetUsersOp {
 	if op != nil {
 		op.QueryOpts.Set("filter", val)
@@ -154,7 +153,7 @@ func (op *GetUsersOp) Filter(val string) *GetUsersOp {
 	return op
 }
 
-// Sort (Optional) Specifies how to sort the results. Valid values are:
+// Sort specifies how to sort the results. Valid values are:
 //
 // - `FirstNameAsc`
 // - `LastNameAsc`
@@ -169,7 +168,7 @@ func (op *GetUsersOp) Sort(val string) *GetUsersOp {
 	return op
 }
 
-// DefaultOfficeID (Optional) Filters for users who have this office id as their default office id.
+// DefaultOfficeID filters for users who have this office ID as their default office ID.
 func (op *GetUsersOp) DefaultOfficeID(val int) *GetUsersOp {
 	if op != nil {
 		op.QueryOpts.Set("defaultOfficeId", fmt.Sprintf("%d", val))
@@ -177,7 +176,7 @@ func (op *GetUsersOp) DefaultOfficeID(val int) *GetUsersOp {
 	return op
 }
 
-// AccessLevel (Optional) Filters for users who have the specified access level. A user's access level and role determine the types of resources and actions that are available to them.
+// AccessLevel filters for users who have the specified access level. A user's access level and role determine the types of resources and actions that are available to them.
 //
 // Valid values are:
 // - Company: Users with this access level can administer resources across the company.
@@ -185,7 +184,7 @@ func (op *GetUsersOp) DefaultOfficeID(val int) *GetUsersOp {
 // - Office: Users with this access level can administer resources within their offices.
 // - Contributor: Users with this access level can only administer their own resources.
 //
-// **Note**: In requests, the values that you may use for this property depend on your permissions and whether you can add users at your access level or lower. This property applies only to Rooms Version 6.
+// **Note:** In requests, the values that you may use for this property depend on your permissions and whether you can add users at your access level or lower.
 func (op *GetUsersOp) AccessLevel(val string) *GetUsersOp {
 	if op != nil {
 		op.QueryOpts.Set("accessLevel", val)
@@ -193,7 +192,7 @@ func (op *GetUsersOp) AccessLevel(val string) *GetUsersOp {
 	return op
 }
 
-// TitleID (Optional) For Rooms Version 5 only, filters for users whose managers have the specified `titleId`.
+// TitleID this field is deprecated in Rooms Version 6.
 func (op *GetUsersOp) TitleID(val int) *GetUsersOp {
 	if op != nil {
 		op.QueryOpts.Set("titleId", fmt.Sprintf("%d", val))
@@ -201,7 +200,7 @@ func (op *GetUsersOp) TitleID(val int) *GetUsersOp {
 	return op
 }
 
-// RoleID (Optional) For Rooms Version 6 only, filters for users who have the specified `roleId`.
+// RoleID filters for users who have the specified `roleId`.
 func (op *GetUsersOp) RoleID(val int) *GetUsersOp {
 	if op != nil {
 		op.QueryOpts.Set("roleId", fmt.Sprintf("%d", val))
@@ -209,7 +208,7 @@ func (op *GetUsersOp) RoleID(val int) *GetUsersOp {
 	return op
 }
 
-// Status (Optional) Filters for users who have the specified `status`.
+// Status filters for users who have the specified `status`.
 //
 // Valid values are:
 //
@@ -222,7 +221,7 @@ func (op *GetUsersOp) Status(val string) *GetUsersOp {
 	return op
 }
 
-// LockedOnly (Optional) When set to **true**, filters for users whose accounts are locked.
+// LockedOnly when **true,** filters for users whose accounts are locked.
 func (op *GetUsersOp) LockedOnly() *GetUsersOp {
 	if op != nil {
 		op.QueryOpts.Set("lockedOnly", "true")
@@ -230,7 +229,7 @@ func (op *GetUsersOp) LockedOnly() *GetUsersOp {
 	return op
 }
 
-// StartPosition (Optional) The starting zero-based index position within the result set from which to begin the response. The default is `0`.
+// StartPosition is the starting zero-based index position within the result set from which to begin the response. The default is `0`.
 func (op *GetUsersOp) StartPosition(val int) *GetUsersOp {
 	if op != nil {
 		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))
@@ -238,7 +237,7 @@ func (op *GetUsersOp) StartPosition(val int) *GetUsersOp {
 	return op
 }
 
-// Count (Optional) The maximum number of users to return in the response. This value must be a number between `1` and `100` (default).
+// Count is the maximum number of users to return in the response. This value must be a number between `1` and `100` (default).
 func (op *GetUsersOp) Count(val int) *GetUsersOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
@@ -246,85 +245,7 @@ func (op *GetUsersOp) Count(val int) *GetUsersOp {
 	return op
 }
 
-// InviteClassicAdmin invites a user to a v5 company account as an Admin.
-//
-// https://developers.docusign.com/docs/rooms-api/reference/users/users/inviteclassicadmin
-//
-// SDK Method Users::InviteClassicAdmin
-func (s *Service) InviteClassicAdmin(body *rooms.ClassicAdminToInvite) *InviteClassicAdminOp {
-	return &InviteClassicAdminOp{
-		Credential: s.credential,
-		Method:     "POST",
-		Path:       "users/invite_classic_admin",
-		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
-		QueryOpts:  make(url.Values),
-		Version:    esign.RoomsV2,
-	}
-}
-
-// InviteClassicAdminOp implements DocuSign API SDK Users::InviteClassicAdmin
-type InviteClassicAdminOp esign.Op
-
-// Do executes the op.  A nil context will return error.
-func (op *InviteClassicAdminOp) Do(ctx context.Context) (*rooms.User, error) {
-	var res *rooms.User
-	return res, ((*esign.Op)(op)).Do(ctx, &res)
-}
-
-// InviteClassicAgent invites a user to a v5 company account as an Agent.
-//
-// https://developers.docusign.com/docs/rooms-api/reference/users/users/inviteclassicagent
-//
-// SDK Method Users::InviteClassicAgent
-func (s *Service) InviteClassicAgent(body *rooms.ClassicAgentToInvite) *InviteClassicAgentOp {
-	return &InviteClassicAgentOp{
-		Credential: s.credential,
-		Method:     "POST",
-		Path:       "users/invite_classic_agent",
-		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
-		QueryOpts:  make(url.Values),
-		Version:    esign.RoomsV2,
-	}
-}
-
-// InviteClassicAgentOp implements DocuSign API SDK Users::InviteClassicAgent
-type InviteClassicAgentOp esign.Op
-
-// Do executes the op.  A nil context will return error.
-func (op *InviteClassicAgentOp) Do(ctx context.Context) (*rooms.User, error) {
-	var res *rooms.User
-	return res, ((*esign.Op)(op)).Do(ctx, &res)
-}
-
-// InviteClassicManager invites a user to a v5 company account as a Manager.
-//
-// https://developers.docusign.com/docs/rooms-api/reference/users/users/inviteclassicmanager
-//
-// SDK Method Users::InviteClassicManager
-func (s *Service) InviteClassicManager(body *rooms.ClassicManagerToInvite) *InviteClassicManagerOp {
-	return &InviteClassicManagerOp{
-		Credential: s.credential,
-		Method:     "POST",
-		Path:       "users/invite_classic_manager",
-		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
-		QueryOpts:  make(url.Values),
-		Version:    esign.RoomsV2,
-	}
-}
-
-// InviteClassicManagerOp implements DocuSign API SDK Users::InviteClassicManager
-type InviteClassicManagerOp esign.Op
-
-// Do executes the op.  A nil context will return error.
-func (op *InviteClassicManagerOp) Do(ctx context.Context) (*rooms.User, error) {
-	var res *rooms.User
-	return res, ((*esign.Op)(op)).Do(ctx, &res)
-}
-
-// InviteUser invites a user to a v6 company account.
+// InviteUser invites a user to a company account.
 //
 // https://developers.docusign.com/docs/rooms-api/reference/users/users/inviteuser
 //
@@ -434,7 +355,7 @@ func (s *Service) RemoveUserFromOffice(userID string, body *rooms.DesignatedOffi
 		Method:     "POST",
 		Path:       strings.Join([]string{"users", userID, "remove_from_office"}, "/"),
 		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
+		Accept:     "application/json-patch+json, application/json, text/json, application/*+json, application/xml, text/xml, application/*+xml",
 		QueryOpts:  make(url.Values),
 		Version:    esign.RoomsV2,
 	}
@@ -459,7 +380,7 @@ func (s *Service) RemoveUserFromRegion(userID string, body *rooms.DesignatedRegi
 		Method:     "POST",
 		Path:       strings.Join([]string{"users", userID, "remove_from_region"}, "/"),
 		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
+		Accept:     "application/json-patch+json, application/json, text/json, application/*+json, application/xml, text/xml, application/*+xml",
 		QueryOpts:  make(url.Values),
 		Version:    esign.RoomsV2,
 	}

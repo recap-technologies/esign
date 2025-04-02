@@ -10,17 +10,16 @@
 //
 // This section shows you how to create and manage offices.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/rooms-api/reference/Offices
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/rooms"
-//   )
-//   ...
-//   officesService := offices.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/rooms"
+//	)
+//	...
+//	officesService := offices.New(esignCredential)
 package offices // import "github.com/jfcote87/esignrooms//offices"
 
 import (
@@ -54,7 +53,7 @@ func (s *Service) CreateOffice(body *rooms.OfficeForCreate) *CreateOfficeOp {
 		Method:     "POST",
 		Path:       "offices",
 		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
+		Accept:     "application/json-patch+json, application/json, text/json, application/*+json, application/xml, text/xml, application/*+xml",
 		QueryOpts:  make(url.Values),
 		Version:    esign.RoomsV2,
 	}
@@ -142,7 +141,7 @@ func (op *GetOfficesOp) Do(ctx context.Context) (*rooms.OfficeSummaryList, error
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Count (Optional) The number of results to return. This value must be a number between `1` and `100` (default).
+// Count is the number of results to return. This value must be a number between `1` and `100` (default).
 func (op *GetOfficesOp) Count(val int) *GetOfficesOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
@@ -150,7 +149,7 @@ func (op *GetOfficesOp) Count(val int) *GetOfficesOp {
 	return op
 }
 
-// StartPosition (Optional) The starting zero-based index position of the results set from which to begin returning values. The default value is `0`.
+// StartPosition is the starting zero-based index position of the results set from which to begin returning values. The default value is `0`.
 func (op *GetOfficesOp) StartPosition(val int) *GetOfficesOp {
 	if op != nil {
 		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))
@@ -158,7 +157,7 @@ func (op *GetOfficesOp) StartPosition(val int) *GetOfficesOp {
 	return op
 }
 
-// OnlyAccessible (Optional) When set to **true**, the response only includes the offices that are accessible to the current user.
+// OnlyAccessible when **true,** the response only includes the offices that are accessible to the current user.
 func (op *GetOfficesOp) OnlyAccessible() *GetOfficesOp {
 	if op != nil {
 		op.QueryOpts.Set("onlyAccessible", "true")
@@ -166,7 +165,7 @@ func (op *GetOfficesOp) OnlyAccessible() *GetOfficesOp {
 	return op
 }
 
-// Search (Optional) Filters returned records by the specified string. The response only includes records containing this string in the office `name` field.
+// Search filters returned records by the specified string. The response only includes records containing this string in the office `name` field.
 func (op *GetOfficesOp) Search(val string) *GetOfficesOp {
 	if op != nil {
 		op.QueryOpts.Set("search", val)

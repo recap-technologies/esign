@@ -30,11 +30,12 @@ import (
 // https://eu.docusign.net/restapi/v2/accounts/{accountId}
 //
 // EXAMPLES
-// 	"https://www.docusign.net/restapi/v2"  (deprecated?)
-// 	"https://na2.docusign.net/restapi/v2"   (north america)
-// 	"https://na3.docusign.net/restapi/v2"   (north america)
-// 	"https://eu.docusign.net/restapi/v2"   (europe)
-// 	"https://demo.docusign.net/restapi/v2" (sandbox)
+//
+//	"https://www.docusign.net/restapi/v2"  (deprecated?)
+//	"https://na2.docusign.net/restapi/v2"   (north america)
+//	"https://na3.docusign.net/restapi/v2"   (north america)
+//	"https://eu.docusign.net/restapi/v2"   (europe)
+//	"https://demo.docusign.net/restapi/v2" (sandbox)
 var (
 	demoHost = "demo.docusign.net"
 	baseHost = "www.docusign.net"

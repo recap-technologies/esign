@@ -26,7 +26,7 @@ var ErrNilOp = errors.New("nil operation")
 // APIv21  indicates that the url will resolve
 // to /restapi/v2.1
 var APIv21 APIVersion = &apiVersion{
-	name:           "DocuSign REST API:v2.1",
+	name:           "Docusign eSignature REST API:v2.1",
 	prefix:         "/restapi",
 	accountReplace: true,
 	versionPrefix:  "/v2.1",

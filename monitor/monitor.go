@@ -12,16 +12,15 @@
 //
 // **Note**: Your accounts must exist inside an organization to access this data.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/monitor-api/reference/monitor
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//   )
-//   ...
-//   monitorService := monitor.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	)
+//	...
+//	monitorService := monitor.New(esignCredential)
 package monitor // import "github.com/jfcote87/esign/monitor"
 
 import (

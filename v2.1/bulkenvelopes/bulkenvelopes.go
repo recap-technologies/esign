@@ -10,17 +10,16 @@
 //
 // Use the BulkEnvelopes category to manage the sending of envelopes to multiple recipients.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/BulkEnvelopes
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   bulkenvelopesService := bulkenvelopes.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	bulkenvelopesService := bulkenvelopes.New(esignCredential)
 package bulkenvelopes // import "github.com/jfcote87/esignv2.1/bulkenvelopes"
 
 import (
@@ -42,7 +41,7 @@ func New(cred esign.Credential) *Service {
 	return &Service{credential: cred}
 }
 
-// BulkSendCreateBulkSendList creates a bulk send list
+// BulkSendCreateBulkSendList creates a bulk send list.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/bulkenvelopes/bulksend/createbulksendlist
 //
@@ -67,7 +66,7 @@ func (op *BulkSendCreateBulkSendListOp) Do(ctx context.Context) (*model.BulkSend
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// BulkSendCreateBulkSendRequest creates a bulk send request
+// BulkSendCreateBulkSendRequest creates a bulk send request.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/bulkenvelopes/bulksend/createbulksendrequest
 //
@@ -92,7 +91,7 @@ func (op *BulkSendCreateBulkSendRequestOp) Do(ctx context.Context) (*model.BulkS
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// BulkSendCreateBulkSendTestRequest creates a bulk send test
+// BulkSendCreateBulkSendTestRequest creates a bulk send test.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/bulkenvelopes/bulksend/createbulksendtestrequest
 //
@@ -117,7 +116,7 @@ func (op *BulkSendCreateBulkSendTestRequestOp) Do(ctx context.Context) (*model.B
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// BulkSendDeleteBulkSendList deletes a bulk send list
+// BulkSendDeleteBulkSendList deletes a bulk send list.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/bulkenvelopes/bulksend/deletebulksendlist
 //
@@ -142,7 +141,7 @@ func (op *BulkSendDeleteBulkSendListOp) Do(ctx context.Context) (*model.BulkSend
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// BulkSendGetBulkSendBatchEnvelopes gets envelopes from a specific bulk send batch
+// BulkSendGetBulkSendBatchEnvelopes gets envelopes from a specific bulk send batch.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/bulkenvelopes/bulksend/getbulksendbatchenvelopes
 //
@@ -320,8 +319,6 @@ func (op *BulkSendGetBulkSendBatchesOp) Count(val string) *BulkSendGetBulkSendBa
 }
 
 // FromDate is the start date for a date range in UTC DateTime format.
-//
-// **Note:** If this property is null, no date filtering is applied.
 func (op *BulkSendGetBulkSendBatchesOp) FromDate(val string) *BulkSendGetBulkSendBatchesOp {
 	if op != nil {
 		op.QueryOpts.Set("from_date", val)
@@ -382,7 +379,7 @@ func (op *BulkSendGetBulkSendBatchesOp) UserID(val string) *BulkSendGetBulkSendB
 	return op
 }
 
-// BulkSendGetBulkSendList gets a specific bulk send list
+// BulkSendGetBulkSendList gets a specific bulk send list.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/bulkenvelopes/bulksend/getbulksendlist
 //
@@ -407,7 +404,7 @@ func (op *BulkSendGetBulkSendListOp) Do(ctx context.Context) (*model.BulkSending
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// BulkSendGetBulkSendLists gets bulk send lists
+// BulkSendGetBulkSendLists gets bulk send lists.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/bulkenvelopes/bulksend/getbulksendlists
 //
@@ -432,7 +429,7 @@ func (op *BulkSendGetBulkSendListsOp) Do(ctx context.Context) (*model.BulkSendin
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// BulkSendUpdateBulkSendBatchAction initiate a specific bulk send batch action
+// BulkSendUpdateBulkSendBatchAction applies a bulk action to all envelopes from a specified bulk send.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/bulkenvelopes/bulksend/updatebulksendbatchaction
 //
@@ -458,7 +455,7 @@ func (op *BulkSendUpdateBulkSendBatchActionOp) Do(ctx context.Context) (*model.B
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// BulkSendUpdateBulkSendBatchStatus updates a specific bulk send batch status.
+// BulkSendUpdateBulkSendBatchStatus updates the name of a bulk send batch.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/bulkenvelopes/bulksend/updatebulksendbatchstatus
 //
@@ -484,7 +481,7 @@ func (op *BulkSendUpdateBulkSendBatchStatusOp) Do(ctx context.Context) (*model.B
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// BulkSendUpdateBulkSendList updates a bulk send list
+// BulkSendUpdateBulkSendList updates a bulk send list.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/bulkenvelopes/bulksend/updatebulksendlist
 //

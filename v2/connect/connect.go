@@ -27,17 +27,16 @@
 // * Retrieving and managing the event log for your Connect configurations.
 // * Requesting that an event be re-published to the listener.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/v2/reference/Connect
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2/model"
-//   )
-//   ...
-//   connectService := connect.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2/model"
+//	)
+//	...
+//	connectService := connect.New(esignCredential)
 package connect // import "github.com/jfcote87/esignv2/connect"
 
 import (

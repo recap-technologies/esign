@@ -8,23 +8,22 @@
 // Package emailarchive implements the DocuSign SDK
 // category EmailArchive.
 //
-// Email archives enable DocuSign partners and other multi-account customers to easily archive emails sent through DocuSign. The `EmailArchive` resource provides methods for managing your email archive configuration, which consists of the BCC email address or addresses that you want to use to archive DocuSign emails. Each account can use up to five BCC email addresses for archiving purposes.
+// Email archives enable Docusign partners and other multi-account customers to easily archive emails sent through Docusign. The `EmailArchive` resource provides methods for managing your email archive configuration, which consists of the BCC email address or addresses that you want to use to archive Docusign emails. Each account can use up to five BCC email addresses for archiving purposes.
 //
-// For more information, see [Email Archive Configuration](https://support.docusign.com/en/guides/ndse-admin-guide-email-archive-configuration).
+// For more information, see [Email Archive Configuration](https://support.docusign.com/s/document-item?bundleId=pik1583277475390&topicId=xjm1583277371373.html).
 //
-// **Note:** This feature is only available for certain account plans and must be enabled by DocuSign.
-//
+// **Note:** This feature is only available for certain account plans and must be enabled by Docusign.
 //
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/EmailArchive
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   emailarchiveService := emailarchive.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	emailarchiveService := emailarchive.New(esignCredential)
 package emailarchive // import "github.com/jfcote87/esignv2.1/emailarchive"
 
 import (

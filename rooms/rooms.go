@@ -45,14 +45,13 @@ type AccountStatus struct {
 
 // AccountSummary contains details about a company account.
 type AccountSummary struct {
-	// The id of the company.
+	// The ID of the company.
 	CompanyID int32 `json:"companyId,omitempty"`
-	// The version of Rooms that the company uses. Read only. Possible values are:
+	// The version of Rooms that the company uses. This property is read-only. Possible values are:
 	//
-	// - `v5`: Rooms Version 5.
 	// - `v6`: Rooms Version 6.
-	CompanyVersion *ProductVersion `json:"companyVersion,omitempty"`
-	// The id of the company's default field set. A field set is a set of data fields and the information about those data fields that the system uses to configure rooms. It corresponds to the **Admin > Company > Room Details** area in the console.
+	CompanyVersion string `json:"companyVersion,omitempty"`
+	// The ID of the company's default field set. A field set is a set of data fields and the information about those data fields that the system uses to configure rooms. It corresponds to the **Admin > Company > Room Details** area in the console.
 	DefaultFieldSetID string `json:"defaultFieldSetId,omitempty"`
 	// The globally-unique identifier (GUID) for the DocuSign Rooms account.
 	DocuSignAccountGUID string `json:"docuSignAccountGuid,omitempty"`
@@ -64,7 +63,7 @@ type AccountSummary struct {
 
 // ActivityType details about an activity type.
 type ActivityType struct {
-	// The id of the activity type.
+	// The ID of the activity type.
 	//
 	// Example: `movefrominbx`
 	ActivityTypeID string `json:"activityTypeId,omitempty"`
@@ -80,11 +79,13 @@ type APIError struct {
 	ErrorCode string `json:"errorCode,omitempty"`
 	// A brief message describing the error condition.
 	Message string `json:"message,omitempty"`
+	//
+	ReferenceID string `json:"referenceId,omitempty"`
 }
 
 // AssignableRoles this complex type contains information about assignable roles.
 type AssignableRoles struct {
-	// The id of the invitee's company-level role. This property lets the requester know what room-level role will give the user the same permissions that they have at the company level. A value is returned only when both the requester and the invitee are internal to the company.
+	// The ID of the invitee's company-level role. This property lets the requester know what room-level role will give the user the same permissions that they have at the company level. A value is returned only when both the requester and the invitee are internal to the company.
 	CurrentRoleID int32 `json:"currentRoleId,omitempty"`
 	// The last zero-based index position in the result set.
 	EndPosition int32 `json:"endPosition,omitempty"`
@@ -102,109 +103,41 @@ type AssignableRoles struct {
 	TotalRowCount int32 `json:"totalRowCount,omitempty"`
 }
 
-// ClassicAdminToInvite this request object contains details about the person who you want to invite.
-type ClassicAdminToInvite struct {
-	// (Required) The user's email address.
-	Email string `json:"email,omitempty"`
-	// (Required) The user's first name.
-	FirstName string `json:"firstName,omitempty"`
-	// (Required) The user's last name.
-	LastName string `json:"lastName,omitempty"`
-}
-
-// ClassicAgentToInvite this request object contains details about the person who you want to invite.
-type ClassicAgentToInvite struct {
-	//
-	CompanyTypeID string `json:"companyTypeId,omitempty"`
-	// (Required) When an administrator or authorized member invites a new user to become an account member, the system also creates an eSignature account for the invitee at the same time. The `eSignPermissionProfileId` is the id of the eSignature permission set to assign to the member.
-	ESignPermissionProfileID string `json:"eSignPermissionProfileId,omitempty"`
-	// (Required) The user's email address.
-	Email string `json:"email,omitempty"`
-	// (Required) The user's first name.
-	FirstName string `json:"firstName,omitempty"`
-	// (Required) The user's last name.
-	LastName string `json:"lastName,omitempty"`
-	// (Required) The id of the office. This is the id that the system generated when you created the office.
-	OfficeID int32 `json:"officeId,omitempty"`
-}
-
 // ClassicManagerPermissions this object contains details about user permissions. These permissions are associated only with Rooms v5.
 type ClassicManagerPermissions struct {
-	// When set to **true**, the user is automatically added to new company rooms and is visible in those rooms.
+	// When **true,** the user is automatically added to new company rooms and is visible in those rooms.
 	AutoAccessToCompanyRooms bool `json:"autoAccessToCompanyRooms,omitempty"`
-	// When set to **true**, the user can approve company checklists.
+	// When **true,** the user can approve company checklists.
 	CanApproveCompanyChecklists bool `json:"canApproveCompanyChecklists,omitempty"`
-	// When set to **true**, the user can close company rooms.
+	// When **true,** the user can close company rooms.
 	CanCloseCompanyRooms bool `json:"canCloseCompanyRooms,omitempty"`
-	// When set to **true**, the user can delete company documents.
+	// When **true,** the user can delete company documents.
 	CanDeleteCompanyDocuments bool `json:"canDeleteCompanyDocuments,omitempty"`
-	// When set to **true**, the user can delete company rooms.
+	// When **true,** the user can delete company rooms.
 	CanDeleteCompanyRooms bool `json:"canDeleteCompanyRooms,omitempty"`
-	// When set to **true**, the user can manage the company's account.
+	// When **true,** the user can manage the company's account.
 	CanManageCompanyAccount bool `json:"canManageCompanyAccount,omitempty"`
-	// When set to **true**, the user can manage other users on the company's account.
+	// When **true,** the user can manage other users on the company's account.
 	CanManageCompanyMembers bool `json:"canManageCompanyMembers,omitempty"`
-	// When set to **true**, the user can manage company rooms.
+	// When **true,** the user can manage company rooms.
 	CanManageCompanyRooms bool `json:"canManageCompanyRooms,omitempty"`
-	// When set to **true**, the user can manage the company's shared library.
+	// When **true,** the user can manage the company's shared library.
 	CanManageCompanySharedLibrary bool `json:"canManageCompanySharedLibrary,omitempty"`
-	// When set to **true**, the user is a system administrator for the company.
+	// When **true,** the user is a system administrator for the company.
 	IsCompanySystemAdmin bool `json:"isCompanySystemAdmin,omitempty"`
-	// When set to **true**, the user is an office manager.
+	// When **true,** the user is an office manager.
 	IsOfficeManager bool `json:"isOfficeManager,omitempty"`
-	// When set to **true**, the user is a region manager.
+	// When **true,** the user is a region manager.
 	IsRegionManager bool `json:"isRegionManager,omitempty"`
-	// When set to **true**, the user is visible in company rooms.
+	// When **true,** the user is visible in company rooms.
 	//
-	// **Note**: Inherited managers are automatically added to rooms and are visible in those rooms unless this setting is set to **false**. Inherited managers are users who oversee others and have the **auto-access to rooms of members the user manages** permission enabled.
+	// **Note:** Inherited managers are automatically added to rooms and are visible in those rooms unless this setting is set to **false.** Inherited managers are users who oversee others and have the **auto-access to rooms of members the user manages** permission enabled.
 	IsVisibleInTransactionRooms bool `json:"isVisibleInTransactionRooms,omitempty"`
-}
-
-// ClassicManagerToInvite this request object contains details about the person who you want to invite.
-type ClassicManagerToInvite struct {
-	// (Required) The user's level of access to the account. This property determines what the user can see in the system.
-	//
-	// In contrast, a user's permissions determine the actions that they can take in a room. For example, a user who has `accessLevel` set to `Company` can see all of the rooms associated with their company. However, if they do not have the `canDeleteCompanyRooms` permission set to **true**, they can't delete those rooms.
-	//
-	// Valid values for a Manager are:
-	//
-	// - `Company`: The user has access to rooms, and if they have permission to manage users, they have access to users across the entire company. What they can do in the rooms and with users is controlled by their permissions. This is the default for the Users::InviteClassicAdmin method.
-	// - `Region`: The user has access to rooms and, if they have permission to manage users, they have access to users across their regions.
-	// - `Office`: The user has access to rooms, and if they have permission to manage users, they have access to users across their offices.
-	//
-	// **Note**: In requests, the values that you may use for this property depend on your permissions and whether you can add users at your access level or lower.
-	AccessLevel *AccessLevel `json:"accessLevel,omitempty"`
-	// (Required) The id of the user's default office.
-	DefaultOfficeID int32 `json:"defaultOfficeId,omitempty"`
-	// (Required) When an administrator or authorized member invites a new user to become an account member, the system also creates an eSignature account for the invitee at the same time. The eSignPermissionProfileId is the id of the eSignature permission set to assign to the member.
-	ESignPermissionProfileID string `json:"eSignPermissionProfileId,omitempty"`
-	// (Required) The user's email address.
-	Email string `json:"email,omitempty"`
-	// (Required) The user's first name.
-	FirstName string `json:"firstName,omitempty"`
-	// (Required) The user's last name.
-	LastName string `json:"lastName,omitempty"`
-	// An array of office ids for the offices to which the user belongs.
-	//
-	// **Note**: You only specify the `offices` property when the user's `accessLevel` is `office`.
-	Offices []int `json:"offices,omitempty"`
-	// (Required) An object that contains details about the user's permissions.
-	//
-	// **Note**: These permissions only apply to Rooms v5.
-	Permissions *ClassicManagerPermissions `json:"permissions,omitempty"`
-	// An array of region ids for the regions to which the user belongs.
-	//
-	// **Note**: You only specify the `regions` property when the user's `accessLevel` is `region`.
-	Regions []int `json:"regions,omitempty"`
-	// (Required) In Rooms v5, this is the id of the custom job title for a Manager role within your company. For example, your company might have the custom job titles "Transaction Coordinator" and "Office Manager".
-	//
-	// **Note**: If you are using Rooms v6, use the Users::InviteUser method with the roleId property instead.
-	TitleID int32 `json:"titleId,omitempty"`
 }
 
 // ClosingStatus contains information about a closing status, or reason for closing a room.
 type ClosingStatus struct {
-	// The id of the closing status.
+	// The ID of the closing status.
 	//
 	// Example: `exp`
 	ClosingStatusID string `json:"closingStatusId,omitempty"`
@@ -216,7 +149,7 @@ type ClosingStatus struct {
 
 // ContactSide details about a contact side.
 type ContactSide struct {
-	// The id of the contact side.
+	// The ID of the contact side.
 	//
 	// Example: `L`
 	ContactSideID string `json:"contactSideId,omitempty"`
@@ -252,9 +185,9 @@ type Currency struct {
 
 // CustomData contains information about whether the field is required when a room is created or submitted for review.
 type CustomData struct {
-	// When set to **true**, the field is required when a new room is created.
+	// When **true,** the field is required when a new room is created.
 	IsRequiredOnCreate bool `json:"isRequiredOnCreate,omitempty"`
-	// When set to **true**, the field is required when a room is submitted for review.
+	// When **true,** the field is required when a room is submitted for review.
 	IsRequiredOnSubmit bool `json:"isRequiredOnSubmit,omitempty"`
 }
 
@@ -274,19 +207,19 @@ type DependsOn struct {
 
 // DesignatedOffice this object contains information about the office that you want to add a member to or remove a member from.
 type DesignatedOffice struct {
-	// (Required) The id of the office. This is the id that the system generated when you created the office.
+	// (Required) The ID of the office. This is the ID that the system generated when you created the office.
 	OfficeID int32 `json:"officeId,omitempty"`
 }
 
 // DesignatedRegion this object contains information about the region associated with the member.
 type DesignatedRegion struct {
-	// (Required) The id of the region. This is the id that the system generated when you created the region.
+	// (Required) The ID of the region. This is the ID that the system generated when you created the region.
 	RegionID int32 `json:"regionId,omitempty"`
 }
 
 // Document information about a document. This object is read-only when used as a response.
 type Document struct {
-	// In a response, when the query parameter `includeContents` is **true**, the base64-encoded contents of the document.
+	// In a response, when the query parameter `includeContents` is **true,** the base64-encoded contents of the document.
 	//
 	// In a request, the base64-encoded contents of the document to add.
 	Base64Contents string `json:"base64Contents,omitempty"`
@@ -298,15 +231,17 @@ type Document struct {
 	CreatedDate string `json:"createdDate,omitempty"`
 	// The ID of the document.
 	DocumentID int32 `json:"documentId,omitempty"`
-	// The id of the folder the document is in.
+	// The ID of the folder the document is in.
 	FolderID int32 `json:"folderId,omitempty"`
+	//
+	IsDynamic bool `json:"isDynamic,omitempty"`
 	// **True** if the document is signed.
 	IsSigned bool `json:"isSigned,omitempty"`
 	// The name of the document.
 	Name string `json:"name,omitempty"`
-	// The id of the user who owns the document.
+	// The ID of the user who owns the document.
 	OwnerID int32 `json:"ownerId,omitempty"`
-	// The id of the room the document belongs to.
+	// The ID of the room the document belongs to.
 	RoomID int32 `json:"roomId,omitempty"`
 	// The size of the document in bytes. This is the number of bytes in the _decoded_ document, not the size of `base64Contents`.
 	Size int64 `json:"size,omitempty"`
@@ -338,19 +273,19 @@ type DocumentUser struct {
 	HasAccess bool `json:"hasAccess,omitempty"`
 	// The file name associated with the document.
 	Name string `json:"name,omitempty"`
-	// The id of the user.
+	// The ID of the user.
 	UserID int32 `json:"userId,omitempty"`
 }
 
 // DocumentUserForCreate not described in definition file
 type DocumentUserForCreate struct {
-	// The id of the user.
+	// The ID of the user.
 	UserID int32 `json:"userId,omitempty"`
 }
 
 // ESignAccountRoleSettings this object contains details about the permissions associated with a eSignature permission profile.
 type ESignAccountRoleSettings struct {
-	// A Boolean specifying whether users with this eSignature permission profile can manage the Rooms account. This property is read only and has the following values:
+	// A Boolean specifying whether users with this eSignature permission profile can manage the Rooms account. This property is read-only and has the following values:
 	//
 	// - `DS Admin` permission profile: **true**
 	// - `DS Sender` permission profile: **false**
@@ -363,13 +298,13 @@ type ESignAccountRoleSettings struct {
 	AllowAccountManagement bool `json:"allowAccountManagement,omitempty"`
 }
 
-// ESignPermissionProfile when you create or invite a new member in Rooms, the system creates an eSignature account for the member at the same time.
+// ESignPermissionProfile when an administrator or authorized member invites a new user to become an account member, the system also creates an eSignature account for the invitee at the same time. This object contains information about the eSignature permission profile, which controls member access to the eSignature account.
 type ESignPermissionProfile struct {
-	// When an administrator or authorized member invites a new user to become an account member, the system also creates an eSignature account for the invitee at the same time. The `eSignPermissionProfileId` is the id of the eSignature permission set to assign to the member.
+	// When an administrator or authorized member invites a new user to become an account member, the system also creates an eSignature account for the invitee at the same time. The `eSignPermissionProfileId` is the ID of the eSignature permission set to assign to the member.
 	ESignPermissionProfileID string `json:"eSignPermissionProfileId,omitempty"`
-	// The name of the eSignature permission profile.
+	// The name of the eSignature permission profile. Valid values are:
 	Name string `json:"name,omitempty"`
-	// The settings associated with the eSignature permission profile.
+	// the eSignature account role settings associated with the permission profile.
 	Settings *ESignAccountRoleSettings `json:"settings,omitempty"`
 }
 
@@ -377,6 +312,20 @@ type ESignPermissionProfile struct {
 type ESignPermissionProfileList struct {
 	// An array of eSignature `permissionProfile` objects.
 	PermissionProfiles []ESignPermissionProfile `json:"permissionProfiles,omitempty"`
+}
+
+// Envelope not described in definition file
+type Envelope struct {
+	//
+	ESignEnvelopeID string `json:"eSignEnvelopeId,omitempty"`
+}
+
+// EnvelopeForCreate not described in definition file
+type EnvelopeForCreate struct {
+	//
+	DocumentIds []int `json:"documentIds,omitempty"`
+	//
+	EnvelopeName string `json:"envelopeName,omitempty"`
 }
 
 // ExternalFormFillSession this resource provides a method that returns a URL for a new external form fill session, based on the `roomId` and `formId` that you specify in the `formFillSessionForCreate` request body.
@@ -387,40 +336,53 @@ type ExternalFormFillSession struct {
 
 // ExternalFormFillSessionForCreate contains the details required to create a form fill session.
 type ExternalFormFillSessionForCreate struct {
-	// (Required) The id of the form.
+	// (Required) The ID of the form.
 	//
 	// Example: `5be324eb-xxxx-xxxx-xxxx-208065181be9`
 	//
 	FormID string `json:"formId,omitempty"`
-	// (Required) The id of the room.
+	//
+	FormIds []string `json:"formIds,omitempty"`
+	// (Required) The ID of the room.
 	RoomID int32 `json:"roomId,omitempty"`
 	// (Optional) This property specifies the origin on which the page is allowed to display in a frame.
 	XFrameAllowedURL string `json:"xFrameAllowedUrl,omitempty"`
 }
 
-// Field is the fields resource provides a method that enables you to retrieve a specific field set. This is a set of fields that can appear on a room's **Details** tab.
+// Field contains details about a field in a field set.
 type Field struct {
 	// The name that the Rooms API uses for the field.
 	//
 	// Example: `companyContactName`
 	//
-	// **Note**: When you create a new room, you use the `apiName` values for fields to specify the details that you want to appear on the room's **Details** tab.
+	// **Note:** When you create a new room, you use the `apiName` values for fields to specify the details that you want to appear on the room's **Details** tab.
 	APIName string `json:"apiName,omitempty"`
 	// Contains information about how the field is configured, such as the maximum length.
 	Configuration *FieldConfiguration `json:"configuration,omitempty"`
-	//
+	// Contains information about whether the field is required when a room is created or submitted for review.
 	CustomData *CustomData `json:"customData,omitempty"`
-	// The id of the DocuSign field definition from which this field derives. When an Admin user configures a field set by using the API, this is the id that they use to add this field definition to the field set. The original field definition associated with this id contains more information about the field, such as the default title, default API name, and configurations such as the maximum length or the maximum value allowed.
+	// The ID of the DocuSign field definition from which this field derives. When an Admin user configures a field set by using the API, this is the ID that they use to add this field definition to the field set. The original field definition associated with this ID contains more information about the field, such as the default title, default API name, and configurations such as the maximum length or the maximum value allowed.
 	FieldDefinitionID string `json:"fieldDefinitionId,omitempty"`
-	// The id of the field.
-	//
-	// Example: `10318d28-xxxx-xxxx-xxxx-d3df664f602c`
-	//
+	// An ID that uniquely identifies the instance of a `fieldDefinition` within a field set.
 	FieldID string `json:"fieldId,omitempty"`
-	// An array of fields.
+	// An array of subfields.
 	Fields []Field `json:"fields,omitempty"`
+	// The human-readable title or name of the field.
 	//
+	// Example: `Company contact name`
 	Title string `json:"title,omitempty"`
+	// The type of field. Valid values:
+	//
+	// - `Date`
+	// - `Text`
+	// - `Checkbox`
+	// - `Currency`
+	// - `Numeric`
+	// - `SelectList`
+	// - `TextArea`
+	// - `Percentage`
+	// - `Integer`
+	//
 	//
 	Type string `json:"type,omitempty"`
 }
@@ -429,7 +391,7 @@ type Field struct {
 type FieldConfiguration struct {
 	// This property applies to child fields. It contains information about the parent field that must have a value set in order for this field to have a value. For example, you must specify a country before you can select a state.
 	DependsOn []DependsOn `json:"dependsOn,omitempty"`
-	// When set to **true**, the field is a parent field on which one or more child fields depend.
+	// When **true,** the field is a parent field on which one or more child fields depend.
 	IsPublisher bool `json:"isPublisher,omitempty"`
 	// The maximum length of the field.
 	MaxLength int32 `json:"maxLength,omitempty"`
@@ -447,108 +409,97 @@ type FieldConfiguration struct {
 	Pattern string `json:"pattern,omitempty"`
 }
 
-// FieldData is the field data associated with a room. See [Rooms::GetRoomFieldData](/rooms-api/reference/Rooms/Rooms/GetRoomFieldData).
+// FieldData is the field data associated with a room.
+// See [Rooms: GetRoomFieldData](/docs/rooms-api/reference/rooms/rooms/getroomfielddata/).
 type FieldData struct {
-	// Field data is a collection of name/value pairs where the names correspond to the fields in the room's **Details** tab. The value of name/value object can be a field data collection itself. These collections are implemented as JSON objects.
+	// Field data is a collection of name/value pairs where the names correspond to the fields in the room's **Details** tab. The value of a name/value pair can be a field data collection itself. These collections are implemented as JSON objects.
 	//
-	// For example, the field data for fields named "Tax annual amount" and "buyer1" might look like this:
+	// The fields `address1`, `state`, `postalCode`, and `city` are required. The `state` value must be a `stateId` value returned by the [getStates](/docs/rooms-api/reference/globalresources/states/getstates/) endpoint. For example, use "US-WA" instead of "Washington".
 	//
+	// For example, the data for fields named "Tax annual amount" and "buyer1" (along with the required fields) might look like this:
 	//
 	// ```
 	// {
 	//   "data": {
 	//     "taxAnnualAmount": 3389.12,
 	//     "buyer1": {
-	//       "email": "lizzy@example.com",
-	//       "country": "England",
-	//       "businessPhone": null,
-	//       "name": "Elizabeth Bennet",
-	//       "homePhone": null,
-	//       "city": "Meryton",
-	//       "address2": null,
-	//       "postalCode": null,
-	//       "state": "Hertfordshire",
-	//       "company": null,
-	//       "cellPhone": null,
-	//       "address1": "Longbourn Estate"
-	//     }
+	//       "name": "Elle Woods",
+	//       "homePhone": "123-456-7890",
+	//       "state": "US-CA",
+	//       "email": "elle.woods@harvard.edu"
+	//     },
+	//     "address1": "123 Harvard Street",
+	//     "state": "US-MA",
+	//     "postalCode": "02138",
+	//     "city": "Cambridge"
 	//   }
 	// }
 	// ```
-	//
 	//
 	Data map[string]interface{} `json:"data,omitempty"`
 }
 
 // FieldDataForCreate contains key-value pairs that specify the properties of the room and their values.
 type FieldDataForCreate struct {
-	// Field data is a collection of name/value pairs where the names correspond to the fields in the room's **Details** tab. The value of name/value object can be a field data collection itself. These collections are implemented as JSON objects.
+	// Field data is a collection of name/value pairs where the names correspond to the fields in the room's **Details** tab. The value of a name/value pair can be a field data collection itself. These collections are implemented as JSON objects.
 	//
-	// For example, the field data for fields named "Tax annual amount" and "buyer1" might look like this:
+	// The fields `address1`, `state`, `postalCode`, and `city` are required. The `state` value must be a `stateId` value returned by the [getStates](/docs/rooms-api/reference/globalresources/states/getstates/) endpoint. For example, use "US-WA" instead of "Washington".
 	//
+	// For example, the data for fields named "Tax annual amount" and "buyer1" (along with the required fields) might look like this:
 	//
 	// ```
 	// {
 	//   "data": {
 	//     "taxAnnualAmount": 3389.12,
 	//     "buyer1": {
-	//       "email": "lizzy@example.com",
-	//       "country": "England",
-	//       "businessPhone": null,
-	//       "name": "Elizabeth Bennet",
-	//       "homePhone": null,
-	//       "city": "Meryton",
-	//       "address2": null,
-	//       "postalCode": null,
-	//       "state": "Hertfordshire",
-	//       "company": null,
-	//       "cellPhone": null,
-	//       "address1": "Longbourn Estate"
-	//     }
+	//       "name": "Elle Woods",
+	//       "homePhone": "123-456-7890",
+	//       "state": "US-CA",
+	//       "email": "elle.woods@harvard.edu"
+	//     },
+	//     "address1": "123 Harvard Street",
+	//     "state": "US-MA",
+	//     "postalCode": "02138",
+	//     "city": "Cambridge"
 	//   }
 	// }
 	// ```
-	//
 	//
 	Data map[string]interface{} `json:"data,omitempty"`
 }
 
 // FieldDataForUpdate is the field data to update. When updating field data, specify only the fields being updated.
 type FieldDataForUpdate struct {
-	// Field data is a collection of name/value pairs where the names correspond to the fields in the room's **Details** tab. The value of name/value object can be a field data collection itself. These collections are implemented as JSON objects.
+	// Field data is a collection of name/value pairs where the names correspond to the fields in the room's **Details** tab. The value of a name/value pair can be a field data collection itself. These collections are implemented as JSON objects.
 	//
-	// For example, the field data for fields named "Tax annual amount" and "buyer1" might look like this:
+	// The fields `address1`, `state`, `postalCode`, and `city` are required. The `state` value must be a `stateId` value returned by the [getStates](/docs/rooms-api/reference/globalresources/states/getstates/) endpoint. For example, use "US-WA" instead of "Washington".
 	//
+	// For example, the data for fields named "Tax annual amount" and "buyer1" (along with the required fields) might look like this:
 	//
 	// ```
 	// {
 	//   "data": {
 	//     "taxAnnualAmount": 3389.12,
 	//     "buyer1": {
-	//       "email": "lizzy@example.com",
-	//       "country": "England",
-	//       "businessPhone": null,
-	//       "name": "Elizabeth Bennet",
-	//       "homePhone": null,
-	//       "city": "Meryton",
-	//       "address2": null,
-	//       "postalCode": null,
-	//       "state": "Hertfordshire",
-	//       "company": null,
-	//       "cellPhone": null,
-	//       "address1": "Longbourn Estate"
-	//     }
+	//       "name": "Elle Woods",
+	//       "homePhone": "123-456-7890",
+	//       "state": "US-CA",
+	//       "email": "elle.woods@harvard.edu"
+	//     },
+	//     "address1": "123 Harvard Street",
+	//     "state": "US-MA",
+	//     "postalCode": "02138",
+	//     "city": "Cambridge"
 	//   }
 	// }
 	// ```
-	//
 	//
 	Data map[string]interface{} `json:"data,omitempty"`
 }
 
 // FieldSet contains details about a field set.
 type FieldSet struct {
-	// The id of the field set.
+	// The ID of the field set.
 	//
 	// Example: `4aef602b-xxxx-xxxx-xxxx-08d76696f678`
 	//
@@ -563,21 +514,13 @@ type FieldSet struct {
 type FieldsCustomDataFilterType struct {
 }
 
-// FinancingType contains information about a financing type.
+// FinancingType this resource provides a method that enables you to retrieve a list of financing types.
 type FinancingType struct {
-	// The id of the financing type.
+	// The ID of the financing type.
 	//
 	// Example: `conv` (for `Conventional`)
 	FinancingTypeID string `json:"financingTypeId,omitempty"`
-	// The name of the financing type. Possible values are:
-	//
-	// - `Cash`
-	// - `Conventional`
-	// - `FHA`
-	// - `VA`
-	// - `USDA`
-	// - `Bitcoin`
-	// - `Other`
+	// The name of the office.
 	Name string `json:"name,omitempty"`
 }
 
@@ -591,7 +534,7 @@ type FormDetails struct {
 	//
 	//
 	CreatedDate string `json:"createdDate,omitempty"`
-	// The id of the form.
+	// The ID of the form.
 	//
 	// Example: `5be324eb-xxxx-xxxx-xxxx-208065181be9`
 	//
@@ -620,7 +563,7 @@ type FormDetails struct {
 
 // FormForAdd contains details about the form that you want to add.
 type FormForAdd struct {
-	// (Required) The id of the form.
+	// (Required) The ID of the form.
 	FormID string `json:"formId,omitempty"`
 }
 
@@ -639,7 +582,7 @@ type FormGroup struct {
 	OfficeIds []int `json:"officeIds,omitempty"`
 }
 
-// FormGroupForCreate request object for FormGroup::CreateFormGroup.
+// FormGroupForCreate request object for FormGroup: CreateFormGroup.
 type FormGroupForCreate struct {
 	// The name of the group.
 	Name string `json:"name,omitempty"`
@@ -651,9 +594,44 @@ type FormGroupForUpdate struct {
 	Name string `json:"name,omitempty"`
 }
 
+// FormGroupForm not described in definition file
+type FormGroupForm struct {
+	// The ID of the form.
+	//
+	// Example: `5be324eb-xxxx-xxxx-xxxx-208065181be9`
+	//
+	FormID string `json:"formId,omitempty"`
+	// **True** if the form is required.
+	IsRequired bool `json:"isRequired,omitempty"`
+	// The UTC date and time when the item was last updated. This is a read-only value that the service assigns.
+	//
+	// Example: 2019-07-17T17:45:42.783Z
+	LastUpdatedDate string `json:"lastUpdatedDate,omitempty"`
+	// The name of the office.
+	Name string `json:"name,omitempty"`
+}
+
+// FormGroupFormList not described in definition file
+type FormGroupFormList struct {
+	// The last zero-based index position in the result set.
+	EndPosition int32 `json:"endPosition,omitempty"`
+	// A list of forms.
+	Forms []FormGroupForm `json:"forms,omitempty"`
+	// The URI for the next chunk of records based on the search request. This property is `null` for the last set of search results.
+	NextURI string `json:"nextUri,omitempty"`
+	// The URI for the previous chunk of records based on the search request. This property is `null` for the first set of search results.
+	PriorURI string `json:"priorUri,omitempty"`
+	// The number of results returned in this response.
+	ResultSetSize int32 `json:"resultSetSize,omitempty"`
+	// The starting zero-based index position of the results set. When this property is used as a query parameter, the default value is `0`.
+	StartPosition int32 `json:"startPosition,omitempty"`
+	//
+	TotalRowCount int32 `json:"totalRowCount,omitempty"`
+}
+
 // FormGroupFormToAssign not described in definition file
 type FormGroupFormToAssign struct {
-	// The id of the form.
+	// The ID of the form.
 	//
 	// Example: `5be324eb-xxxx-xxxx-xxxx-208065181be9`
 	//
@@ -662,18 +640,20 @@ type FormGroupFormToAssign struct {
 	IsRequired bool `json:"isRequired,omitempty"`
 }
 
-// FormGroupSummary is the `FormGroups` resource enables you to create and manage custom groups of association forms.
+// FormGroupSummary contains details about a form group.
 type FormGroupSummary struct {
-	// The number of forms in the form library.
+	// The number of forms in the form group.
 	//
-	// Example: `50`
+	// Example: `10`
 	FormCount int32 `json:"formCount,omitempty"`
 	// The ID of the form group.
 	//
 	// Example: `7b879c89-xxxx-xxxx-xxxx-819d6a85e0a1`
 	//
 	FormGroupID string `json:"formGroupId,omitempty"`
-	// The name of the office.
+	// The name of the form group.
+	//
+	// Example: `Apartment Rental`
 	Name string `json:"name,omitempty"`
 }
 
@@ -701,7 +681,7 @@ type FormLibrarySummary struct {
 	//
 	// Example: `50`
 	FormCount int32 `json:"formCount,omitempty"`
-	// The id of the form library.
+	// The ID of the form library.
 	//
 	// Example: `402c6e2f-xxxx-xxxx-xxxx-ff3f249f6da9`
 	//
@@ -730,13 +710,47 @@ type FormLibrarySummaryList struct {
 	TotalRowCount int32 `json:"totalRowCount,omitempty"`
 }
 
+// FormProviderAssociationSummary not described in definition file
+type FormProviderAssociationSummary struct {
+	//
+	AssociationID string `json:"associationId,omitempty"`
+	//
+	FormProviderAssociationGUID string `json:"formProviderAssociationGuid,omitempty"`
+	//
+	FormProviderAssociationName string `json:"formProviderAssociationName,omitempty"`
+	//
+	LastUpdateDate string `json:"lastUpdateDate,omitempty"`
+	// The provider ID.
+	// <!-- like nar, nwmls etc.. -->
+	//
+	ProviderID string `json:"providerId,omitempty"`
+}
+
+// FormProviderAssociationsSummaryList not described in definition file
+type FormProviderAssociationsSummaryList struct {
+	// The last zero-based index position in the result set.
+	EndPosition int32 `json:"endPosition,omitempty"`
+	//
+	FormProviderAssociations []FormProviderAssociationSummary `json:"formProviderAssociations,omitempty"`
+	// The URI for the next chunk of records based on the search request. This property is `null` for the last set of search results.
+	NextURI string `json:"nextUri,omitempty"`
+	// The URI for the previous chunk of records based on the search request. This property is `null` for the first set of search results.
+	PriorURI string `json:"priorUri,omitempty"`
+	// The number of results returned in this response.
+	ResultSetSize int32 `json:"resultSetSize,omitempty"`
+	// The starting zero-based index position of the results set. When this property is used as a query parameter, the default value is `0`.
+	StartPosition int32 `json:"startPosition,omitempty"`
+	//
+	TotalRowCount int32 `json:"totalRowCount,omitempty"`
+}
+
 // FormSummary contains details about a form in a form library.
 type FormSummary struct {
 	// The date and time when the form was last updated.
 	//
 	// Example: `2017-08-11T19:58:36.18`
 	LastUpdatedDate string `json:"lastUpdatedDate,omitempty"`
-	// The id of the form.
+	// The ID of the form.
 	//
 	// Example: `301f560d-xxxx-xxxx-xxxx-063a47cc12c2`
 	//
@@ -745,6 +759,8 @@ type FormSummary struct {
 	//
 	// Example: `Short Sale Supplement to Marketing Agreement`
 	Name string `json:"name,omitempty"`
+	//
+	ViewingUserHasAccess bool `json:"viewingUserHasAccess,omitempty"`
 }
 
 // FormSummaryList contains a list of forms in a form library.
@@ -869,7 +885,7 @@ type GlobalTransactionSides struct {
 
 // GroupForm description of a single form in a group.
 type GroupForm struct {
-	// The id of the form.
+	// The ID of the form.
 	//
 	// Example: `5be324eb-xxxx-xxxx-xxxx-208065181be9`
 	//
@@ -882,6 +898,12 @@ type GroupForm struct {
 	LastUpdatedDate string `json:"lastUpdatedDate,omitempty"`
 	// The name of the office.
 	Name string `json:"name,omitempty"`
+	//
+	ViewingUserHasAccess bool `json:"viewingUserHasAccess,omitempty"`
+}
+
+// ListingType not described in definition file
+type ListingType struct {
 }
 
 // LockedOutDetails details about a locked account.
@@ -894,7 +916,7 @@ type LockedOutDetails struct {
 type MemberSortingOption struct {
 }
 
-// Office object that contains information about an office in the Rooms account.
+// Office contains information about an office.
 type Office struct {
 	// First line of the office street address.
 	Address1 string `json:"address1,omitempty"`
@@ -904,27 +926,27 @@ type Office struct {
 	City string `json:"city,omitempty"`
 	// The two-letter country code of the office address (for example, "UK" for United Kingdom).
 	CountryID string `json:"countryId,omitempty"`
-	// The UTC DateTime when the office was created.
+	// The UTC date and time when the item was created. This is a read-only value that the service assigns.
 	//
 	// Example: `2019-07-17T17:45:42.783Z`
 	//
-	// **Note**: This value is read-only.
+	//
 	CreatedDate string `json:"createdDate,omitempty"`
 	// The name of the office.
 	Name string `json:"name,omitempty"`
-	// The id of the office. This is the id that the system generated when you created the office.
+	// The ID of the office. This is the ID that the system generated when you created the office.
 	OfficeID int32 `json:"officeId,omitempty"`
 	// Phone number of the office.
 	Phone string `json:"phone,omitempty"`
 	// Postal code or ZIP code of the office address.
 	PostalCode string `json:"postalCode,omitempty"`
-	// The id of the region. This is the id that the system generated when you created the region.
+	// The ID of the region. This is the ID that the system generated when you created the region.
 	RegionID int32 `json:"regionId,omitempty"`
 	// A concatenation of the two-letter country code with the state/province/region of the office address.
 	//
 	// Example: `US-OH` (for Ohio)
 	StateID string `json:"stateId,omitempty"`
-	// The id of the time zone for the office address.
+	// The ID of the time zone for the office address.
 	//
 	// Example: `eastern` (for the Eastern US Time Zone)
 	TimeZoneID string `json:"timeZoneId,omitempty"`
@@ -946,13 +968,13 @@ type OfficeForCreate struct {
 	Phone string `json:"phone,omitempty"`
 	// Postal code or ZIP code of the office address.
 	PostalCode string `json:"postalCode,omitempty"`
-	// The id of the region. This is the id that the system generated when you created the region.
+	// The ID of the region. This is the ID that the system generated when you created the region.
 	RegionID int32 `json:"regionId,omitempty"`
 	// A concatenation of the two-letter country code with the state/province/region of the office address.
 	//
 	// Example: `US-OH` (for Ohio)
 	StateID string `json:"stateId,omitempty"`
-	// The id of the time zone for the office address.
+	// The ID of the time zone for the office address.
 	//
 	// Example: `eastern` (for the Eastern US Time Zone)
 	TimeZoneID string `json:"timeZoneId,omitempty"`
@@ -986,19 +1008,19 @@ type OfficeSummary struct {
 	CreatedDate string `json:"createdDate,omitempty"`
 	// The name of the office.
 	Name string `json:"name,omitempty"`
-	// The id of the office. This is the id that the system generated when you created the office.
+	// The ID of the office. This is the ID that the system generated when you created the office.
 	OfficeID int32 `json:"officeId,omitempty"`
 	// Phone number of the office.
 	Phone string `json:"phone,omitempty"`
 	// Postal code or ZIP code of the office address.
 	PostalCode string `json:"postalCode,omitempty"`
-	// The id of the region. This is the id that the system generated when you created the region.
+	// The ID of the region. This is the ID that the system generated when you created the region.
 	RegionID int32 `json:"regionId,omitempty"`
 	// A concatenation of the two-letter country code with the state/province/region of the office address.
 	//
 	// Example: `US-OH` (for Ohio)
 	StateID string `json:"stateId,omitempty"`
-	// The id of the time zone for the office address.
+	// The ID of the time zone for the office address.
 	//
 	// Example: `eastern` (for the Eastern US Time Zone)
 	TimeZoneID string `json:"timeZoneId,omitempty"`
@@ -1022,28 +1044,11 @@ type OfficeSummaryList struct {
 	TotalRowCount int32 `json:"totalRowCount,omitempty"`
 }
 
-// OriginOfLead contains information about an origin of lead.
+// OriginOfLead is the `OriginsOfLeads` resource enables you to get a list of origins of leads (such as Trulia or Zillow) that you can specify for rooms.
 type OriginOfLead struct {
-	// The name of the origin of lead. Possible values are:
-	//
-	// - `Realtor.com`
-	// - `Trulia`
-	// - `Zillow`
-	// - `Company Website`
-	// - `Agent Website`
-	// - `Other Online`
-	// - `Mobile App`
-	// - `Social Media`
-	// - `Personal Referral`
-	// - `Company Referral`
-	// - `Repeat Client`
-	// - `Corporate Relocation`
-	// - `Print Marketing`
-	// - `Prospecting`
-	// - `Other`
-	// - `REO (Real Estate Owned)`
+	// The name of the office.
 	Name string `json:"name,omitempty"`
-	// The id of the origin of lead.
+	// The ID of the origin of lead.
 	//
 	// Example: `tru` (for `Trulia`)
 	OriginOfLeadID string `json:"originOfLeadId,omitempty"`
@@ -1051,121 +1056,133 @@ type OriginOfLead struct {
 
 // Permissions contains details about permissions.
 type Permissions struct {
-	// When set to **true**, users are automatically added to new rooms when someone with an internal role in their office or region creates or is invited to a room.
+	// When **true,** users are automatically added to new rooms when someone with an internal role in their office or region creates or is invited to a room.
 	AutoAccessToRooms bool `json:"autoAccessToRooms,omitempty"`
-	// When set to **true**, users can add documents to rooms and share the documents that they own with other people in the room.
+	//
+	AutoAccessToRoomsInOfficeOnly bool `json:"autoAccessToRoomsInOfficeOnly,omitempty"`
+	// When **true,** users can add documents to rooms and share the documents that they own with other people in the room.
 	CanAddDocuments bool `json:"canAddDocuments,omitempty"`
-	// When set to **true**, users can add documents from form groups to rooms.
+	// When **true,** users can add documents from form groups to rooms.
 	CanAddDocumentsFromFormGroups bool `json:"canAddDocumentsFromFormGroups,omitempty"`
-	// When set to **true**, users can add documents from form libraries to rooms.
+	// When **true,** users can add documents from form libraries to rooms.
 	CanAddDocumentsFromFormLibraries bool `json:"canAddDocumentsFromFormLibraries,omitempty"`
-	// When set to **true**, users can add other users with a lower access level than their own to offices or regions that they oversee and set those users' roles.
+	// When **true,** users can add other users with a lower access level than their own to offices or regions that they oversee and set those users' roles.
 	CanAddMemberAndSetRoleLowerAccessLevel bool `json:"canAddMemberAndSetRoleLowerAccessLevel,omitempty"`
-	// When set to **true**, users can add other users with the same access level as their own to offices or regions that they oversee and set those users' roles.
+	// When **true,** users can add other users with the same access level as their own to offices or regions that they oversee and set those users' roles.
 	CanAddMemberAndSetRoleSameAccessLevel bool `json:"canAddMemberAndSetRoleSameAccessLevel,omitempty"`
-	// When set to **true**, users can add tasks to any task list, including lists that they do not own.
+	// When **true,** users can add tasks to any task list, including lists that they do not own.
 	CanAddTasksToAnyTaskLists bool `json:"canAddTasksToAnyTaskLists,omitempty"`
-	// When set to **true**, users can add tasks to rooms.
+	// When **true,** users can add tasks to rooms.
 	CanAddTasksToRooms bool `json:"canAddTasksToRooms,omitempty"`
-	// When set to **true**, users can see the **Invite** button on the room's **People** tab and can invite people into a room.
+	// When **true,** users can see the **Invite** button on the room's **People** tab and can invite people into a room.
 	CanAddUsersToRooms bool `json:"canAddUsersToRooms,omitempty"`
-	// When set to **true**, users can apply a room template when they create a room.
+	// When **true,** users can apply a room template when they create a room.
 	CanApplyRoomTemplates bool `json:"canApplyRoomTemplates,omitempty"`
-	// When set to **true**, users see the **Attach Task List** option in the room's **Actions** menu and can apply task lists to rooms.
+	// When **true,** users see the **Attach Task List** option in the room's **Actions** menu and can apply task lists to rooms.
 	CanApplyTaskList bool `json:"canApplyTaskList,omitempty"`
-	// When set to **true** and a room is approved, the task lists associated with the room auto-approve if all of the tasks are approved.
+	// When **true** and a room is approved, the task lists associated with the room auto-approve if all of the tasks are approved.
 	CanAutoApproveTaskList bool `json:"canAutoApproveTaskList,omitempty"`
-	// When set to **true**, users can use the **Submit Task List** option in the room's **Actions** menu to submit task lists for review.
+	// When **true,** users can use the **Submit Task List** option in the room's **Actions** menu to submit task lists for review.
 	CanAutoSubmitTaskList bool `json:"canAutoSubmitTaskList,omitempty"`
-	// When set to **true**, users can edit the roles of other users who have a lower access level than their own and that belong to offices or regions that they oversee.
+	// When **true,** users can edit the roles of other users who have a lower access level than their own and that belong to offices or regions that they oversee.
 	CanChangeMemberRoleLowerAccessLevel bool `json:"canChangeMemberRoleLowerAccessLevel,omitempty"`
-	// When set to **true**, users can edit the roles of other users who have the same access level as their own and that belong to offices or regions that they oversee.
+	// When **true,** users can edit the roles of other users who have the same access level as their own and that belong to offices or regions that they oversee.
 	CanChangeMemberRoleSameAccessLevel bool `json:"canChangeMemberRoleSameAccessLevel,omitempty"`
-	// When set to **true**, users can review and close rooms that are owned by them or someone they manage.
+	// When **true,** users can review and close rooms that are owned by them or someone they manage.
 	CanCloseRooms bool `json:"canCloseRooms,omitempty"`
 	//
 	CanConnectToMortgageCadence bool `json:"canConnectToMortgageCadence,omitempty"`
-	// When set to **true**, users see a **Copy** room option in the room **Actions** menu, which copies the room's detail information to populate a new room.
+	// When **true,** users see a **Copy** room option in the room **Actions** menu, which copies the room's detail information to populate a new room.
 	CanCopyRoomDetails bool `json:"canCopyRoomDetails,omitempty"`
-	// When set to **true**, users can see the **New** button on the **Rooms** tab and can create a room.
+	//
+	CanCreateFormTemplates bool `json:"canCreateFormTemplates,omitempty"`
+	// When **true,** users can see the **New** button on the **Rooms** tab and can create a room.
 	CanCreateRooms bool `json:"canCreateRooms,omitempty"`
-	// When set to **true**, users can delete tasks, even if the task owner has not marked the task as deletable.
+	// When **true,** users can delete tasks, even if the task owner has not marked the task as deletable.
 	CanDeleteAnyTasks bool `json:"canDeleteAnyTasks,omitempty"`
-	// When set to **true**, users can delete deletable tasks.
+	// When **true,** users can delete deletable tasks.
 	CanDeleteDeletableTasks bool `json:"canDeleteDeletableTasks,omitempty"`
-	// When set to **true**, users can delete documents that they own from rooms.
+	// When **true,** users can delete documents that they own from rooms.
 	CanDeleteOwnedDocuments bool `json:"canDeleteOwnedDocuments,omitempty"`
-	// When set to **true**, the user can delete rooms that are owned by them or someone they manage.
+	// When **true,** the user can delete rooms that are owned by them or someone they manage.
 	CanDeleteOwnedRooms bool `json:"canDeleteOwnedRooms,omitempty"`
 	//
 	CanDeleteRooms bool `json:"canDeleteRooms,omitempty"`
 	//
+	CanDeleteSignedDocuments bool `json:"canDeleteSignedDocuments,omitempty"`
+	//
+	CanDeleteUnsignedDocuments bool `json:"canDeleteUnsignedDocuments,omitempty"`
+	//
 	CanEditAnyRoomRole bool `json:"canEditAnyRoomRole,omitempty"`
-	// When set to **true**, users can edit tasks in rooms, even if the task owner has not marked the task as editable.
+	// When **true,** users can edit tasks in rooms, even if the task owner has not marked the task as editable.
 	CanEditAnyTasks bool `json:"canEditAnyTasks,omitempty"`
-	// When set to **true**, users can edit editable tasks.
+	// When **true,** users can edit editable tasks.
 	CanEditEditableTasks bool `json:"canEditEditableTasks,omitempty"`
 	//
 	CanEditInvitedRoomRole bool `json:"canEditInvitedRoomRole,omitempty"`
 	//
 	CanEditRoomSide bool `json:"canEditRoomSide,omitempty"`
-	// When set to **true**, users can export the details, people, and history of a room to a PDF or CSV file.
+	//
+	CanExportCompanyUsageReport bool `json:"canExportCompanyUsageReport,omitempty"`
+	// When **true,** users can export the details, people, and history of a room to a PDF or CSV file.
 	CanExportRoomActivityDetailsPeople bool `json:"canExportRoomActivityDetailsPeople,omitempty"`
-	// When set to **true**, users can access the **Company Settings** tab under **Rooms > Admin > Company** to manage company account settings and change the company name, contact information, currency, offices, and regions.
+	// When **true,** users can access the **Company Settings** tab under **Rooms > Admin > Company** to manage company account settings and change the company name, contact information, currency, offices, and regions.
 	CanManageAccount bool `json:"canManageAccount,omitempty"`
 	//
 	CanManageAnyUserRoomAccess bool `json:"canManageAnyUserRoomAccess,omitempty"`
 	//
 	CanManageDocsOnAnyTask bool `json:"canManageDocsOnAnyTask,omitempty"`
-	// When set to **true**, users have access to **Admin > Forms** and can manage form groups and form libraries for the company.
+	// When **true,** users have access to **Admin > Forms** and can manage form groups and form libraries for the company.
 	CanManageFormGroups bool `json:"canManageFormGroups,omitempty"`
+	//
+	CanManageFormPackets bool `json:"canManageFormPackets,omitempty"`
 	//
 	CanManageIntegrationSettings bool `json:"canManageIntegrationSettings,omitempty"`
 	//
 	CanManageInvitedUserRoomAccess bool `json:"canManageInvitedUserRoomAccess,omitempty"`
-	// When set to **true**, users can access the **Company Logo** section in **Company Settings** to add or change the company logo.
+	// When **true,** users can access the **Company Logo** section in **Company Settings** to add or change the company logo.
 	CanManageLogo bool `json:"canManageLogo,omitempty"`
-	// When set to **true**, users can change the access level, office, region, and eSignature permission set of other users who have a lower access level than their own.
+	// When **true,** users can change the access level, office, region, and eSignature permission set of other users who have a lower access level than their own.
 	CanManageMemberLowerAccessLevel bool `json:"canManageMemberLowerAccessLevel,omitempty"`
-	// When set to **true**, users can change the access level, office, region, and eSignature permission set of other users who have the same access level as their own.
+	// When **true,** users can change the access level, office, region, and eSignature permission set of other users who have the same access level as their own.
 	CanManageMemberSameAccessLevel bool `json:"canManageMemberSameAccessLevel,omitempty"`
 	//
 	CanManageRolesAndPermissions bool `json:"canManageRolesAndPermissions,omitempty"`
-	// When set to **true**, users see the **Room Details** tab under **Rooms > Admin > Company** and can use it to configure room details. They can also add additional contact fields.
+	// When **true,** users see the **Room Details** tab under **Rooms > Admin > Company** and can use it to configure room details. They can also add additional contact fields.
 	CanManageRoomDetails bool `json:"canManageRoomDetails,omitempty"`
 	//
 	CanManageRoomOwners bool `json:"canManageRoomOwners,omitempty"`
-	// When set to **true**, users see the **Room Templates** option in the **Rooms > Admin** menu, which enables them to add, edit, and delete room templates.
+	// When **true,** users see the **Room Templates** option in the **Rooms > Admin** menu, which enables them to add, edit, and delete room templates.
 	CanManageRoomTemplates bool `json:"canManageRoomTemplates,omitempty"`
-	// When set to **true**, users can manage all documents, including ones that another user has shared with them.
+	// When **true,** users can manage all documents, including ones that another user has shared with them.
 	CanManageSharedDocs bool `json:"canManageSharedDocs,omitempty"`
-	// When set to **true**, users have access to the **Admin > Company > Task List Templates** menu so that they can create, edit, and delete task list templates for all regions and offices.
+	// When **true,** users have access to the **Admin > Company > Task List Templates** menu so that they can create, edit, and delete task list templates for all regions and offices.
 	CanManageTaskTemplatesForAllRegionsAllOffices bool `json:"canManageTaskTemplatesForAllRegionsAllOffices,omitempty"`
-	// When set to **true**, users can use the **Remove Task List** option in the room's **Actions** menu to remove task lists owned by others.
+	// When **true,** users can use the **Remove Task List** option in the room's **Actions** menu to remove task lists owned by others.
 	//
-	// **Note**: Users can already remove task lists that they own.
+	// **Note:** Users can already remove task lists that they own.
 	CanRemoveAnyTaskList bool `json:"canRemoveAnyTaskList,omitempty"`
-	// When set to **true**, users can remove other users who have a lower access level than their own and that belong to offices or regions that they oversee from the company account.
+	// When **true,** users can remove other users who have a lower access level than their own and that belong to offices or regions that they oversee from the company account.
 	CanRemoveCompanyMemberLowerAccessLevel bool `json:"canRemoveCompanyMemberLowerAccessLevel,omitempty"`
-	// When set to **true**, users can remove other users who have the same access level as their own and that belong to offices or regions that they oversee from the company account.
+	// When **true,** users can remove other users who have the same access level as their own and that belong to offices or regions that they oversee from the company account.
 	CanRemoveCompanyMemberSameAccessLevel bool `json:"canRemoveCompanyMemberSameAccessLevel,omitempty"`
-	// When set to **true**, users can reopen rooms that are owned by them or someone they manage.
+	// When **true,** users can reopen rooms that are owned by them or someone they manage.
 	CanReopenRooms bool `json:"canReopenRooms,omitempty"`
 	//
 	CanReviewAnyTask bool `json:"canReviewAnyTask,omitempty"`
-	// When set to **true**, users can approve or decline a task list. Declining a task list sends it back to open status for the assignee to complete. The assignee also receives a notification.
+	// When **true,** users can approve or decline a task list. Declining a task list sends it back to open status for the assignee to complete. The assignee also receives a notification.
 	CanReviewTaskList bool `json:"canReviewTaskList,omitempty"`
 	//
 	CanSendRoomDetailsToLoneWolf bool `json:"canSendRoomDetailsToLoneWolf,omitempty"`
-	// When set to **true**, users can share documents that they do not own (documents that another user has shared with them).
+	// When **true,** users can share documents that they do not own (documents that another user has shared with them).
 	CanShareDocsNotOwned bool `json:"canShareDocsNotOwned,omitempty"`
-	// When set to **true**, users can submit rooms for review that are owned by them or someone they manage.
+	// When **true,** users can submit rooms for review that are owned by them or someone they manage.
 	CanSubmitRoomsForReview bool `json:"canSubmitRoomsForReview,omitempty"`
-	// When set to **true**, users can use the **Submit Task List** option in the room's **Actions** menu to submit task lists for review.
+	// When **true,** users can use the **Submit Task List** option in the room's **Actions** menu to submit task lists for review.
 	CanSubmitTaskList bool `json:"canSubmitTaskList,omitempty"`
-	// When set to **true**, users can view and make edits to any room detail fields.
+	// When **true,** users can view and make edits to any room detail fields.
 	CanViewAndEditRoomDetails bool `json:"canViewAndEditRoomDetails,omitempty"`
-	// When set to **true**, users can view all room detail fields that the company Admin has set to **Use**.
+	// When **true,** users can view all room detail fields that the company Admin has set to **Use.**
 	CanViewRoomDetails bool `json:"canViewRoomDetails,omitempty"`
 	// When a user for whom this permission is set to **true** adds a document, the document is automatically seen and owned by those users' peers. Peers are others in the same office or region who have the same access level as the user.
 	DocumentsAutoOwnedByPeers bool `json:"documentsAutoOwnedByPeers,omitempty"`
@@ -1173,19 +1190,28 @@ type Permissions struct {
 	DocumentsViewableByOthersInRoomFromOffice bool `json:"documentsViewableByOthersInRoomFromOffice,omitempty"`
 	//
 	IsHiddenInRoom bool `json:"isHiddenInRoom,omitempty"`
-	// When set to **true**, users who also have the `autoAccessToRooms` permission enabled are visible in those rooms.
-	IsVisibleInRooms bool `json:"isVisibleInRooms,omitempty"`
 }
 
 // ProductVersion not described in definition file
 type ProductVersion struct {
 }
 
-// PropertyType is the `OriginsOfLeads` resource enables you to get a list of property types (such as ????) that you can specify for rooms.
+// PropertyType contains information about a property type.
 type PropertyType struct {
-	// The name of the office.
+	// The name of the property type. Possible values are:
+	//
+	// - `Residential Detached`
+	// - `Residential Attached`
+	// - `New Construction`
+	// - `Residential Developed Lots`
+	// - `Land/Farm`
+	// - `Rental`
+	// - `Commercial`
+	// - `Condominium`
+	// - `Mobile Home`
+	//
 	Name string `json:"name,omitempty"`
-	// The id of the property type.
+	// The ID of the property type.
 	//
 	// Example: `resd` (for `Residential Detached`)
 	PropertyTypeID string `json:"propertyTypeId,omitempty"`
@@ -1197,7 +1223,7 @@ type Region struct {
 	CreatedDate string `json:"createdDate,omitempty"`
 	// String that specifies the region name.
 	Name string `json:"name,omitempty"`
-	// The id of the region. This is the id that the system generated when you created the region.
+	// The ID of the region. This is the ID that the system generated when you created the region.
 	RegionID int32 `json:"regionId,omitempty"`
 }
 
@@ -1221,7 +1247,7 @@ type RegionSummary struct {
 	CreatedDate string `json:"createdDate,omitempty"`
 	// String that specifies the region name.
 	Name string `json:"name,omitempty"`
-	// The id of the region. This is the id that the system generated when you created the region.
+	// The ID of the region. This is the ID that the system generated when you created the region.
 	RegionID int32 `json:"regionId,omitempty"`
 }
 
@@ -1247,13 +1273,13 @@ type RegionSummaryList struct {
 type Role struct {
 	// The UTC DateTime when the role was created.
 	CreatedDate string `json:"createdDate,omitempty"`
-	// When set to **true**, indicates that this role is currently assigned to a user.
+	// When **true,** indicates that this role is currently assigned to a user.
 	IsAssigned bool `json:"isAssigned,omitempty"`
-	// When **true**, the role is the default for account administrators.
+	// When **true,** the role is the default for account administrators.
 	IsDefaultForAdmin bool `json:"isDefaultForAdmin,omitempty"`
-	// When set to **true**, the role is an external role. You assign external roles to people from outside your company when you invite them into a room.
+	// When **true,** the role is an external role. You assign external roles to people from outside your company when you invite them into a room.
 	IsExternal bool `json:"isExternal,omitempty"`
-	// The legacy name of the role in Rooms Version 5.
+	// This field is deprecated in Rooms Version 6.
 	LegacyRoleID string `json:"legacyRoleId,omitempty"`
 	// The name of the role.
 	//
@@ -1262,21 +1288,19 @@ type Role struct {
 	// - `Agent`
 	// - `Default Admin`
 	Name string `json:"name,omitempty"`
-	// An object that contains details about a manager user's permissions.
-	//
-	// **Note**: These permissions only apply to Rooms v5.
+	// This object is deprecated in Rooms Version 6.
 	Permissions *Permissions `json:"permissions,omitempty"`
-	// In Rooms v6, this is the id of the company role assigned to the user.
+	// In Rooms v6, this is the ID of the company role assigned to the user.
 	//
 	// You can assign external roles to users who aren't a part of your organization.
 	//
-	// **Note**: If you are using Rooms v6, you must enter a `roleId` in requests. If you are using Rooms v5, you must enter a value for the `titleId` property instead.
+	// **Note:** If you are using Rooms v6, you must enter a `roleId` in requests. If you are using Rooms v5, you must enter a value for the `titleId` property instead.
 	RoleID int32 `json:"roleId,omitempty"`
 }
 
 // RoleForCreate contains details about the role that you want to create.
 type RoleForCreate struct {
-	// When set to **true**, the role is an external role. You assign external roles to people from outside your company when you invite them into a room.
+	// When **true,** the role is an external role. You assign external roles to people from outside your company when you invite them into a room.
 	IsExternal bool `json:"isExternal,omitempty"`
 	// The name of the role.
 	Name string `json:"name,omitempty"`
@@ -1286,7 +1310,7 @@ type RoleForCreate struct {
 
 // RoleForUpdate this request object contains the details to use for the update.
 type RoleForUpdate struct {
-	// When set to **true**, the role is an external role. You assign external roles to people from outside your company when you invite them into a room.
+	// When **true,** the role is an external role. You assign external roles to people from outside your company when you invite them into a room.
 	IsExternal bool `json:"isExternal,omitempty"`
 	// The name of the role.
 	Name string `json:"name,omitempty"`
@@ -1302,15 +1326,15 @@ type RoleSummary struct {
 	//
 	//
 	CreatedDate string `json:"createdDate,omitempty"`
-	// When **true**, the role is the default for account administrators.
+	// When **true,** the role is the default for account administrators.
 	IsDefaultForAdmin bool `json:"isDefaultForAdmin,omitempty"`
-	// When set to **true**, the role is an external role. You assign external roles to people from outside your company when you invite them into a room.
+	// When **true,** the role is an external role. You assign external roles to people from outside your company when you invite them into a room.
 	IsExternal bool `json:"isExternal,omitempty"`
-	// The legacy name of the role in Rooms Version 5.
+	// This field is deprecated in Rooms Version 6.
 	LegacyRoleID string `json:"legacyRoleId,omitempty"`
 	// The name of the role.
 	Name string `json:"name,omitempty"`
-	// In Rooms v6, this is the id of the company role assigned to the user.
+	// The ID of the company role assigned to the user.
 	RoleID int32 `json:"roleId,omitempty"`
 }
 
@@ -1330,6 +1354,10 @@ type RoleSummaryList struct {
 	StartPosition int32 `json:"startPosition,omitempty"`
 	//
 	TotalRowCount int32 `json:"totalRowCount,omitempty"`
+}
+
+// RolesFilterContextTypes not described in definition file
+type RolesFilterContextTypes struct {
 }
 
 // Room is the Rooms resource provides methods that enable you to create and manage rooms. In Rooms for Real Estate, a room is a collaborative digital space corresponding to a specific property. In Rooms for Mortgages, a room corresponds to a specific loan.
@@ -1360,9 +1388,9 @@ type Room struct {
 	// - `proplsd`: Property leased. Use for the list side of the transaction.
 	// - `tenlease`: Tenant signed lease. Use when an agent helps renters find a to lease.
 	ClosedStatusID string `json:"closedStatusId,omitempty"`
-	// The id of the company.
+	// The ID of the company.
 	CompanyID int32 `json:"companyId,omitempty"`
-	// The id of the user who created the room.
+	// The ID of the user who created the room.
 	CreatedByUserID int32 `json:"createdByUserId,omitempty"`
 	// The UTC date and time when the item was created. This is a read-only value that the service assigns.
 	//
@@ -1370,48 +1398,36 @@ type Room struct {
 	//
 	//
 	CreatedDate string `json:"createdDate,omitempty"`
-	// The field data associated with a room. See [Rooms::GetRoomFieldData](/rooms-api/reference/Rooms/Rooms/GetRoomFieldData).
+	// The field data associated with a room.
+	// See [Rooms: GetRoomFieldData](/docs/rooms-api/reference/rooms/rooms/getroomfielddata/).
 	FieldData *FieldData `json:"fieldData,omitempty"`
+	//
+	FieldDataLastUpdatedDate string `json:"fieldDataLastUpdatedDate,omitempty"`
 	// The name of the room.
 	//
 	// Maximum Length: 100 characters.
 	Name string `json:"name,omitempty"`
-	// The id of the office. This is the id that the system generated when you created the office.
+	// The ID of the office. This is the ID that the system generated when you created the office.
 	OfficeID int32 `json:"officeId,omitempty"`
-	// The id of the user who rejected the room.
+	// The ID of the user who rejected the room.
 	RejectedByUserID int32 `json:"rejectedByUserId,omitempty"`
 	// The date on which the reviewer rejected the room. For example, a reviewer might reject closing a room if documentation is missing or the details are inaccurate.
 	RejectedDate string `json:"rejectedDate,omitempty"`
-	// The id of the room.
+	// The ID of the room.
 	RoomID int32 `json:"roomId,omitempty"`
-	// The UTC DateTime when the room was submitted for review.
 	//
-	// **Note**: In Rooms v5, this is when an agent submitted the room to a manager. In Rooms v6, this is when a member with a role for which the **Submit rooms for review** permission is set to **true** submitted the room to a member with a role for which the **Review and close rooms** permission is set to **true**.
+	RoomOwnerIds []int `json:"roomOwnerIds,omitempty"`
+	// The UTC DateTime when the room was submitted for review. This is when a member with a role for which the **Submit rooms for review** permission is set to **true** submitted the room to a member with a role for which the **Review and close rooms** permission is set to **true.**
 	SubmittedForReviewDate string `json:"submittedForReviewDate,omitempty"`
 }
 
-// RoomContactType contains information about a room contact type.
+// RoomContactType is the `RoomContactTypes` resource provides a method that enables you to retrieve a list of room contact types, such as Buyer, Seller, and Listing Agent.
 type RoomContactType struct {
-	// The id of the room contact type.
+	// The ID of the room contact type.
 	//
 	// Example: `lisagent` (for `Listing Agent`)
 	ID string `json:"id,omitempty"`
-	// The name of the room contact type. Possible values are:
-	//
-	// - `Seller`
-	// - `Listing Agent`
-	// - `Buyer`
-	// - `Buyer Agent`
-	// - `Service Provider`
-	// - `Transaction Coordinator`
-	// - `Mortgage Provider`
-	// - `Title Provider`
-	// - `Insurance Provider`
-	// - `Home Warranty Provider`
-	// - `Survey Provider`
-	// - `Escrow Provider`
-	// - `Buyer Broker`
-	// - `Listing Broker`
+	// The name of the office.
 	Name string `json:"name,omitempty"`
 }
 
@@ -1422,15 +1438,17 @@ type RoomDocument struct {
 	// Example: `2019-07-25T22:18:56.95Z`
 	//
 	CreatedDate string `json:"createdDate,omitempty"`
-	// The id of the corresponding DocuSign form.
+	// The ID of the corresponding DocuSign form.
 	DocuSignFormID string `json:"docuSignFormId,omitempty"`
 	// The ID of the document.
 	DocumentID int32 `json:"documentId,omitempty"`
-	// The id of the folder the document is in.
+	// The ID of the folder the document is in.
 	FolderID int32 `json:"folderId,omitempty"`
 	// **True** if the document is archived.
 	IsArchived bool `json:"isArchived,omitempty"`
-	// When set to **true**, this property indicates that the document is signed.
+	// **True** if the document is from a dynamic content provider like [DocuSign Forms](/docs/rooms-api/rooms101/forms/).
+	IsDynamic bool `json:"isDynamic,omitempty"`
+	// When **true,** this property indicates that the document is signed.
 	IsSigned bool `json:"isSigned,omitempty"`
 	// **True** if the document is virtual.
 	IsVirtual bool `json:"isVirtual,omitempty"`
@@ -1440,7 +1458,7 @@ type RoomDocument struct {
 	Name string `json:"name,omitempty"`
 	// The owner of the document.
 	Owner *RoomDocumentOwner `json:"owner,omitempty"`
-	// The id of the user who owns the document.
+	// The ID of the user who owns the document.
 	OwnerID int32 `json:"ownerId,omitempty"`
 	// The size of the document in bytes.
 	Size int64 `json:"size,omitempty"`
@@ -1474,13 +1492,13 @@ type RoomDocumentOwner struct {
 	ImageSrc string `json:"imageSrc,omitempty"`
 	// The user's last name.
 	LastName string `json:"lastName,omitempty"`
-	// The id of the user.
+	// The ID of the user.
 	UserID int32 `json:"userId,omitempty"`
 }
 
 // RoomFolder information about a room folder.
 type RoomFolder struct {
-	// When **true**, this is the default folder.
+	// When **true,** this is the default folder.
 	IsDefault bool `json:"isDefault,omitempty"`
 	// The name of the folder.
 	Name string `json:"name,omitempty"`
@@ -1508,28 +1526,30 @@ type RoomFolderList struct {
 
 // RoomForCreate this request object contains the details about the new room.
 type RoomForCreate struct {
-	// (Optional) The details to use for the room, such as `yearBuilt` and `originalListingAmount`. This is the information that appears on a room's Details tab.
+	// The details to use for the room, such as `yearBuilt` and `originalListingAmount`. This is the information that appears on a room's Details tab. Note that `address1`, `state`, `postalCode`, and `city` are required fields.
 	//
-	// To determine the fields for which you can provide data, use the Fields::GetFieldSet method.
+	// To determine the fields for which you can provide data, use the Fields: GetFieldSet method.
 	FieldData *FieldDataForCreate `json:"fieldData,omitempty"`
+	//
+	ListingSource string `json:"listingSource,omitempty"`
 	// (Required) The name of the room.
 	Name string `json:"name,omitempty"`
-	// (Optional) The id of the office associated with the room. Required when creating a room on behalf of someone else or a Manager-owned room.
+	// (Optional) The ID of the office associated with the room. Required when creating a room on behalf of someone else or a Manager-owned room.
 	OfficeID int32 `json:"officeId,omitempty"`
-	// The id of the user who owns the room.
+	// The ID of the user who owns the room.
 	OwnerID int32 `json:"ownerId,omitempty"`
-	// (Required) The id of the role that the owner has in the room.
+	// (Required) The ID of the role that the owner has in the room.
 	RoleID int32 `json:"roleId,omitempty"`
-	// (Optional) The id of the template to use to create the room.
+	// (Optional) The ID of the template to use to create the room.
 	TemplateID int32 `json:"templateId,omitempty"`
-	// The id of the transaction side. Valid values are:
+	// The ID of the transaction side. Valid values are:
 	//
 	// - `buy`
 	// - `sell`
 	// - `listbuy`
 	// - `refi`
 	//
-	// **Note**: This property is required for real estate companies, and otherwise ignored.
+	// **Note:** This property is required for real estate companies, and otherwise ignored.
 	TransactionSideID string `json:"transactionSideId,omitempty"`
 }
 
@@ -1541,11 +1561,9 @@ type RoomInvite struct {
 	FirstName string `json:"firstName,omitempty"`
 	// The user's last name.
 	LastName string `json:"lastName,omitempty"`
-	// In Rooms Version 6, this is the id of the company role assigned to the user.
+	// The ID of the company role assigned to the user.
 	//
-	// You can assign external roles to users who are not part of your organization.
-	//
-	// **Note**: If you are using Rooms Version 6, you must enter a `roleId` in requests. If you are using Rooms Version 5, you must use one of the Users::InviteClassic methods with the `titleId` property instead.
+	// You can assign external roles to users who aren't a part of your organization.
 	RoleID int32 `json:"roleId,omitempty"`
 	// Required for a real estate company; otherwise ignored.
 	TransactionSideID string `json:"transactionSideId,omitempty"`
@@ -1559,22 +1577,20 @@ type RoomInviteResponse struct {
 	FirstName string `json:"firstName,omitempty"`
 	// The user's last name.
 	LastName string `json:"lastName,omitempty"`
-	// In Rooms v6, this is the id of the company role assigned to the user.
+	// The ID of the company role assigned to the user.
 	//
 	// You can assign external roles to users who aren't a part of your organization.
-	//
-	// **Note**: If you are using Rooms v6, you must enter a `roleId` in requests. If you are using Rooms v5, you must enter a value for the `titleId` property instead.
 	RoleID int32 `json:"roleId,omitempty"`
-	// The id of the room.
+	// The ID of the room.
 	RoomID int32 `json:"roomId,omitempty"`
-	// The id of the transaction side. Valid values are:
+	// The ID of the transaction side. Valid values are:
 	//
 	// - `buy`
 	// - `sell`
 	// - `listbuy`
 	// - `refi`
 	TransactionSideID string `json:"transactionSideId,omitempty"`
-	// The id of the user.
+	// The ID of the user.
 	UserID int32 `json:"userId,omitempty"`
 }
 
@@ -1616,7 +1632,7 @@ type RoomSummary struct {
 	// - `proplsd`: Property leased. Use for the list side of the transaction.
 	// - `tenlease`: Tenant signed lease. Use when an agent helps renters find a to lease.
 	ClosedStatusID string `json:"closedStatusId,omitempty"`
-	// The id of the user who created the room.
+	// The ID of the user who created the room.
 	CreatedByUserID int32 `json:"createdByUserId,omitempty"`
 	// The UTC date and time when the item was created. This is a read-only value that the service assigns.
 	//
@@ -1628,17 +1644,15 @@ type RoomSummary struct {
 	FieldDataLastUpdatedDate string `json:"fieldDataLastUpdatedDate,omitempty"`
 	// The name of the room.
 	Name string `json:"name,omitempty"`
-	// The id of the office. This is the id that the system generated when you created the office.
+	// The ID of the office. This is the ID that the system generated when you created the office.
 	OfficeID int32 `json:"officeId,omitempty"`
-	// The id of the user who rejected the room.
+	// The ID of the user who rejected the room.
 	RejectedByUserID int32 `json:"rejectedByUserId,omitempty"`
 	// The date on which the reviewer rejected the room. For example, a reviewer might reject closing a room if documentation is missing or the details are inaccurate.
 	RejectedDate string `json:"rejectedDate,omitempty"`
-	// The id of the room.
+	// The ID of the room.
 	RoomID int32 `json:"roomId,omitempty"`
-	// The UTC DateTime when the room was submitted for review.
-	//
-	// **Note**: In Rooms v5, this is when an agent submitted the room to a manager. In Rooms v6, this is when a member with a role for which the **Submit rooms for review** permission is set to **true** submitted the room to a member with a role for which the **Review and close rooms** permission is set to **true**.
+	// The UTC DateTime when the room was submitted for review. This is when a member with a role for which the **Submit rooms for review** permission is set to **true** submitted the room to a member with a role for which the **Review and close rooms** permission is set to **true.**
 	SubmittedForReviewDate string `json:"submittedForReviewDate,omitempty"`
 }
 
@@ -1660,11 +1674,11 @@ type RoomSummaryList struct {
 	TotalRowCount int32 `json:"totalRowCount,omitempty"`
 }
 
-// RoomTemplate contains details about a room template.
+// RoomTemplate is the room template resources provides a method that enables you to retrieve the room templates associated with an account.
 type RoomTemplate struct {
-	// The name of the office.
+	// The name of the room template.
 	Name string `json:"name,omitempty"`
-	// The id of the room template.
+	// The ID of the room template.
 	RoomTemplateID int32 `json:"roomTemplateId,omitempty"`
 	// The total number of task templates that the room template uses.
 	TaskTemplateCount int32 `json:"taskTemplateCount,omitempty"`
@@ -1696,32 +1710,30 @@ type RoomUser struct {
 	FirstName string `json:"firstName,omitempty"`
 	// The `userId` of the person who invited the room user to the room.
 	InvitedByUserID int32 `json:"invitedByUserId,omitempty"`
-	// When set to **true**, indicates that the user's access to the room has been revoked.
+	// When **true,** indicates that the user's access to the room has been revoked.
 	IsRevoked bool `json:"isRevoked,omitempty"`
 	// The user's last name.
 	LastName string `json:"lastName,omitempty"`
-	// The id of the user's role.
+	// The ID of the user's role.
 	RoleID int32 `json:"roleId,omitempty"`
-	// The id of the transaction side. Valid values are:
+	// The ID of the transaction side. Valid values are:
 	//
 	// - `buy`
 	// - `sell`
 	// - `listbuy`
 	// - `refi`
 	TransactionSideID string `json:"transactionSideId,omitempty"`
-	// The id of the user.
+	// The ID of the user.
 	UserID int32 `json:"userId,omitempty"`
 }
 
 // RoomUserForUpdate this request object contains the information that you want to update for the room user.
 type RoomUserForUpdate struct {
-	// In Rooms v6, this is the id of the company role assigned to the user.
+	// The ID of the company role assigned to the user.
 	//
 	// You can assign external roles to users who aren't a part of your organization.
-	//
-	// **Note**: If you are using Rooms v6, you must enter a `roleId` in requests. If you are using Rooms v5, you must enter a value for the `titleId` property instead.
 	RoleID int32 `json:"roleId,omitempty"`
-	// The id of the transaction side. Valid values are:
+	// The ID of the transaction side. Valid values are:
 	//
 	// - `buy`
 	// - `sell`
@@ -1751,26 +1763,22 @@ type RoomUserSummary struct {
 	FirstName string `json:"firstName,omitempty"`
 	// The user's last name.
 	LastName string `json:"lastName,omitempty"`
-	// In Rooms v6, this is the id of the company role assigned to the user.
+	// The ID of the company role assigned to the user.
 	//
 	// You can assign external roles to users who aren't a part of your organization.
-	//
-	// **Note**: If you are using Rooms v6, you must enter a `roleId` in requests. If you are using Rooms v5, you must enter a value for the `titleId` property instead.
 	RoleID int32 `json:"roleId,omitempty"`
 	//
 	RoleName string `json:"roleName,omitempty"`
-	// In Rooms Version 5, this is the id of the custom job title for a Manager role within your company. For example, your company might have the custom job titles "Transaction Coordinator" and "Office Manager".
-	//
-	// **Note**: If you are using Rooms Version 5, you must enter a `titleId` when using the Users::InviteClassicManager method. (The `titleId` property is empty for Agent users on Rooms Version 5.) If you are using Rooms Version 6, use the Users::InviteUser method with the `roleId` property instead.
+	// Deprecated in Rooms Version 6.
 	TitleID int32 `json:"titleId,omitempty"`
-	// The id of the transaction side. Valid values are:
+	// The ID of the transaction side. Valid values are:
 	//
 	// - `buy`
 	// - `sell`
 	// - `listbuy`
 	// - `refi`
 	TransactionSideID string `json:"transactionSideId,omitempty"`
-	// The id of the user.
+	// The ID of the user.
 	UserID int32 `json:"userId,omitempty"`
 }
 
@@ -1794,7 +1802,7 @@ type RoomUsersResult struct {
 
 // SelectListFieldOption contains details about an option in a list.
 type SelectListFieldOption struct {
-	// The id of the list option.
+	// The ID of the list option.
 	//
 	// Example: `AU`
 	ID *interface{} `json:"id,omitempty"`
@@ -1810,15 +1818,9 @@ type SelectListFieldOption struct {
 
 // SellerDecisionType contains information about a seller decision type.
 type SellerDecisionType struct {
-	// The name of the seller decision type. Possible values are:
-	//
-	// - `Pending`
-	// - `Approved`
-	// - `Countered`
-	// - `Rejected`
-	// - `Pending Rejection`
+	// The name of the seller decision type.
 	Name string `json:"name,omitempty"`
-	// The id of the seller decision type.
+	// The ID of the seller decision type.
 	//
 	// Example: `appr` (for `Approved`)
 	SellerDecisionTypeID string `json:"sellerDecisionTypeId,omitempty"`
@@ -1828,108 +1830,15 @@ type SellerDecisionType struct {
 type SpecialCircumstanceType struct {
 	// The name of the office.
 	Name string `json:"name,omitempty"`
-	// The id of the special circumstance type.
+	// The ID of the special circumstance type.
 	//
 	// Example: `ss` (for `Short Sale`)
 	SpecialCircumstanceTypeID string `json:"specialCircumstanceTypeId,omitempty"`
 }
 
-// State contains information about a state.
+// State is the `States` resource provides a method that enables you to retrieve a list of states and state IDs that the Rooms API uses.
 type State struct {
-	// The name of the state. Possible values are:
-	//
-	// - `Alberta`
-	// - `Auckland`
-	// - `New South Wales`
-	// - `Alabama`
-	// - `Alaska`
-	// - `Bay of Plenty`
-	// - `British Columbia`
-	// - `Queensland`
-	// - `South Australia`
-	// - `Manitoba`
-	// - `Canterbury`
-	// - `Arizona`
-	// - `Arkansas`
-	// - `New Brunswick`
-	// - `Tasmania`
-	// - `Hawke's Bay`
-	// - `Manawatu-Wanganui`
-	// - `Victoria`
-	// - `Newfoundland and Labrador`
-	// - `California`
-	// - `Colorado`
-	// - `Western Australia`
-	// - `Northwest Territories`
-	// - `Northland`
-	// - `Otago`
-	// - `Australian Capital Territory`
-	// - `Nova Scotia`
-	// - `Connecticut`
-	// - `Delaware`
-	// - `Nunavut`
-	// - `Northern Territory`
-	// - `Southland`
-	// - `Taranaki`
-	// - `Ontario`
-	// - `District of Columbia`
-	// - `Florida`
-	// - `Prince Edward Island`
-	// - `Waikato`
-	// - `Wellington`
-	// - `Quebec`
-	// - `Georgia`
-	// - `Guam`
-	// - `Saskatchewan`
-	// - `West Coast`
-	// - `Gisborne District`
-	// - `Yukon`
-	// - `Hawaii`
-	// - `Idaho`
-	// - `Marlborough District`
-	// - `Nelson City`
-	// - `Illinois`
-	// - `Indiana`
-	// - `Tasman District`
-	// - `Chatham Islands Territory`
-	// - `Iowa`
-	// - `Kansas`
-	// - `Kentucky`
-	// - `Louisiana`
-	// - `Maine`
-	// - `Maryland`
-	// - `Massachusetts`
-	// - `Michigan`
-	// - `Minnesota`
-	// - `Mississippi`
-	// - `Missouri`
-	// - `Montana`
-	// - `Nebraska`
-	// - `Nevada`
-	// - `New Hampshire`
-	// - `New Jersey`
-	// - `New Mexico`
-	// - `New York`
-	// - `North Carolina`
-	// - `North Dakota`
-	// - `Ohio`
-	// - `Oklahoma`
-	// - `Oregon`
-	// - `Pennsylvania`
-	// - `Puerto Rico`
-	// - `Rhode Island`
-	// - `South Carolina`
-	// - `South Dakota`
-	// - `Tennessee`
-	// - `Texas`
-	// - `US Virgin Islands`
-	// - `Utah`
-	// - `Vermont`
-	// - `Virginia`
-	// - `Washington`
-	// - `West Virginia`
-	// - `Wisconsin`
-	// - `Wyoming`
+	// The name of the office.
 	Name string `json:"name,omitempty"`
 	// A concatenation of the two-letter country code with the state/province/region of the office address.
 	//
@@ -1937,52 +1846,41 @@ type State struct {
 	StateID string `json:"stateId,omitempty"`
 }
 
-// TaskDateType contains information about a task date type.
+// TaskDateType this resource provides a method that returns a list of date types that you can use with tasks, such as `Actual Close Date` and `Task Due Date`.
 type TaskDateType struct {
-	// The name of the task date type.
-	//
-	// Possible values are:
-	//
-	// - `Specific Calendar Date`
-	// - `Task Due Date`
-	// - `Actual Close Date`
-	// - `Binding Date`
-	// - `Contingency Removal Date`
-	// - `Contract Date`
-	// - `Expected Closing Date`
-	// - `Listing Date`
-	// - `Listing Expiration Date`
-	// - `Offer Date`
+	// The name of the office.
 	Name string `json:"name,omitempty"`
-	// The id of the task date type.
+	// The ID of the task date type.
 	//
 	// Example: `tdd` (for `Task Due Date`)
 	TaskDateTypeID string `json:"taskDateTypeId,omitempty"`
 }
 
-// TaskList this response object contains details about the new task list.
+// TaskList is the `TaskLists` resource helps you keep track of the documents and activities you must complete before you can close a room.
 type TaskList struct {
-	// The UTC DateTime when the task list was approved.
-	ApprovalDate string `json:"approvalDate,omitempty"`
-	// The id of the user who approved the task list.
-	ApprovedByUserID int32 `json:"approvedByUserId,omitempty"`
-	// Contains a comment about the task list.
-	Comment string `json:"comment,omitempty"`
-	// The UTC date and time when the task list was created. This is a read-only value that the service assigns.
 	//
-	// Example: 2019-07-17T17:45:42.783Z
+	ApprovalDate string `json:"approvalDate,omitempty"`
+	//
+	ApprovedByUserID int32 `json:"approvedByUserId,omitempty"`
+	//
+	Comment string `json:"comment,omitempty"`
+	// The UTC date and time when the item was created. This is a read-only value that the service assigns.
+	//
+	// Example: `2019-07-17T17:45:42.783Z`
+	//
+	//
 	CreatedDate string `json:"createdDate,omitempty"`
-	// The name of the task list.
+	// The name of the office.
 	Name string `json:"name,omitempty"`
-	// The id of the user who rejected the task list.
+	// The ID of the user who rejected the room.
 	RejectedByUserID int32 `json:"rejectedByUserId,omitempty"`
-	// The UTC DateTime when the reviewer rejected the task list.
+	// The date on which the reviewer rejected the room. For example, a reviewer might reject closing a room if documentation is missing or the details are inaccurate.
 	RejectedDate string `json:"rejectedDate,omitempty"`
-	// The UTC DateTime when the task list was submitted for review.
+	// The UTC DateTime when the room was submitted for review. This is when a member with a role for which the **Submit rooms for review** permission is set to **true** submitted the room to a member with a role for which the **Review and close rooms** permission is set to **true.**
 	SubmittedForReviewDate string `json:"submittedForReviewDate,omitempty"`
-	// The id of the task list.
+	// The ID of the task list.
 	TaskListID int32 `json:"taskListId,omitempty"`
-	// The id of the task list template used to create the task list.
+	// The ID of the task list template.
 	TaskListTemplateID int32 `json:"taskListTemplateId,omitempty"`
 	// A list of tasks in the task list.
 	Tasks []TaskSummary `json:"tasks,omitempty"`
@@ -1990,7 +1888,7 @@ type TaskList struct {
 
 // TaskListForCreate contains information about the task list template to use to create the new task list.
 type TaskListForCreate struct {
-	// (Required) The id of the task list template.
+	// (Required) The ID of the task list template.
 	TaskListTemplateID int32 `json:"taskListTemplateId,omitempty"`
 }
 
@@ -1998,7 +1896,7 @@ type TaskListForCreate struct {
 type TaskListSummary struct {
 	// The UTC DateTime when the task list was approved.
 	ApprovalDate string `json:"approvalDate,omitempty"`
-	// The id of the user who approved the task list.
+	// The ID of the user who approved the task list.
 	ApprovedByUserID int32 `json:"approvedByUserId,omitempty"`
 	// Contains a user comment about the task list.
 	Comment string `json:"comment,omitempty"`
@@ -2008,15 +1906,15 @@ type TaskListSummary struct {
 	CreatedDate string `json:"createdDate,omitempty"`
 	// The name of the task list.
 	Name string `json:"name,omitempty"`
-	// The id of the user who rejected the task list.
+	// The ID of the user who rejected the task list.
 	RejectedByUserID int32 `json:"rejectedByUserId,omitempty"`
 	// The date on which the reviewer rejected the task list.
 	RejectedDate string `json:"rejectedDate,omitempty"`
 	// The UTC DateTime when the task list was submitted for review.
 	SubmittedForReviewDate string `json:"submittedForReviewDate,omitempty"`
-	// The id of the task list.
+	// The ID of the task list.
 	TaskListID int32 `json:"taskListId,omitempty"`
-	// The id of the task list template.
+	// The ID of the task list template.
 	TaskListTemplateID int32 `json:"taskListTemplateId,omitempty"`
 }
 
@@ -2026,13 +1924,13 @@ type TaskListSummaryList struct {
 	TaskListSummaries []TaskListSummary `json:"taskListSummaries,omitempty"`
 }
 
-// TaskListTemplate contains details about a task list template.
+// TaskListTemplate is a task list template is a custom task list that can be added to rooms.
 type TaskListTemplate struct {
-	// The name of the task list template.
+	// The name of the office.
 	Name string `json:"name,omitempty"`
 	// The total number of tasks in the task list template.
 	TaskCount int32 `json:"taskCount,omitempty"`
-	// The id of the task list template.
+	// The ID of the task list template.
 	TaskListTemplateID int32 `json:"taskListTemplateId,omitempty"`
 	// The number of tasks in the task list template that have documents associated with them.
 	TasksWithDocumentsCount int32 `json:"tasksWithDocumentsCount,omitempty"`
@@ -2058,13 +1956,13 @@ type TaskListTemplateList struct {
 
 // TaskResponsibilityType contains information about a task responsibility type.
 type TaskResponsibilityType struct {
-	// The name of the task responsibility type. The possible values are:
+	// The name of the task responsibility type. Valid values:
 	//
 	// - `Assignee`
 	// - `Watcher`
 	// - `Reviewer`
 	Name string `json:"name,omitempty"`
-	// The id of the task responsibility type.
+	// The ID of the task responsibility type.
 	TaskResponsibilityTypeID string `json:"taskResponsibilityTypeId,omitempty"`
 }
 
@@ -2093,7 +1991,7 @@ type TaskSummary struct {
 	CreatedDate string `json:"createdDate,omitempty"`
 	// The number of days before or after the due date (specified by the `dueDateTypeId`) within which the task must be completed. A negative number indicates that the task must be completed within a certain number of days before the due date. A positive number indicates that the task must be completed within a certain number of days after the due date.
 	DueDateOffset int32 `json:"dueDateOffset,omitempty"`
-	// The id of the due date type (such as Actual Close Date or Contract Date).
+	// The ID of the due date type (such as Actual Close Date or Contract Date).
 	DueDateTypeID string `json:"dueDateTypeId,omitempty"`
 	// A specific calendar due date for the task.
 	//
@@ -2101,19 +1999,19 @@ type TaskSummary struct {
 	//
 	// Example: 2019-07-17T00:00:00.000Z
 	FixedDueDate string `json:"fixedDueDate,omitempty"`
-	// When set to **true**, the task is associated with a document.
+	// When **true,** the task is associated with a document.
 	IsDocumentTask bool `json:"isDocumentTask,omitempty"`
 	// The name of the task list.
 	Name string `json:"name,omitempty"`
-	// The id of the user who owns the task.
+	// The ID of the user who owns the task.
 	OwnerUserID int32 `json:"ownerUserId,omitempty"`
 	// The date on which the reviewer rejected the task.
 	RejectedDate string `json:"rejectedDate,omitempty"`
-	// When set to **true**, the task must be completed and reviewed before it can be closed.
+	// When **true,** the task must be completed and reviewed before it can be closed.
 	RequiresApproval bool `json:"requiresApproval,omitempty"`
-	// When set to **true**, the task is optional. If the task is completed (if a document is added or the task is marked complete), it must be reviewed before it can be closed.
+	// When **true,** the task is optional. If the task is completed (if a document is added or the task is marked complete), it must be reviewed before it can be closed.
 	RequiresReview bool `json:"requiresReview,omitempty"`
-	// The id of the task list.
+	// The ID of the task list.
 	TaskID int32 `json:"taskId,omitempty"`
 }
 
@@ -2121,23 +2019,17 @@ type TaskSummary struct {
 type TimeZone struct {
 	// The name of the office.
 	Name string `json:"name,omitempty"`
-	// The id of the time zone for the office address.
+	// The ID of the time zone for the office address.
 	//
 	// Example: `eastern` (for the Eastern US Time Zone)
 	TimeZoneID string `json:"timeZoneId,omitempty"`
 }
 
-// TransactionSide contains information about a real estate transaction side.
+// TransactionSide is the `TransactionSides` resource provides a method that enables you to list possible real estate transaction sides.
 type TransactionSide struct {
-	// The name of the transaction side. Valid values are:
-	//
-	// - `List Side`
-	// - `Buy Side`
-	// - `List & Buy Side`
-	// - `Refinance`
-	//
+	// The name of the office.
 	Name string `json:"name,omitempty"`
-	// The id of the transaction side. Valid values are:
+	// The ID of the transaction side. Valid values are:
 	//
 	// - `buy`
 	// - `sell`
@@ -2150,7 +2042,7 @@ type TransactionSide struct {
 type User struct {
 	// The user's level of access to the account. This property determines what the user can see in the system.
 	//
-	// In contrast, a user's permissions determine the actions that they can take in a room. For example, a user who has `accessLevel` set to `Company` can see all of the rooms associated with their company. However, if they do not have a role for which the **Add documents to room** permission is set to **true**, they can't add documents to those rooms.
+	// In contrast, a user's permissions determine the actions that they can take in a room. For example, a user who has `accessLevel` set to `Company` can see all of the rooms associated with their company. However, if they do not have a role for which the **Add documents to room** permission is set to **true,** they can't add documents to those rooms.
 	//
 	// Valid values are:
 	//
@@ -2159,50 +2051,42 @@ type User struct {
 	// - `Office`: The user has access to rooms and, if they have permission to manage users, they have access to users across their offices.
 	// - `Contributor`: The user has access only to their own rooms and those to which they are invited. They cannot perform any user management actions because they do not oversee other users. For example, agents typically have the `Contributor` access level.
 	//
-	// **Note**: In requests, the values that you may use for this property depend on your permissions and whether you can add users at your access level or lower.
-	AccessLevel *AccessLevel `json:"accessLevel,omitempty"`
-	// The id of the user's default office.
+	// **Note:** In requests, the values that you may use for this property depend on your permissions and whether you can add users at your access level or lower.
+	AccessLevel string `json:"accessLevel,omitempty"`
+	// The ID of the user's default office.
 	DefaultOfficeID int32 `json:"defaultOfficeId,omitempty"`
 	// The user's email address.
 	Email string `json:"email,omitempty"`
 	// The user's first name.
 	FirstName string `json:"firstName,omitempty"`
-	// When set to **true**, an administrator has locked the user's account. For example, an administrator might want to lock an agent's account after they leave the brokerage until they determine how to transfer the agent's rooms and data to another active user.
+	// When **true,** an administrator has locked the user's account. For example, an administrator might want to lock an agent's account after they leave the brokerage until they determine how to transfer the agent's rooms and data to another active user.
 	IsLockedOut bool `json:"isLockedOut,omitempty"`
 	// The user's last name.
 	LastName string `json:"lastName,omitempty"`
-	// An array of office ids for the offices in which a user with an `Office` or `Contributor` `accessLevel` has been granted the ability to participate.
+	// An array of office IDs for the offices in which a user with an `Office` or `Contributor` `accessLevel` has been granted the ability to participate.
 	Offices []int `json:"offices,omitempty"`
-	// An object that contains details about a manager user's permissions.
-	//
-	// **Note**: These permissions only apply to Rooms v5.
+	// This object is deprecated in Rooms Version 6.
 	Permissions *ClassicManagerPermissions `json:"permissions,omitempty"`
 	// The URL for the user's profile image.
 	ProfileImageURL string `json:"profileImageUrl,omitempty"`
-	// An array of region ids for the regions in which a user with the `Region accessLevel` has been granted the ability to participate.
+	// An array of region IDs for the regions in which a user with the `Region accessLevel` has been granted the ability to participate.
 	Regions []int `json:"regions,omitempty"`
-	// In Rooms v6, this is the id of the company role assigned to the user.
-	//
-	// You can assign external roles to users who aren't a part of your organization.
-	//
-	// **Note**: If you are using Rooms v6, you must enter a `roleId` in requests. If you are using Rooms v5, you must enter a value for the `titleId` property instead.
+	// The ID of the company role assigned to the user. You can assign external roles to users who aren't a part of your organization.
 	RoleID int32 `json:"roleId,omitempty"`
-	// The user's status. Read only. Possible values are:
+	// The user's status. This property is read-only. Possible values are:
 	//
 	// - `Active`: The user is active.
 	// - `Pending`: The user has been invited but has not yet accepted the invitation.
 	Status string `json:"status,omitempty"`
-	// In Rooms Version 5, this is the id of the custom job title for a Manager role within your company. For example, your company might have the custom job titles "Transaction Coordinator" and "Office Manager".
-	//
-	// **Note**: If you are using Rooms Version 5, you must enter a `titleId` when using the Users::InviteClassicManager method. (The `titleId` property is empty for Agent users on Rooms Version 5.) If you are using Rooms Version 6, use the Users::InviteUser method with the `roleId` property instead.
+	// This field is deprecated in Rooms Version 6.
 	TitleID int32 `json:"titleId,omitempty"`
-	// The id of the user.
+	// The ID of the user.
 	UserID int32 `json:"userId,omitempty"`
 }
 
 // UserForUpdate this request object contains the information to use to update a user's default office.
 type UserForUpdate struct {
-	// (Required) The id of the user's default office.
+	// (Required) The ID of the user's default office.
 	DefaultOfficeID int32 `json:"defaultOfficeId,omitempty"`
 }
 
@@ -2210,7 +2094,7 @@ type UserForUpdate struct {
 type UserSummary struct {
 	// The user's level of access to the account. This property determines what the user can see in the system.
 	//
-	// In contrast, a user's permissions determine the actions that they can take in a room. For example, a user who has `accessLevel` set to `Company` can see all of the rooms associated with their company. However, if they do not have a role for which the **Add documents to room** permission is set to **true**, they can't add documents to those rooms.
+	// In contrast, a user's permissions determine the actions that they can take in a room. For example, a user who has `accessLevel` set to `Company` can see all of the rooms associated with their company. However, if they do not have a role for which the **Add documents to room** permission is set to **true,** they can't add documents to those rooms.
 	//
 	// Valid values are:
 	//
@@ -2219,36 +2103,32 @@ type UserSummary struct {
 	// - `Office`: The user has access to rooms and, if they have permission to manage users, they have access to users across their offices.
 	// - `Contributor`: The user has access only to their own rooms and those to which they are invited. They cannot perform any user management actions because they do not oversee other users. For example, agents typically have the `Contributor` access level.
 	//
-	// **Note**: In requests, the values that you may use for this property depend on your permissions and whether you can add users at your access level or lower.
-	AccessLevel *AccessLevel `json:"accessLevel,omitempty"`
-	// The id of the user's default office.
+	// **Note:** In requests, the values that you may use for this property depend on your permissions and whether you can add users at your access level or lower.
+	AccessLevel string `json:"accessLevel,omitempty"`
+	// The ID of the user's default office.
 	DefaultOfficeID int32 `json:"defaultOfficeId,omitempty"`
 	// The user's email address.
 	Email string `json:"email,omitempty"`
 	// The user's first name.
 	FirstName string `json:"firstName,omitempty"`
-	// When set to **true**, an administrator has locked the user's account. For example, an administrator might want to lock an agent's account after they leave the brokerage until they determine how to transfer the agent's rooms and data to another active user.
+	// When **true,** an administrator has locked the user's account. For example, an administrator might want to lock an agent's account after they leave the brokerage until they determine how to transfer the agent's rooms and data to another active user.
 	IsLockedOut bool `json:"isLockedOut,omitempty"`
 	// The user's last name.
 	LastName string `json:"lastName,omitempty"`
 	// The URL for the user's profile image.
 	ProfileImageURL string `json:"profileImageUrl,omitempty"`
-	// In Rooms v6, this is the id of the company role assigned to the user.
+	// The ID of the company role assigned to the user.
 	//
 	// You can assign external roles to users who aren't a part of your organization.
-	//
-	// **Note**: If you are using Rooms v6, you must enter a `roleId` in requests. If you are using Rooms v5, you must enter a value for the `titleId` property instead.
 	RoleID int32 `json:"roleId,omitempty"`
 	// The user's status. Possible values are:
 	//
 	// - `Active`
 	// - `Pending`
 	Status string `json:"status,omitempty"`
-	// In Rooms Version 5, this is the id of the custom job title for a Manager role within your company. For example, your company might have the custom job titles "Transaction Coordinator" and "Office Manager".
-	//
-	// **Note**: If you are using Rooms Version 5, you must enter a `titleId` when using the Users::InviteClassicManager method. (The `titleId` property is empty for Agent users on Rooms Version 5.) If you are using Rooms Version 6, use the Users::InviteUser method with the `roleId` property instead.
+	// This field is deprecated in Rooms Version 6.
 	TitleID int32 `json:"titleId,omitempty"`
-	// The id of the user.
+	// The ID of the user.
 	UserID int32 `json:"userId,omitempty"`
 }
 
@@ -2274,7 +2154,7 @@ type UserSummaryList struct {
 type UserToInvite struct {
 	// (Required) The user's level of access to the account. This property determines what the user can see in the system.
 	//
-	// In contrast, a user's permissions determine the actions that they can take in a room. For example, a user who has `accessLevel` set to `Company` can see all of the rooms associated with their company. However, if they do not have a role for which the **Add documents to room** permission is set to **true**, they can't add documents to those rooms.
+	// In contrast, a user's permissions determine the actions that they can take in a room. For example, a user who has `accessLevel` set to `Company` can see all of the rooms associated with their company. However, if they do not have a role for which the **Add documents to room** permission is set to **true,** they can't add documents to those rooms.
 	//
 	// Valid values are:
 	//
@@ -2283,11 +2163,11 @@ type UserToInvite struct {
 	// - `Office`: The user has access to rooms, and if they have permission to manage users, they have access to users across their regions.
 	// - `Contributor`: The user has access only to their own rooms and those to which they are invited. They cannot perform any user management actions because they do not oversee other users. For example, agents typically have the `Contributor` access level.
 	//
-	// **Note**: In requests, the values that you may use for this property depend on your permissions and whether you can add users at your access level or lower.
-	AccessLevel *AccessLevel `json:"accessLevel,omitempty"`
-	// (Required) The id of the user's default office.
+	// **Note:** In requests, the values that you may use for this property depend on your permissions and whether you can add users at your access level or lower.
+	AccessLevel string `json:"accessLevel,omitempty"`
+	// (Required) The ID of the user's default office.
 	DefaultOfficeID int32 `json:"defaultOfficeId,omitempty"`
-	// (Required) When an administrator or authorized member invites a new user to become an account member, the system also creates an eSignature account for the invitee at the same time. The eSignPermissionProfileId is the id of the eSignature permission set to assign to the member.
+	// (Required) When an administrator or authorized member invites a new user to become an account member, the system also creates an eSignature account for the invitee at the same time. The eSignPermissionProfileId is the ID of the eSignature permission set to assign to the member.
 	ESignPermissionProfileID string `json:"eSignPermissionProfileId,omitempty"`
 	// (Required) The user's email address.
 	Email string `json:"email,omitempty"`
@@ -2295,15 +2175,17 @@ type UserToInvite struct {
 	FirstName string `json:"firstName,omitempty"`
 	// (Required) The user's last name.
 	LastName string `json:"lastName,omitempty"`
-	// An array of office ids for the offices in which a user with an `Office` or `Contributor` `accessLevel` has been granted the ability to participate. If the value for `accessLevel` is `Office`, this property is required.
+	// An array of office IDs for the offices in which a user with an `Office` or `Contributor` `accessLevel` has been granted the ability to participate. If the value for `accessLevel` is `Office`, this property is required.
 	Offices []int `json:"offices,omitempty"`
 	// URL to redirect to after inviting.
 	RedirectURL string `json:"redirectUrl,omitempty"`
-	// An array of region ids for the regions in which a user with the `Region accessLevel` has been granted the ability to participate. If the value for `accessLevel` is `Region`, this property is required.
+	// An array of region IDs for the regions in which a user with the `Region accessLevel` has been granted the ability to participate. If the value for `accessLevel` is `Region`, this property is required.
 	Regions []int `json:"regions,omitempty"`
-	// (Required) In Rooms v6, this is the id of the company role assigned to the user.
+	// (Required) The ID of the company role assigned to the user.
 	//
 	// You can assign external roles to users who are not part of your organization.
 	//
 	RoleID int32 `json:"roleId,omitempty"`
+	//
+	SubscribeToRoomsActivityNotifications bool `json:"subscribeToRoomsActivityNotifications,omitempty"`
 }

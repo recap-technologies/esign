@@ -27,17 +27,16 @@
 // - Time Zones
 // - Transaction Sides
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/rooms-api/reference/GlobalResources
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/rooms"
-//   )
-//   ...
-//   globalresourcesService := globalresources.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/rooms"
+//	)
+//	...
+//	globalresourcesService := globalresources.New(esignCredential)
 package globalresources // import "github.com/jfcote87/esignrooms//globalresources"
 
 import (

@@ -14,19 +14,18 @@
 //
 // **Note:** To create and manage signing groups, you must be an account administrator.
 //
-// For more information about this topic, see [Signing Groups](https://support.docusign.com/en/guides/ndse-user-guide-signing-groups).
-//
+// For more information about this topic, see [Signing Groups](https://support.docusign.com/s/document-item?bundleId=gav1643676262430&topicId=zgn1578456447934.html).
 //
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/SigningGroups
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   signinggroupsService := signinggroups.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	signinggroupsService := signinggroups.New(esignCredential)
 package signinggroups // import "github.com/jfcote87/esignv2.1/signinggroups"
 
 import (
@@ -226,7 +225,10 @@ func (op *ListOp) Do(ctx context.Context) (*model.SigningGroupInformation, error
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// GroupType set the call query parameter group_type
+// GroupType filters by the type of signing group. Valid values:
+// * `sharedSigningGroup`
+// * `privateSigningGroup`
+// * `systemSigningGroup`
 func (op *ListOp) GroupType(val string) *ListOp {
 	if op != nil {
 		op.QueryOpts.Set("group_type", val)

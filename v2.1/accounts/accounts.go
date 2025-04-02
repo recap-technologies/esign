@@ -17,17 +17,16 @@
 //
 // The Accounts category also includes end points for listing the recipient names associated with an email address that was used by the account. For example, a single email address is often shared by multiple members of a family.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/Accounts
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   accountsService := accounts.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	accountsService := accounts.New(esignCredential)
 package accounts // import "github.com/jfcote87/esignv2.1/accounts"
 
 import (
@@ -367,7 +366,7 @@ func (op *BrandsUpdateOp) Do(ctx context.Context) (*model.Brand, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// ReplaceBrand set the call query parameter replace_brand
+// ReplaceBrand when **true,** replaces the brand instead of updating it. The only unchanged value is the brand ID. The request body must be XML. The default value is **false.**
 func (op *BrandsUpdateOp) ReplaceBrand(val string) *BrandsUpdateOp {
 	if op != nil {
 		op.QueryOpts.Set("replace_brand", val)
@@ -1136,6 +1135,14 @@ func (op *DeleteOp) Do(ctx context.Context) error {
 	return ((*esign.Op)(op)).Do(ctx, nil)
 }
 
+// RedactUserData set the call query parameter redact_user_data
+func (op *DeleteOp) RedactUserData(val string) *DeleteOp {
+	if op != nil {
+		op.QueryOpts.Set("redact_user_data", val)
+	}
+	return op
+}
+
 // DeleteCaptiveRecipient deletes the signature for one or more captive recipient records.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/accounts/accounts/deletecaptiverecipient
@@ -1187,8 +1194,7 @@ func (op *GetOp) Do(ctx context.Context) (*model.AccountInformation, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// IncludeAccountSettings when **true,** includes account settings
-// in the response. If you omit this parameter, the default behavior is **false.**
+// IncludeAccountSettings when **true,** includes account settings in the response. The default value is **false.**
 func (op *GetOp) IncludeAccountSettings() *GetOp {
 	if op != nil {
 		op.QueryOpts.Set("include_account_settings", "true")
@@ -1283,7 +1289,7 @@ func (op *ListRecipientNamesByEmailOp) Do(ctx context.Context) (*model.Recipient
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Email is the email address for which you want to retrieve recipient names.
+// Email (Required) The email address for which you want to retrieve recipient names.
 func (op *ListRecipientNamesByEmailOp) Email(val string) *ListRecipientNamesByEmailOp {
 	if op != nil {
 		op.QueryOpts.Set("email", val)
@@ -1660,8 +1666,7 @@ func (op *SealProvidersListOp) Do(ctx context.Context) (*model.AccountSeals, err
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// SignaturesCreateAccountSignatures adds or updates one or more account signatures.
-// This request may include images in multi-part format.
+// SignaturesCreateAccountSignatures adds or updates one or more account stamps.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/accounts/accountsignatures/createaccountsignatures
 //
@@ -1694,7 +1699,7 @@ func (op *SignaturesCreateAccountSignaturesOp) DecodeOnly(val string) *Signature
 	return op
 }
 
-// SignaturesDeleteAccountSignature close the specified signature by ID.
+// SignaturesDeleteAccountSignature deletes an account stamp.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/accounts/accountsignatures/deleteaccountsignature
 //
@@ -1717,7 +1722,7 @@ func (op *SignaturesDeleteAccountSignatureOp) Do(ctx context.Context) error {
 	return ((*esign.Op)(op)).Do(ctx, nil)
 }
 
-// SignaturesDeleteAccountSignatureImage deletes a signature image, initials, or stamp.
+// SignaturesDeleteAccountSignatureImage deletes the image for a stamp.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/accounts/accountsignatures/deleteaccountsignatureimage
 //
@@ -1742,7 +1747,7 @@ func (op *SignaturesDeleteAccountSignatureImageOp) Do(ctx context.Context) (*mod
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// SignaturesGetAccountSignature returns information about the specified signature.
+// SignaturesGetAccountSignature returns information about the specified stamp.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/accounts/accountsignatures/getaccountsignature
 //
@@ -1767,7 +1772,7 @@ func (op *SignaturesGetAccountSignatureOp) Do(ctx context.Context) (*model.Accou
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// SignaturesGetAccountSignatureImage returns a signature image, initials, or stamp.
+// SignaturesGetAccountSignatureImage returns the image for an account stamp.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/accounts/accountsignatures/getaccountsignatureimage
 //
@@ -1799,7 +1804,7 @@ func (op *SignaturesGetAccountSignatureImageOp) IncludeChrome(val string) *Signa
 	return op
 }
 
-// SignaturesGetAccountSignatures returns the managed signature definitions for the account
+// SignaturesGetAccountSignatures returns a list of stamps available in the account.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/accounts/accountsignatures/getaccountsignatures
 //
@@ -1824,7 +1829,10 @@ func (op *SignaturesGetAccountSignaturesOp) Do(ctx context.Context) (*model.Acco
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// StampFormat set the call query parameter stamp_format
+// StampFormat is the format of the stamp to return. Valid values:
+// - `NameDateHanko`
+// - `NameHanko`
+// - `PlaceholderHanko`
 func (op *SignaturesGetAccountSignaturesOp) StampFormat(val string) *SignaturesGetAccountSignaturesOp {
 	if op != nil {
 		op.QueryOpts.Set("stamp_format", val)
@@ -1832,7 +1840,7 @@ func (op *SignaturesGetAccountSignaturesOp) StampFormat(val string) *SignaturesG
 	return op
 }
 
-// StampName set the call query parameter stamp_name
+// StampName is the name associated with the stamps to return. This value can be a Japanese surname (up to 5 characters) or a purchase order ID.
 func (op *SignaturesGetAccountSignaturesOp) StampName(val string) *SignaturesGetAccountSignaturesOp {
 	if op != nil {
 		op.QueryOpts.Set("stamp_name", val)
@@ -1840,7 +1848,10 @@ func (op *SignaturesGetAccountSignaturesOp) StampName(val string) *SignaturesGet
 	return op
 }
 
-// StampType set the call query parameter stamp_type
+// StampType is the type of the stamps to return. Valid values:
+// - `name_stamp`
+// - `stamp`
+// - `signature`
 func (op *SignaturesGetAccountSignaturesOp) StampType(val string) *SignaturesGetAccountSignaturesOp {
 	if op != nil {
 		op.QueryOpts.Set("stamp_type", val)
@@ -1848,8 +1859,7 @@ func (op *SignaturesGetAccountSignaturesOp) StampType(val string) *SignaturesGet
 	return op
 }
 
-// SignaturesUpdateAccountSignature updates an account signature.
-//
+// SignaturesUpdateAccountSignature updates an account stamp.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/accounts/accountsignatures/updateaccountsignature
 //
@@ -1875,7 +1885,7 @@ func (op *SignaturesUpdateAccountSignatureOp) Do(ctx context.Context) (*model.Ac
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// SignaturesUpdateAccountSignatureByID updates an account signature.
+// SignaturesUpdateAccountSignatureByID updates an account stamp by ID.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/accounts/accountsignatures/updateaccountsignaturebyid
 //
@@ -2046,7 +2056,7 @@ func (op *UpdateNotificationDefaultsOp) Do(ctx context.Context) (*model.Notifica
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// FavoriteTemplatesGetFavoriteTemplates retrieves the list of favorited templates for this caller.
+// FavoriteTemplatesGetFavoriteTemplates retrieves the list of favorite templates for the account.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/accounts/favoritetemplates/getfavoritetemplates
 //
@@ -2071,7 +2081,7 @@ func (op *FavoriteTemplatesGetFavoriteTemplatesOp) Do(ctx context.Context) (*mod
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// FavoriteTemplatesUnFavoriteTemplate unfavorites a template.
+// FavoriteTemplatesUnFavoriteTemplate remove one or more templates from the account favorites.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/accounts/favoritetemplates/unfavoritetemplate
 //
@@ -2097,8 +2107,7 @@ func (op *FavoriteTemplatesUnFavoriteTemplateOp) Do(ctx context.Context) (*model
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// FavoriteTemplatesUpdateFavoriteTemplate sets a template as a favorite.
-//
+// FavoriteTemplatesUpdateFavoriteTemplate set one or more templates as account favorites.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/accounts/favoritetemplates/updatefavoritetemplate
 //
@@ -2147,4 +2156,16 @@ type IdentityVerificationsListOp esign.Op
 func (op *IdentityVerificationsListOp) Do(ctx context.Context) (*model.AccountIdentityVerificationResponse, error) {
 	var res *model.AccountIdentityVerificationResponse
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
+}
+
+// IdentityVerificationWorkflowStatus filters the workflows returned according to status. Valid values:
+//
+// - `active`: Only active workflows are returned. This is the default.
+// - `deactivated`: Only deactivated workflows are returned.
+// - `all`: All workflows are returned.
+func (op *IdentityVerificationsListOp) IdentityVerificationWorkflowStatus(val string) *IdentityVerificationsListOp {
+	if op != nil {
+		op.QueryOpts.Set("identity_verification_workflow_status", val)
+	}
+	return op
 }

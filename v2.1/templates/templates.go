@@ -16,19 +16,18 @@
 // * Manage the notification and group sharing settings for templates.
 // * Fetch and rotate pages from a document used by a template.
 //
-// You can create templates either programmatically or through the DocuSign web interface and then used by your application.
-//
+// You can create templates either programmatically or through the Docusign web interface and then used by your application.
 //
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/Templates
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   templatesService := templates.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	templatesService := templates.New(esignCredential)
 package templates // import "github.com/jfcote87/esignv2.1/templates"
 
 import (
@@ -127,78 +126,6 @@ type DocumentVisibilityUpdateListOp esign.Op
 func (op *DocumentVisibilityUpdateListOp) Do(ctx context.Context) (*model.TemplateDocumentVisibilityList, error) {
 	var res *model.TemplateDocumentVisibilityList
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
-}
-
-// BulkRecipientsDelete deletes the bulk recipient list on a template.
-//
-// https://developers.docusign.com/docs/esign-rest-api/reference/templates/templatebulkrecipients/delete
-//
-// SDK Method Templates::deleteBulkRecipients
-func (s *Service) BulkRecipientsDelete(recipientID string, templateID string) *BulkRecipientsDeleteOp {
-	return &BulkRecipientsDeleteOp{
-		Credential: s.credential,
-		Method:     "DELETE",
-		Path:       strings.Join([]string{"templates", templateID, "recipients", recipientID, "bulk_recipients"}, "/"),
-		Accept:     "application/json",
-		QueryOpts:  make(url.Values),
-		Version:    esign.APIv21,
-	}
-}
-
-// BulkRecipientsDeleteOp implements DocuSign API SDK Templates::deleteBulkRecipients
-type BulkRecipientsDeleteOp esign.Op
-
-// Do executes the op.  A nil context will return error.
-func (op *BulkRecipientsDeleteOp) Do(ctx context.Context) (*model.BulkRecipientsUpdateResponse, error) {
-	var res *model.BulkRecipientsUpdateResponse
-	return res, ((*esign.Op)(op)).Do(ctx, &res)
-}
-
-// BulkRecipientsList gets the bulk recipient file from a template.
-//
-// https://developers.docusign.com/docs/esign-rest-api/reference/templates/templatebulkrecipients/list
-//
-// SDK Method Templates::listBulkRecipients
-func (s *Service) BulkRecipientsList(recipientID string, templateID string) *BulkRecipientsListOp {
-	return &BulkRecipientsListOp{
-		Credential: s.credential,
-		Method:     "GET",
-		Path:       strings.Join([]string{"templates", templateID, "recipients", recipientID, "bulk_recipients"}, "/"),
-		Accept:     "application/json",
-		QueryOpts:  make(url.Values),
-		Version:    esign.APIv21,
-	}
-}
-
-// BulkRecipientsListOp implements DocuSign API SDK Templates::listBulkRecipients
-type BulkRecipientsListOp esign.Op
-
-// Do executes the op.  A nil context will return error.
-func (op *BulkRecipientsListOp) Do(ctx context.Context) (*model.BulkRecipientsResponse, error) {
-	var res *model.BulkRecipientsResponse
-	return res, ((*esign.Op)(op)).Do(ctx, &res)
-}
-
-// IncludeTabs when **true,** the tab information associated with the recipient is included in the response. If you do not specify this parameter, the effect is the default behavior (**false**).
-func (op *BulkRecipientsListOp) IncludeTabs() *BulkRecipientsListOp {
-	if op != nil {
-		op.QueryOpts.Set("include_tabs", "true")
-	}
-	return op
-}
-
-// StartPosition is the zero-based index of the
-// result from which to start returning results.
-//
-// Use with `count` to limit the number
-// of results.
-//
-// The default value is `0`.
-func (op *BulkRecipientsListOp) StartPosition(val int) *BulkRecipientsListOp {
-	if op != nil {
-		op.QueryOpts.Set("start_position", fmt.Sprintf("%d", val))
-	}
-	return op
 }
 
 // CustomFieldsCreate creates custom document fields in an existing template document.
@@ -515,10 +442,18 @@ func (op *DocumentsGetOp) Do(ctx context.Context) (*esign.Download, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Encrypt when **true,** the PDF bytes returned in the response are encrypted for all the key managers configured on your DocuSign account. You can decrypt the documents by using the Key Manager DecryptDocument API method. For more information about Key Manager, see the DocuSign Security Appliance Installation Guide that your organization received from DocuSign.
+// Encrypt when **true,** the PDF bytes returned in the response are encrypted for all the key managers configured on your Docusign account. You can decrypt the documents by using the Key Manager DecryptDocument API method. For more information about Key Manager, see the Docusign Security Appliance Installation Guide that your organization received from Docusign.
 func (op *DocumentsGetOp) Encrypt() *DocumentsGetOp {
 	if op != nil {
 		op.QueryOpts.Set("encrypt", "true")
+	}
+	return op
+}
+
+// FileType set the call query parameter file_type
+func (op *DocumentsGetOp) FileType(val string) *DocumentsGetOp {
+	if op != nil {
+		op.QueryOpts.Set("file_type", val)
 	}
 	return op
 }
@@ -556,7 +491,7 @@ func (op *DocumentsListOp) Do(ctx context.Context) (*model.TemplateDocumentsResu
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// IncludeTabs reserved for DocuSign.
+// IncludeTabs reserved for Docusign.
 func (op *DocumentsListOp) IncludeTabs(val string) *DocumentsListOp {
 	if op != nil {
 		op.QueryOpts.Set("include_tabs", val)
@@ -877,7 +812,7 @@ func (op *RecipientsCreateOp) Do(ctx context.Context) (*model.Recipients, error)
 // who deleted the original email notification.
 //
 // **Note:** Correcting an envelope is a different process.
-// DocuSign always resends an envelope when you correct it,
+// Docusign always resends an envelope when you correct it,
 // regardless of the value that you enter here.
 func (op *RecipientsCreateOp) ResendEnvelope() *RecipientsCreateOp {
 	if op != nil {
@@ -1021,7 +956,7 @@ func (op *RecipientsUpdateOp) Do(ctx context.Context) (*model.RecipientsUpdateSu
 // who deleted the original email notification.
 //
 // **Note:** Correcting an envelope is a different process.
-// DocuSign always resends an envelope when you correct it,
+// Docusign always resends an envelope when you correct it,
 // regardless of the value that you enter here.
 func (op *RecipientsUpdateOp) ResendEnvelope() *RecipientsUpdateOp {
 	if op != nil {
@@ -1035,12 +970,12 @@ func (op *RecipientsUpdateOp) ResendEnvelope() *RecipientsUpdateOp {
 // https://developers.docusign.com/docs/esign-rest-api/reference/templates/templateviews/createedit
 //
 // SDK Method Templates::createEditView
-func (s *Service) ViewsCreateEdit(templateID string, returnURLRequest *model.ReturnURLRequest) *ViewsCreateEditOp {
+func (s *Service) ViewsCreateEdit(templateID string, templateViewRequest *model.TemplateViewRequest) *ViewsCreateEditOp {
 	return &ViewsCreateEditOp{
 		Credential: s.credential,
 		Method:     "POST",
 		Path:       strings.Join([]string{"templates", templateID, "views", "edit"}, "/"),
-		Payload:    returnURLRequest,
+		Payload:    templateViewRequest,
 		QueryOpts:  make(url.Values),
 		Version:    esign.APIv21,
 	}
@@ -1363,6 +1298,8 @@ func (op *ListOp) Do(ctx context.Context) (*model.EnvelopeTemplateResults, error
 // Count is the maximum number of results to return.
 //
 // Use `start_position` to specify the number of results to skip.
+//
+// **Note:** If the `count` parameter is not used, `listTemplates` has a default limit of 2,000 templates. If the account has more than 2,000 templates, `listTemplates` will return the first 2,000 templates. To retrieve more than 2,000 templates, repeat the API call, specifying `start_position` and `count` to control the number of templates retrieved.
 func (op *ListOp) Count(val int) *ListOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
@@ -1396,10 +1333,10 @@ func (op *ListOp) FolderIds(val ...string) *ListOp {
 
 // FolderTypes is the type of folder to return templates for. Possible values are:
 //
-// - `templates`: Templates in the **My Templates** folder.
-//   Templates in the **Shared Templates**  and **All Template** folders (if the request ID from and Admin) are excluded.
-// - `templates_root`: Templates in the root level of the **My Templates** folder, but not in an actual folder. Note that the **My Templates** folder is not a real folder.
-// - `recylebin`: Templates that have been deleted.
+//   - `templates`: Templates in the **My Templates** folder.
+//     Templates in the **Shared Templates**  and **All Template** folders (if the request ID from and Admin) are excluded.
+//   - `templates_root`: Templates in the root level of the **My Templates** folder, but not in an actual folder. Note that the **My Templates** folder is not a real folder.
+//   - `recylebin`: Templates that have been deleted.
 func (op *ListOp) FolderTypes(val string) *ListOp {
 	if op != nil {
 		op.QueryOpts.Set("folder_types", val)
@@ -1435,7 +1372,9 @@ func (op *ListOp) Include(val ...string) *ListOp {
 	return op
 }
 
-// IsDeletedTemplateOnly set the call query parameter is_deleted_template_only
+// IsDeletedTemplateOnly when **true,** retrieves templates that have been permanently deleted. The default is **false.**
+//
+// **Note:** After you delete a template, you can see it in the `Deleted` bin in the UI for 24 hours. After 24 hours, the template is permanently deleted.
 func (op *ListOp) IsDeletedTemplateOnly(val string) *ListOp {
 	if op != nil {
 		op.QueryOpts.Set("is_deleted_template_only", val)
@@ -1500,7 +1439,6 @@ func (op *ListOp) OrderBy(val string) *ListOp {
 
 // SearchFields is a comma-separated list of additional template properties to search.
 //
-//
 // - `sender`: Include sender name and email in the search.
 // - `recipients`: Include recipient names and emails in the search.
 // - `envelope`: Not used in template searches.
@@ -1521,7 +1459,7 @@ func (op *ListOp) SearchText(val string) *ListOp {
 	return op
 }
 
-// SharedByMe when **true,** the response only includes templates shared by the user. If false, the response only returns template not shared by the user. If not specified, the response is not affected.
+// SharedByMe when **true,** the response only includes templates shared by the user. When **false,** the response only returns template not shared by the user. If not specified, templates are returned whether or not they have been shared by the user.
 func (op *ListOp) SharedByMe(val string) *ListOp {
 	if op != nil {
 		op.QueryOpts.Set("shared_by_me", val)
@@ -1580,7 +1518,7 @@ func (op *ListOp) UsedToDate(val time.Time) *ListOp {
 // UserFilter filters the templates in the response. Valid values are:
 //
 // - `owned_by_me`: Results include only templates owned by the user.
-// - `shared_with_me`: Results include only templates owned by the user.
+// - `shared_with_me`: Results include only templates shared with the user.
 // - `all`:  Results include all templates owned or shared with the user.
 func (op *ListOp) UserFilter(val string) *ListOp {
 	if op != nil {
@@ -1898,5 +1836,53 @@ type ResponsiveHTMLPreviewCreateOp esign.Op
 // Do executes the op.  A nil context will return error.
 func (op *ResponsiveHTMLPreviewCreateOp) Do(ctx context.Context) (*model.DocumentHTMLDefinitions, error) {
 	var res *model.DocumentHTMLDefinitions
+	return res, ((*esign.Op)(op)).Do(ctx, &res)
+}
+
+// UpdateTemplates is SDK Method Templates::updateTemplates
+//
+// https://developers.docusign.com/docs/esign-rest-api/reference/Templates/Templates/updateTemplates
+func (s *Service) UpdateTemplates(templateAutoMatchList *model.TemplateAutoMatchList) *UpdateTemplatesOp {
+	return &UpdateTemplatesOp{
+		Credential: s.credential,
+		Method:     "PUT",
+		Path:       "templates",
+		Payload:    templateAutoMatchList,
+		Accept:     "application/json",
+		QueryOpts:  make(url.Values),
+		Version:    esign.APIv21,
+	}
+}
+
+// UpdateTemplatesOp implements DocuSign API SDK Templates::updateTemplates
+type UpdateTemplatesOp esign.Op
+
+// Do executes the op.  A nil context will return error.
+func (op *UpdateTemplatesOp) Do(ctx context.Context) (*model.TemplateAutoMatchList, error) {
+	var res *model.TemplateAutoMatchList
+	return res, ((*esign.Op)(op)).Do(ctx, &res)
+}
+
+// UpdateTemplatesAutoMatch is SDK Method Templates::updateTemplatesAutoMatch
+//
+// https://developers.docusign.com/docs/esign-rest-api/reference/Templates/Templates/updateTemplatesAutoMatch
+func (s *Service) UpdateTemplatesAutoMatch(templateAutoMatchList *model.TemplateAutoMatchList) *UpdateTemplatesAutoMatchOp {
+	return &UpdateTemplatesAutoMatchOp{
+		Credential: s.credential,
+		Method:     "PUT",
+		Path:       "templates/auto_match",
+		Payload:    templateAutoMatchList,
+		Accept:     "application/json",
+		QueryOpts:  make(url.Values),
+		Version:    esign.APIv21,
+	}
+}
+
+// UpdateTemplatesAutoMatchOp implements DocuSign API SDK Templates::updateTemplatesAutoMatch
+type UpdateTemplatesAutoMatchOp esign.Op
+
+// Do executes the op.  A nil context will return error.
+func (op *UpdateTemplatesAutoMatchOp) Do(ctx context.Context) (*model.TemplateAutoMatchList, error) {
+	var res *model.TemplateAutoMatchList
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }

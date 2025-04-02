@@ -10,17 +10,16 @@
 //
 // Methods for working with organizations.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/admin-api/reference/Organization
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/admin"
-//   )
-//   ...
-//   organizationService := organization.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/admin"
+//	)
+//	...
+//	organizationService := organization.New(esignCredential)
 package organization // import "github.com/jfcote87/esignadmin/organization"
 
 import (

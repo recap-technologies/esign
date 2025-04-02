@@ -10,17 +10,16 @@
 //
 // Methods to get a list of identity providers.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/admin-api/reference/IdentityProviders
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/admin"
-//   )
-//   ...
-//   identityprovidersService := identityproviders.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/admin"
+//	)
+//	...
+//	identityprovidersService := identityproviders.New(esignCredential)
 package identityproviders // import "github.com/jfcote87/esignadmin/identityproviders"
 
 import (

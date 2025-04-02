@@ -345,11 +345,11 @@ type AccountIdentityVerificationWorkflow struct {
 	WorkflowID string `json:"workflowId,omitempty"`
 }
 
-// AccountInformation account management
+// AccountInformation not described in definition file
 type AccountInformation struct {
 	// The GUID associated with the account ID.
 	AccountIDGUID string `json:"accountIdGuid,omitempty"`
-	// The name of the current account.
+	// The name of the account that the workspace user belongs to.
 	AccountName string `json:"accountName,omitempty"`
 	// When set to **true**, the transaction rooms feature exposed through the Workspaces API is enabled.
 	AllowTransactionRooms Bool `json:"allowTransactionRooms,omitempty"`
@@ -373,7 +373,7 @@ type AccountInformation struct {
 	ConnectPermission string `json:"connectPermission,omitempty"`
 	//
 	CreatedDate string `json:"createdDate,omitempty"`
-	// Specifies the ISO currency code for the account.
+	// Specifies the ISO currency code of the purchase. This is based on the ISO 4217 currency code information.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 	// Identifies the plan that was used create this account.
 	CurrentPlanID string `json:"currentPlanId,omitempty"`
@@ -397,7 +397,7 @@ type AccountInformation struct {
 	PlanClassification string `json:"planClassification,omitempty"`
 	// The date that the current plan will end.
 	PlanEndDate string `json:"planEndDate,omitempty"`
-	// The name of the Billing Plan.
+	//
 	PlanName string `json:"planName,omitempty"`
 	// The date that the Account started using the current plan.
 	PlanStartDate string `json:"planStartDate,omitempty"`
@@ -1043,7 +1043,6 @@ type AppStoreReceipt struct {
 // Approve is a tab that allows the recipient to approve documents
 // without placing a signature or initials on the
 // document.
-//
 type Approve struct {
 	TabBase
 	TabPosition
@@ -1275,15 +1274,15 @@ type BillingDiscount struct {
 	EndQuantity string `json:"endQuantity,omitempty"`
 }
 
-// BillingInvoice invoices
+// BillingInvoice not described in definition file
 type BillingInvoice struct {
-	// Reserved: TBD
+	// The total amount of the purchase.
 	Amount string `json:"amount,omitempty"`
 	// Reserved: TBD
 	Balance string `json:"balance,omitempty"`
 	// Reserved: TBD
 	DueDate string `json:"dueDate,omitempty"`
-	// Reserved: TBD
+	//
 	InvoiceID string `json:"invoiceId,omitempty"`
 	// Reserved: TBD
 	InvoiceItems []BillingInvoiceItem `json:"invoiceItems,omitempty"`
@@ -1627,7 +1626,7 @@ type BrandsRequest struct {
 	Brands []BrandRequest `json:"brands,omitempty"`
 }
 
-// BrandsResponse not described in definition file
+// BrandsResponse brand management for accounts
 type BrandsResponse struct {
 	// The list of brands.
 	Brands []Brand `json:"brands,omitempty"`
@@ -1773,7 +1772,7 @@ type BulkRecipientsRequest struct {
 	BulkRecipients []BulkRecipient `json:"bulkRecipients,omitempty"`
 }
 
-// BulkRecipientsResponse template bulk recipients
+// BulkRecipientsResponse not described in definition file
 type BulkRecipientsResponse struct {
 	// A complex type containing information about the bulk recipients in the response.
 	BulkRecipients []BulkRecipient `json:"bulkRecipients,omitempty"`
@@ -2192,7 +2191,6 @@ type CertifiedDelivery struct {
 }
 
 // Checkbox is a tab that allows the recipient to select a yes/no (on/off) option.
-//
 type Checkbox struct {
 	TabBase
 	TabPosition
@@ -2268,14 +2266,13 @@ type CloudStorageProvider struct {
 	ServiceID string `json:"serviceId,omitempty"`
 }
 
-// CloudStorageProviders cloud storage providers
+// CloudStorageProviders not described in definition file
 type CloudStorageProviders struct {
 	// An Array containing the storage providers associated with the user.
 	StorageProviders []CloudStorageProvider `json:"storageProviders,omitempty"`
 }
 
 // Company is a tab that displays the recipient's company name.
-//
 type Company struct {
 	TabBase
 	TabPosition
@@ -2305,6 +2302,16 @@ type Company struct {
 	Width string `json:"width,omitempty"`
 }
 
+// CompleteSignHashResponse not described in definition file
+type CompleteSignHashResponse struct {
+	// Complex element contains the details on the documents in the envelope.
+	Documents []interface{} `json:"documents,omitempty"`
+	//
+	RedirectionURL string `json:"redirectionUrl,omitempty"`
+	//
+	RemainingSignatureRequests string `json:"remainingSignatureRequests,omitempty"`
+}
+
 // CompositeTemplate not described in definition file
 type CompositeTemplate struct {
 	// The identify of this composite template. It is used as a reference when adding document object information. If used, the document's `content-disposition` must include the composite template ID to which the document should be added. If a composite template ID is not specified in the content-disposition, the document is applied based on the value of the `documentId` property only. If no document object is specified, the composite template inherits the first document.
@@ -2327,7 +2334,7 @@ type ConnectConfigResults struct {
 	TotalRecords string `json:"totalRecords,omitempty"`
 }
 
-// ConnectCustomConfiguration not described in definition file
+// ConnectCustomConfiguration connect configurations
 type ConnectCustomConfiguration struct {
 	// When set to **true**, the tracked envelope and recipient events for all users, including users that are added a later time, are sent through Connect.
 	AllUsers Bool `json:"allUsers,omitempty"`
@@ -2335,13 +2342,11 @@ type ConnectCustomConfiguration struct {
 	AllowEnvelopePublish Bool `json:"allowEnvelopePublish,omitempty"`
 	// If merge field's are being used, specifies the type of the merge field. The only  supported value is **salesforce**.
 	ConfigurationType string `json:"configurationType,omitempty"`
-	// The ID of the custom Connect configuration being accessed.
+	//  Read only: the DocuSign generated ID for the Connect configuration.
 	ConnectID string `json:"connectId,omitempty"`
 	// This turns Connect logging on or off. When set to **true**, logging is turned on.
 	EnableLog Bool `json:"enableLog,omitempty"`
-	// A list of envelope-level event statuses that will trigger Connect to send updates to the endpoint specified in the `url` property.
-	//
-	// To receive notifications, you must include either an `envelopeEvents` node or a `recipientEvents` node. You do not need to specify both.
+	// A comma separated list of Envelope related events that are tracked through Connect. The possible event values are: Sent, Delivered, Completed, Declined, and Voided.
 	EnvelopeEvents string `json:"envelopeEvents,omitempty"`
 	//
 	IncludeCertSoapHeader string `json:"includeCertSoapHeader,omitempty"`
@@ -2349,9 +2354,9 @@ type ConnectCustomConfiguration struct {
 	IncludeCertificateOfCompletion Bool `json:"includeCertificateOfCompletion,omitempty"`
 	// When set to **true**, the Document Fields associated with the envelope's documents are included in the notification messages. Document Fields are optional custom name-value pairs added to documents using the API.
 	IncludeDocumentFields Bool `json:"includeDocumentFields,omitempty"`
-	// reserved
+	// When set to **true**, Connect will send the PDF document along with the update XML.
 	IncludeDocuments Bool `json:"includeDocuments,omitempty"`
-	// When set to **true**, if the envelope is voided, the Connect Service notification will include the void reason, as entered by the person that voided the envelope.
+	// When set to **true**, Connect will include the voidedReason for voided envelopes.
 	IncludeEnvelopeVoidReason Bool `json:"includeEnvelopeVoidReason,omitempty"`
 	//
 	IncludeHMAC string `json:"includeHMAC,omitempty"`
@@ -2359,11 +2364,9 @@ type ConnectCustomConfiguration struct {
 	IncludeSenderAccountasCustomField Bool `json:"includeSenderAccountasCustomField,omitempty"`
 	// When set to **true**, Connect will include the envelope time zone information.
 	IncludeTimeZoneInformation Bool `json:"includeTimeZoneInformation,omitempty"`
-	//
+	// The name of the Connect configuration. The name helps identify the configuration in the list.
 	Name string `json:"name,omitempty"`
-	// An array of recipient event statuses that will trigger Connect to send notifications to your webhook listener at the url endpoint specified in the `url` property.
-	//
-	// To receive notifications, you must include either an `envelopeEvents` node or a `recipientEvents` node. You do not need to specify both.
+	// A comma separated list of *Recipient* related events that will trigger a notification to your webhook Connect listener. The possible event values are: Sent, Delivered, Completed, Declined, AuthenticationFailed, and AutoResponded.
 	RecipientEvents string `json:"recipientEvents,omitempty"`
 	// #### When set to **true**, and SIM mode is activated:
 	//
@@ -2386,9 +2389,9 @@ type ConnectCustomConfiguration struct {
 	//
 	// The namespace value must be set if useSoapInterface is set to true.
 	SoapNamespace string `json:"soapNamespace,omitempty"`
-	// This is the web address and name of your listener or Retrieving Service endpoint. You need to include HTTPS:// in the web address.
+	// The endpoint to which webhook notification messages are sent via an HTTPS POST request. The url must start with https. The customer's web server must use an SSL/TLS certificate whose CA is in the Microsoft list of trusted CAs. Self-signed certificates are not ok. Free certificates from Let's Encrypt can be used.
 	URLToPublishTo string `json:"urlToPublishTo,omitempty"`
-	// When set to **true**, the notifications are sent to your endpoint as SOAP requests.
+	// When set to **true**, indicates that the `urlToPublishTo` property contains a SOAP endpoint.
 	UseSoapInterface Bool `json:"useSoapInterface,omitempty"`
 	// A comma separated list of userIds. This sets the users associated with the tracked envelope and recipient events. When a tracked event occurs for a set user, the a notification message is sent to your Connect listener.
 	//
@@ -2481,7 +2484,7 @@ type ConnectLog struct {
 	UserName string `json:"userName,omitempty"`
 }
 
-// ConnectLogs not described in definition file
+// ConnectLogs connect event logging
 type ConnectLogs struct {
 	// An array of containing failure information from the Connect failure log.
 	Failures []ConnectLog `json:"failures,omitempty"`
@@ -2780,7 +2783,7 @@ type CustomFieldV2 struct {
 	Value string `json:"value,omitempty"`
 }
 
-// CustomFields not described in definition file
+// CustomFields template custom fields
 type CustomFields struct {
 	// An array of list custom fields.
 	ListCustomFields []ListCustomField `json:"listCustomFields,omitempty"`
@@ -2796,7 +2799,7 @@ type CustomFieldsEnvelope struct {
 	TextCustomFields []TextCustomField `json:"textCustomFields,omitempty"`
 }
 
-// CustomSettingsInformation users' custom settings
+// CustomSettingsInformation not described in definition file
 type CustomSettingsInformation struct {
 	// The name/value pair information for the user custom setting.
 	CustomSettings []NameValue `json:"customSettings,omitempty"`
@@ -2810,7 +2813,6 @@ type CustomSettingsInformation struct {
 // particular date format enforced, DocuSign recommends using a
 // Text tab with a validation pattern and a validation message
 // to enforce the format.
-//
 type Date struct {
 	TabBase
 	TabPosition
@@ -2858,7 +2860,6 @@ type Date struct {
 
 // DateSigned is a tab that displays the date that the recipient signed the
 // document.
-//
 type DateSigned struct {
 	TabBase
 	TabPosition
@@ -2885,7 +2886,6 @@ type DateStampProperties struct {
 // Decline is a tab that allows the recipient the option of declining an
 // envelope. If the recipient clicks the tab during the signing
 // process, the envelope is voided.
-//
 type Decline struct {
 	TabBase
 	TabPosition
@@ -3098,14 +3098,8 @@ type Document struct {
 	URI string `json:"uri,omitempty"`
 }
 
-// DocumentFieldsInformation envelope document fields
+// DocumentFieldsInformation not described in definition file
 type DocumentFieldsInformation struct {
-	// The array of name/value custom data strings to be added to a document. Custom document field information is returned in the status, but otherwise is not used by DocuSign. The array contains the elements:
-	//
-	// * name - A string that can be a maximum of 50 characters.
-	// * value - A string that can be a maximum of 200 characters.
-	//
-	// *IMPORTANT*: If you are using xml, the name/value pair is contained in a nameValue element.
 	//
 	DocumentFields []NameValue `json:"documentFields,omitempty"`
 }
@@ -3476,7 +3470,6 @@ type Editor struct {
 // When getting information that includes
 // this tab type, the original value of the tab when the
 // associated envelope was sent is included in the response.
-//
 type Email struct {
 	TabBase
 	TabPosition
@@ -3524,7 +3517,6 @@ type Email struct {
 
 // EmailAddress is a tab that displays the recipient's email as entered in the
 // recipient information.
-//
 type EmailAddress struct {
 	TabBase
 	TabPosition
@@ -3536,7 +3528,7 @@ type EmailAddress struct {
 	Tooltip string `json:"tooltip,omitempty"`
 }
 
-// EmailSettings envelope email settings
+// EmailSettings not described in definition file
 type EmailSettings struct {
 	// An array containing the email address that should receive a copy of all email communications related to an envelope for archiving purposes. Maximum Length: 100 characters.
 	//
@@ -3958,11 +3950,11 @@ type EnvelopeDocument struct {
 	URI string `json:"uri,omitempty"`
 }
 
-// EnvelopeDocumentsResult envelope documents
+// EnvelopeDocumentsResult not described in definition file
 type EnvelopeDocumentsResult struct {
 	//
 	EnvelopeDocuments []EnvelopeDocument `json:"envelopeDocuments,omitempty"`
-	// The envelope ID of the envelope status that failed to post.
+	// The envelope's GUID. Eg 93be49ab-afa0-4adf-933c-f752070d71ec
 	EnvelopeID string `json:"envelopeId,omitempty"`
 }
 
@@ -3996,7 +3988,6 @@ type EnvelopeFormData struct {
 
 // EnvelopeID is a tab that displays the envelope ID. Recipients cannot enter
 // or change the information in this tab.
-//
 type EnvelopeID struct {
 	TabBase
 	TabPosition
@@ -4046,7 +4037,7 @@ type EnvelopeSummary struct {
 	URI string `json:"uri,omitempty"`
 }
 
-// EnvelopeTemplate template management
+// EnvelopeTemplate not described in definition file
 type EnvelopeTemplate struct {
 	// When set to **true**, Document Markup is enabled for envelope. Account must have Document Markup enabled to use this
 	AllowMarkup Bool `json:"allowMarkup,omitempty"`
@@ -4113,7 +4104,7 @@ type EnvelopeTemplate struct {
 	//
 	// ###### Note: Your account must have Document Visibility enabled to use this.
 	EnforceSignerVisibility Bool `json:"enforceSignerVisibility,omitempty"`
-	// The envelope ID of the envelope status that failed to post.
+	// The envelope's GUID. Eg 93be49ab-afa0-4adf-933c-f752070d71ec
 	EnvelopeID string `json:"envelopeId,omitempty"`
 	// When set to **true**, Envelope ID Stamping is enabled.
 	EnvelopeIDStamping Bool `json:"envelopeIdStamping,omitempty"`
@@ -4183,16 +4174,13 @@ type EnvelopeTemplate struct {
 	SignerCanSignOnMobile Bool `json:"signerCanSignOnMobile,omitempty"`
 	// Specifies the physical location where the signing takes place. It can have two enumeration values; InPerson and Online. The default value is Online.
 	SigningLocation string `json:"signingLocation,omitempty"`
-	// Indicates the envelope status. Valid values are:
-	//
-	// * sent - The envelope is sent to the recipients.
-	// * created - The envelope is saved as a draft and can be modified and sent later.
+	// Item status. <!-- TODO -->
 	Status string `json:"status,omitempty"`
 	// The data and time the status changed.
 	StatusChangedDateTime *time.Time `json:"statusChangedDateTime,omitempty"`
 	// Contains a URI for an endpoint which you can use to retrieve the templates.
 	TemplatesURI string `json:"templatesUri,omitempty"`
-	//  Used to identify an envelope. The id is a sender-generated value and is valid in the DocuSign system for 7 days. It is recommended that a transaction ID is used for offline signing to ensure that an envelope is not sent multiple times. The `transactionId` property can be used determine an envelope's status (i.e. was it created or not) in cases where the internet connection was lost before the envelope status was returned.
+	// Specifies the Transaction ID from the AppStore.
 	TransactionID string `json:"transactionId,omitempty"`
 	// When set to **true**, the disclosure is shown to recipients in accordance with the account's Electronic Record and Signature Disclosure frequency setting. When set to **false**, the Electronic Record and Signature Disclosure is not shown to any envelope recipients.
 	//
@@ -4701,7 +4689,6 @@ type Filter struct {
 // takes the recipient's name as entered in the recipient
 // information, splits it into sections based on spaces and
 // uses the first section as the first name.
-//
 type FirstName struct {
 	TabBase
 	TabPosition
@@ -4876,7 +4863,7 @@ type FoldersRequest struct {
 	FromFolderID string `json:"fromFolderId,omitempty"`
 }
 
-// FoldersResponse not described in definition file
+// FoldersResponse folder management
 type FoldersResponse struct {
 	// A collection of folder objects returned in a response.
 	Folders []Folder `json:"folders,omitempty"`
@@ -4923,8 +4910,7 @@ type ForgottenPasswordInformation struct {
 // to learn more about payments.
 //
 // [calculatedfields]: https://support.docusign.com/en/guides/ndse-user-guide-calculated-fields
-// [paymentguide]:     https://support.docusign.com/en/guides/requesting-payments-along-with-signatures
-//
+// [paymentguide]: https://support.docusign.com/en/guides/requesting-payments-along-with-signatures
 type FormulaTab struct {
 	TabBase
 	TabPosition
@@ -5026,7 +5012,6 @@ type FormulaTab struct {
 }
 
 // FullName is a tab that displays the recipient's full name.
-//
 type FullName struct {
 	TabBase
 	TabPosition
@@ -5118,7 +5103,6 @@ type IDCheckInformationInput struct {
 // see the [EnvelopeRecipients resource][enveloperecipientsInPerson].
 //
 // [enveloperecipientsInPerson]: /https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeRecipients/#in-person-signers-recipient
-//
 type InPersonSigner struct {
 	// If a value is provided, the recipient must enter the value as the access code to view and sign the envelope.
 	//
@@ -5374,7 +5358,6 @@ type InPersonSigner struct {
 
 // InitialHere is a tab that allows the recipient to initial the document. May
 // be optional.
-//
 type InitialHere struct {
 	TabBase
 	TabPosition
@@ -5623,7 +5606,6 @@ type Jurisdiction struct {
 // takes the recipient's name as entered in the recipient
 // information, splits it into sections based on spaces and
 // uses the last section as the last name.
-//
 type LastName struct {
 	TabBase
 	TabPosition
@@ -5640,7 +5622,6 @@ type LastName struct {
 // property contains a list of
 // [`listItem`](https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeRecipientTabs/create/#/definitions/listItem)
 // objects to specify the selectable options.
-//
 type List struct {
 	TabBase
 	TabPosition
@@ -5931,7 +5912,6 @@ type MobileNotifierConfigurationInformation struct {
 
 // Money describes information
 // about the `total` of a payment.
-//
 type Money struct {
 	// The total payment amount
 	// in the currency's base unit.
@@ -6113,7 +6093,6 @@ type Notarize struct {
 // * `name`: Specifies the notary's full legal name.
 // * `email`: Specifies the notary's email address.
 // * `recipientId`: A unique ID number for the notary signing host.
-//
 type NotaryHost struct {
 	// If a value is provided, the recipient must enter the value as the access code to view and sign the envelope.
 	//
@@ -6332,7 +6311,6 @@ type NotaryJournalMetaData struct {
 
 // Note is a tab that displays additional information, in the form of a
 // note, for the recipient.
-//
 type Note struct {
 	TabBase
 	TabPosition
@@ -6355,15 +6333,15 @@ type Note struct {
 // * useAccountDefaults - When set to **true**, the account default notification settings are used for the envelope.
 // * reminders - A complex element that specifies reminder settings for the envelope. It consists of:
 //
-//    * reminderEnabled - When set to **true**, a reminder message is sent to the recipient.
-//    * reminderDelay - An interger that sets the number of days after the recipient receives the envelope that reminder emails are sent to the recipient.
-//    * reminderFrequency - An interger that sets the interval, in days, between reminder emails.
+//   - reminderEnabled - When set to **true**, a reminder message is sent to the recipient.
+//   - reminderDelay - An interger that sets the number of days after the recipient receives the envelope that reminder emails are sent to the recipient.
+//   - reminderFrequency - An interger that sets the interval, in days, between reminder emails.
 //
 // * expirations - A complex element that specifies the expiration settings for the envelope. It consists of:
 //
-//    * expireEnabled - When set to **true**, the envelope expires (is no longer available for signing) in the set number of days. If false, the account default setting is used. If the account does not have an expiration setting, the DocuSign default value of 120 days is used.
-//    * expireAfter - An integer that sets the number of days the envelope is active.
-//    * expireWarn - An integer that sets the number of days before envelope expiration that an expiration warning email is sent to the recipient. If set to 0 (zero), no warning email is sent.
+//   - expireEnabled - When set to **true**, the envelope expires (is no longer available for signing) in the set number of days. If false, the account default setting is used. If the account does not have an expiration setting, the DocuSign default value of 120 days is used.
+//   - expireAfter - An integer that sets the number of days the envelope is active.
+//   - expireWarn - An integer that sets the number of days before envelope expiration that an expiration warning email is sent to the recipient. If set to 0 (zero), no warning email is sent.
 type Notification struct {
 	// A complex element that specifies the expiration settings for the envelope.
 	Expirations *Expirations `json:"expirations,omitempty"`
@@ -6375,7 +6353,6 @@ type Notification struct {
 
 // Number is a tab that allows the recipient to enter numbers and decimal
 // (.) points.
-//
 type Number struct {
 	TabBase
 	TabPosition
@@ -6523,8 +6500,7 @@ type PageRequest struct {
 // in the DocuSign Support Center
 // to learn more about payments.
 //
-// [paymentguide]:     https://support.docusign.com/en/guides/requesting-payments-along-with-signatures
-//
+// [paymentguide]: https://support.docusign.com/en/guides/requesting-payments-along-with-signatures
 type PaymentDetails struct {
 	// An array of accepted payment methods:
 	//
@@ -6679,8 +6655,6 @@ type PaymentGatewayAccountsInfo struct {
 // PaymentLineItem is a line item describes details
 // about an individual line item
 // in a payment request.
-//
-//
 type PaymentLineItem struct {
 	// This is a the `tabLabel`
 	// that specifies the amount paid
@@ -6986,7 +6960,6 @@ type PurchasedEnvelopesInformation struct {
 // Radio one of the selectable radio buttons
 // in the `radios` property
 // of a [`radioGroup`](https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeRecipientTabs/create/#/definitions/radioGroup) tab.
-//
 type Radio struct {
 	// Reserved for DocuSign.
 	// <!--
@@ -7064,7 +7037,6 @@ type Radio struct {
 // [`radio`](https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeRecipientTabs/create/#/definitions/radio)
 // objects  associated with the group. Only one radio button can
 // be selected in a group.
-//
 type RadioGroup struct {
 	TabBase
 	// The name of the group. The search_text provided in the call automatically performs a wild card search on group_name.
@@ -7246,7 +7218,6 @@ type RecipientSignatureInformation struct {
 }
 
 // RecipientSignatureProvider is an Electronic or Standards Based Signature (digital signature) provider for the signer to use. [More information](https://developers.docusign.com/esign-rest-api/guides/standards-based-signatures).
-//
 type RecipientSignatureProvider struct {
 	// By default, electronic seals apply on all documents in an envelope. If any of the documents has a `signHere` tab, then a visual representation of the electronic seal will show up in the final document. If not, the electronic seal will be visible in the metadata but not in the content of the document.
 	//
@@ -7391,7 +7362,7 @@ type RecipientViewRequest struct {
 	XFrameOptionsAllowFromURL string `json:"xFrameOptionsAllowFromUrl,omitempty"`
 }
 
-// Recipients envelope recipients
+// Recipients not described in definition file
 type Recipients struct {
 	// A complex type defining the management and access rights of a recipient assigned assigned as an agent on the document.
 	Agents []Agent `json:"agents,omitempty"`
@@ -7401,7 +7372,7 @@ type Recipients struct {
 	CertifiedDeliveries []CertifiedDelivery `json:"certifiedDeliveries,omitempty"`
 	//
 	CurrentRoutingOrder string `json:"currentRoutingOrder,omitempty"`
-	// A complex type defining the management and access rights of a recipient assigned assigned as an editor on the document.
+	//
 	Editors []Editor `json:"editors,omitempty"`
 	// This object describes errors that occur. It is only valid for responses and ignored in requests.
 	ErrorDetails *ErrorDetails `json:"errorDetails,omitempty"`
@@ -7532,19 +7503,21 @@ type SealIdentifier struct {
 // SealSign specifies one or more electronic seals to apply on  documents.
 //
 // ```json
-// "recipients": {
-//       "seals": [
-//         {
-//           "recipientId": "1",
-//           "routingOrder" : 1,
-//           "recipientSignatureProviders": [
-//             {
-//               "sealName": "52e9d968-13be-42ca-a6fe-4682bc45c106"
-//             }
-//       	]
-//     	}
-//   	]
-// 	},
+//
+//	"recipients": {
+//	      "seals": [
+//	        {
+//	          "recipientId": "1",
+//	          "routingOrder" : 1,
+//	          "recipientSignatureProviders": [
+//	            {
+//	              "sealName": "52e9d968-13be-42ca-a6fe-4682bc45c106"
+//	            }
+//	      	]
+//	    	}
+//	  	]
+//		},
+//
 // ```
 // For more information on Electronic Seals , see https://support.docusign.com/en/guides/ndse-user-guide-apply-electronic-seals
 type SealSign struct {
@@ -7695,7 +7668,7 @@ type ServerTemplate struct {
 	TemplateID string `json:"templateId,omitempty"`
 }
 
-// ServiceInformation not described in definition file
+// ServiceInformation aPI service information
 type ServiceInformation struct {
 	// Reserved: TBD
 	BuildBranch string `json:"buildBranch,omitempty"`
@@ -7752,7 +7725,6 @@ type SharedItem struct {
 
 // SignHere is a tab that allows the recipient to sign a document. May be
 // optional.
-//
 type SignHere struct {
 	TabBase
 	TabPosition
@@ -8016,7 +7988,6 @@ type Signer struct {
 
 // SignerAttachment is a tab that allows the recipient to attach supporting
 // documents to an envelope.
-//
 type SignerAttachment struct {
 	TabBase
 	TabPosition
@@ -8110,7 +8081,7 @@ type SigningGroupUser struct {
 	UserName string `json:"userName,omitempty"`
 }
 
-// SigningGroupUsers not described in definition file
+// SigningGroupUsers signing groups' users
 type SigningGroupUsers struct {
 	//
 	Users []SigningGroupUser `json:"users,omitempty"`
@@ -8303,9 +8274,9 @@ type SmartSectionDisplaySettings struct {
 	TableStyle string `json:"tableStyle,omitempty"`
 }
 
-// SocialAccountInformation not described in definition file
+// SocialAccountInformation users' social account logins
 type SocialAccountInformation struct {
-	//
+	// The users email address.
 	Email string `json:"email,omitempty"`
 	// This object describes errors that occur. It is only valid for responses and ignored in requests.
 	ErrorDetails *ErrorDetails `json:"errorDetails,omitempty"`
@@ -8313,7 +8284,7 @@ type SocialAccountInformation struct {
 	Provider string `json:"provider,omitempty"`
 	// The ID provided by the Socal Account.
 	SocialID string `json:"socialId,omitempty"`
-	//
+	// The full user name for the account.
 	UserName string `json:"userName,omitempty"`
 }
 
@@ -8327,7 +8298,6 @@ type SocialAuthentication struct {
 // Security Number. The SSN can be typed with or without
 // dashes. It uses the same parameters as a Text tab, with the
 // validation message and pattern set for SSN information.
-//
 type SSN struct {
 	TabBase
 	TabPosition
@@ -9007,11 +8977,11 @@ type TemplateDocumentVisibilityList struct {
 	DocumentVisibility []DocumentVisibility `json:"documentVisibility,omitempty"`
 }
 
-// TemplateDocumentsResult template documents
+// TemplateDocumentsResult not described in definition file
 type TemplateDocumentsResult struct {
 	//
 	TemplateDocuments []EnvelopeDocument `json:"templateDocuments,omitempty"`
-	// The unique identifier of the template. If this is not provided, DocuSign will generate a value.
+	// The ID of the template being accessed.
 	TemplateID string `json:"templateId,omitempty"`
 }
 
@@ -9516,7 +9486,6 @@ type TemplateUpdateSummary struct {
 }
 
 // Text is a tab that allows the recipient to enter any type of text.
-//
 type Text struct {
 	TabBase
 	TabPosition
@@ -9615,7 +9584,6 @@ type TextCustomField struct {
 }
 
 // Title is a tab that displays the recipient's title.
-//
 type Title struct {
 	TabBase
 	TabPosition
@@ -9887,7 +9855,7 @@ type UserPasswordRules struct {
 	UserID string `json:"userId,omitempty"`
 }
 
-// UserProfile not described in definition file
+// UserProfile users' profiles
 type UserProfile struct {
 	//
 	Address *AddressInformationV2 `json:"address,omitempty"`
@@ -9907,7 +9875,9 @@ type UserProfile struct {
 	DisplayUsageHistory Bool `json:"displayUsageHistory,omitempty"`
 	//
 	ProfileImageURI string `json:"profileImageUri,omitempty"`
-	// The title of the user.
+	// The user's job title.
+	//
+	// Limit 100 characters.
 	Title string `json:"title,omitempty"`
 	// A complex element consisting of:
 	//
@@ -10034,7 +10004,7 @@ type UserSocialIDResult struct {
 	UserID string `json:"userId,omitempty"`
 }
 
-// UsersResponse not described in definition file
+// UsersResponse groups' users
 type UsersResponse struct {
 	// The last position in the result set.
 	EndPosition string `json:"endPosition,omitempty"`
@@ -10074,9 +10044,9 @@ type View struct {
 	Width string `json:"width,omitempty"`
 }
 
-// ViewURL not described in definition file
+// ViewURL embedding Envelope views
 type ViewURL struct {
-	// The endpoint to which webhook notification messages are sent via an HTTP/S POST request. For the DocuSign production platform, the url must start with https. For the demo platform, either http or https is ok.
+	// The view URL to be navigated to.
 	URL string `json:"url,omitempty"`
 }
 
@@ -10552,7 +10522,6 @@ type WorkspaceUserAuthorization struct {
 // The zip code can be typed with or without dashes. It uses
 // the same parameters as a Text tab, with the validation
 // message and pattern set for ZIP code information.
-//
 type Zip struct {
 	TabBase
 	TabPosition

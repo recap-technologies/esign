@@ -10,17 +10,16 @@
 //
 // A room can hold documents, envelopes, a list of tasks comprising a workflow, and other related information. You can invite others to this space and assign them permissions on a per-room basis. The documentation in this section shows you how to perform these and other tasks.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/rooms-api/reference/Rooms
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/rooms"
-//   )
-//   ...
-//   roomsService := rooms.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/rooms"
+//	)
+//	...
+//	roomsService := rooms.New(esignCredential)
 package rooms // import "github.com/jfcote87/esignrooms//rooms"
 
 import (
@@ -44,6 +43,32 @@ func New(cred esign.Credential) *Service {
 	return &Service{credential: cred}
 }
 
+// CreateRoomEnvelope creates an envelope with the given documents. Returns the eSignature envelope ID of the envelope that was created.
+//
+// https://developers.docusign.com/docs/rooms-api/reference/rooms/rooms/createroomenvelope
+//
+// SDK Method Rooms::CreateRoomEnvelope
+func (s *Service) CreateRoomEnvelope(roomID string, body *rooms.EnvelopeForCreate) *CreateRoomEnvelopeOp {
+	return &CreateRoomEnvelopeOp{
+		Credential: s.credential,
+		Method:     "POST",
+		Path:       strings.Join([]string{"rooms", roomID, "envelopes"}, "/"),
+		Payload:    body,
+		Accept:     "application/json",
+		QueryOpts:  make(url.Values),
+		Version:    esign.RoomsV2,
+	}
+}
+
+// CreateRoomEnvelopeOp implements DocuSign API SDK Rooms::CreateRoomEnvelope
+type CreateRoomEnvelopeOp esign.Op
+
+// Do executes the op.  A nil context will return error.
+func (op *CreateRoomEnvelopeOp) Do(ctx context.Context) (*rooms.Envelope, error) {
+	var res *rooms.Envelope
+	return res, ((*esign.Op)(op)).Do(ctx, &res)
+}
+
 // AddDocumentToRoom adds a document to a room.
 //
 // https://developers.docusign.com/docs/rooms-api/reference/rooms/rooms/adddocumenttoroom
@@ -55,7 +80,7 @@ func (s *Service) AddDocumentToRoom(roomID string, body *rooms.Document) *AddDoc
 		Method:     "POST",
 		Path:       strings.Join([]string{"rooms", roomID, "documents"}, "/"),
 		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
+		Accept:     "application/json-patch+json, application/json, text/json, application/*+json, application/xml, text/xml, application/*+xml",
 		QueryOpts:  make(url.Values),
 		Version:    esign.RoomsV2,
 	}
@@ -197,7 +222,7 @@ func (op *GetAssignableRolesOp) Do(ctx context.Context) (*rooms.AssignableRoles,
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// AssigneeEmail (Optional) The email address of a specific member. Using this parameter returns only the roles that the current user can assign to the member with that email address.
+// AssigneeEmail is the email address of a specific member. Using this parameter returns only the roles that the current user can assign to the member with that email address.
 func (op *GetAssignableRolesOp) AssigneeEmail(val string) *GetAssignableRolesOp {
 	if op != nil {
 		op.QueryOpts.Set("assigneeEmail", val)
@@ -205,9 +230,9 @@ func (op *GetAssignableRolesOp) AssigneeEmail(val string) *GetAssignableRolesOp 
 	return op
 }
 
-// Filter (Optional) A search filter that returns assignable roles by the beginning of the role name.
+// Filter is a search filter that returns assignable roles by the beginning of the role name.
 //
-// **Note**: You do not enter a wildcard (*) at the end of the name fragment.
+// **Note:** You do not enter a wildcard (*) at the end of the name fragment.
 func (op *GetAssignableRolesOp) Filter(val string) *GetAssignableRolesOp {
 	if op != nil {
 		op.QueryOpts.Set("filter", val)
@@ -215,7 +240,7 @@ func (op *GetAssignableRolesOp) Filter(val string) *GetAssignableRolesOp {
 	return op
 }
 
-// StartPosition (Optional) The index position within the total result set from which to start returning values. The default value is `0`.
+// StartPosition is the index position within the total result set from which to start returning values. The default value is `0`.
 func (op *GetAssignableRolesOp) StartPosition(val int) *GetAssignableRolesOp {
 	if op != nil {
 		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))
@@ -223,7 +248,7 @@ func (op *GetAssignableRolesOp) StartPosition(val int) *GetAssignableRolesOp {
 	return op
 }
 
-// Count (Optional) The number of results to return. This value must be a number between `1` and `100` (default).
+// Count is the number of results to return. This value must be a number between `1` and `100` (default).
 func (op *GetAssignableRolesOp) Count(val int) *GetAssignableRolesOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
@@ -256,7 +281,7 @@ func (op *GetDocumentsOp) Do(ctx context.Context) (*rooms.RoomDocumentList, erro
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Count (Optional) The number of results to return. This value must be a number between `1` and `100` (default).
+// Count is the number of results to return. This value must be a number between `1` and `100` (default).
 func (op *GetDocumentsOp) Count(val int) *GetDocumentsOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
@@ -264,10 +289,42 @@ func (op *GetDocumentsOp) Count(val int) *GetDocumentsOp {
 	return op
 }
 
-// StartPosition (Optional) The index position within the total result set from which to start returning values. The default value is `0`.
+// StartPosition is the index position within the total result set from which to start returning values. The default value is `0`.
 func (op *GetDocumentsOp) StartPosition(val int) *GetDocumentsOp {
 	if op != nil {
 		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))
+	}
+	return op
+}
+
+// RequireContentForDynamicDocuments when **true,** dynamic documents without content will not be returned. The default value is **false.**
+func (op *GetDocumentsOp) RequireContentForDynamicDocuments() *GetDocumentsOp {
+	if op != nil {
+		op.QueryOpts.Set("requireContentForDynamicDocuments", "true")
+	}
+	return op
+}
+
+// RoomFolderID filters results by `folderId`. If this property is not set, no filtering is applied.
+func (op *GetDocumentsOp) RoomFolderID(val int) *GetDocumentsOp {
+	if op != nil {
+		op.QueryOpts.Set("roomFolderId", fmt.Sprintf("%d", val))
+	}
+	return op
+}
+
+// NameFilter filters results by `name`. If this property is not set, no filtering is applied.
+func (op *GetDocumentsOp) NameFilter(val string) *GetDocumentsOp {
+	if op != nil {
+		op.QueryOpts.Set("nameFilter", val)
+	}
+	return op
+}
+
+// IncludeArchived filters results by `isArchived`. For example, when **true,** only documents with the property `isArchived=true` will be returned. If this property is not set, no filtering is applied.
+func (op *GetDocumentsOp) IncludeArchived() *GetDocumentsOp {
+	if op != nil {
+		op.QueryOpts.Set("includeArchived", "true")
 	}
 	return op
 }
@@ -297,7 +354,7 @@ func (op *GetRoomOp) Do(ctx context.Context) (*rooms.Room, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// IncludeFieldData (Optional) When set to **true**, the response includes the field data from the room. This is the information that appears on the room's **Details** tab.
+// IncludeFieldData when **true,** the response includes the field data from the room. This is the information that appears on the room's **Details** tab.
 func (op *GetRoomOp) IncludeFieldData() *GetRoomOp {
 	if op != nil {
 		op.QueryOpts.Set("includeFieldData", "true")
@@ -380,7 +437,7 @@ func (op *GetRoomUsersOp) Do(ctx context.Context) (*rooms.RoomUsersResult, error
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Count (Optional) The number of results to return. This value must be a number between `1` and `100` (default).
+// Count is the number of results to return. This value must be a number between `1` and `100` (default).
 func (op *GetRoomUsersOp) Count(val int) *GetRoomUsersOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
@@ -388,7 +445,7 @@ func (op *GetRoomUsersOp) Count(val int) *GetRoomUsersOp {
 	return op
 }
 
-// StartPosition (Optional) The index position within the total result set from which to start returning values. The default value is `0`.
+// StartPosition is the index position within the total result set from which to start returning values. The default value is `0`.
 func (op *GetRoomUsersOp) StartPosition(val int) *GetRoomUsersOp {
 	if op != nil {
 		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))
@@ -396,9 +453,9 @@ func (op *GetRoomUsersOp) StartPosition(val int) *GetRoomUsersOp {
 	return op
 }
 
-// Filter (Optional) A search filter that returns users by the beginning of the user's first name, last name, or email address. You can enter the beginning of the name or email only to return all of the users whose names or email addresses begin with the text that you entered.
+// Filter is a search filter that returns users by the beginning of the user's first name, last name, or email address. You can enter the beginning of the name or email only to return all of the users whose names or email addresses begin with the text that you entered.
 //
-// **Note**: You do not enter a wildcard (*) at the end of the name or email fragment.
+// **Note:** You do not enter a wildcard (*) at the end of the name or email fragment.
 func (op *GetRoomUsersOp) Filter(val string) *GetRoomUsersOp {
 	if op != nil {
 		op.QueryOpts.Set("filter", val)
@@ -406,7 +463,7 @@ func (op *GetRoomUsersOp) Filter(val string) *GetRoomUsersOp {
 	return op
 }
 
-// Sort (Optional) The order in which to return results. Valid values are:
+// Sort is the order in which to return results. Valid values are:
 //
 // - `firstNameAsc`: Sort on first name in ascending order.
 // - `firstNameDesc`:  Sort on first name in descending order.
@@ -444,7 +501,7 @@ func (op *GetRoomsOp) Do(ctx context.Context) (*rooms.RoomSummaryList, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Count (Optional) The number of results. When this property is used as a request parameter specifying the number of results to return, the value must be a number between 1 and 100 (default).
+// Count is the number of results. When this property is used as a request parameter specifying the number of results to return, the value must be a number between 1 and 100 (default).
 func (op *GetRoomsOp) Count(val int) *GetRoomsOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
@@ -452,7 +509,7 @@ func (op *GetRoomsOp) Count(val int) *GetRoomsOp {
 	return op
 }
 
-// StartPosition (Optional) The index position within the total result set from which to start returning values. The default value is `0`.
+// StartPosition is the index position within the total result set from which to start returning values. The default value is `0`.
 func (op *GetRoomsOp) StartPosition(val int) *GetRoomsOp {
 	if op != nil {
 		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))
@@ -460,7 +517,7 @@ func (op *GetRoomsOp) StartPosition(val int) *GetRoomsOp {
 	return op
 }
 
-// RoomStatus (Optional) The status of the room. Valid values are:
+// RoomStatus is the status of the room. Valid values are:
 //
 // - `active`: This is the default value.
 // - `pending`
@@ -479,7 +536,7 @@ func (op *GetRoomsOp) RoomStatus(val string) *GetRoomsOp {
 	return op
 }
 
-// OfficeID (Optional) The id of the office.
+// OfficeID is the ID of the office.
 func (op *GetRoomsOp) OfficeID(val int) *GetRoomsOp {
 	if op != nil {
 		op.QueryOpts.Set("officeId", fmt.Sprintf("%d", val))
@@ -487,7 +544,7 @@ func (op *GetRoomsOp) OfficeID(val int) *GetRoomsOp {
 	return op
 }
 
-// FieldDataChangedStartDate (Optional) Starting date and time to filter rooms whose field data has changed after this date. Date and time is always given as UTC. If the time (`hh:mm:ss`) is omitted, it defaults to `00:00:00`.
+// FieldDataChangedStartDate starting date and time to filter rooms whose field data has changed after this date. Date and time is always given as UTC. If the time (`hh:mm:ss`) is omitted, it defaults to `00:00:00`.
 //
 // Valid formats:
 //
@@ -502,8 +559,7 @@ func (op *GetRoomsOp) FieldDataChangedStartDate(val string) *GetRoomsOp {
 	return op
 }
 
-// FieldDataChangedEndDate (Optional) Ending date and time to filter rooms whose field data has changed before this date. Date and time is always given as UTC. If the time (`hh:mm:ss`) is omitted, it defaults to `00:00:00`.
-//
+// FieldDataChangedEndDate ending date and time to filter rooms whose field data has changed before this date. Date and time is always given as UTC. If the time (`hh:mm:ss`) is omitted, it defaults to `00:00:00`.
 //
 // Valid formats:
 //
@@ -518,7 +574,7 @@ func (op *GetRoomsOp) FieldDataChangedEndDate(val string) *GetRoomsOp {
 	return op
 }
 
-// RoomClosedStartDate (Optional) Starting date and time to filter rooms that were closed this date. Date and time is always given as UTC. If the time (`hh:mm:ss`) is omitted, it defaults to `00:00:00`.
+// RoomClosedStartDate starting date and time to filter rooms that were closed this date. Date and time is always given as UTC. If the time (`hh:mm:ss`) is omitted, it defaults to `00:00:00`.
 //
 // Valid formats:
 //
@@ -533,7 +589,7 @@ func (op *GetRoomsOp) RoomClosedStartDate(val string) *GetRoomsOp {
 	return op
 }
 
-// RoomClosedEndDate (Optional) Ending date and time to filter rooms that were closed before this date. Date and time is always given as UTC. If the time (`hh:mm:ss`) is omitted, it defaults to `00:00:00`.
+// RoomClosedEndDate ending date and time to filter rooms that were closed before this date. Date and time is always given as UTC. If the time (`hh:mm:ss`) is omitted, it defaults to `00:00:00`.
 //
 // Valid formats:
 //
@@ -636,7 +692,7 @@ func (s *Service) RevokeRoomUserAccess(roomID string, userID string, body *rooms
 		Method:     "POST",
 		Path:       strings.Join([]string{"rooms", roomID, "users", userID, "revoke_access"}, "/"),
 		Payload:    body,
-		Accept:     "application/json-patch+json, application/json, text/json, application/*+json",
+		Accept:     "application/json-patch+json, application/json, text/json, application/*+json, application/xml, text/xml, application/*+xml",
 		QueryOpts:  make(url.Values),
 		Version:    esign.RoomsV2,
 	}

@@ -18,17 +18,16 @@
 //
 // Templates can be created programmatically or can be created via the DocuSign web interface and then used by your application.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/v2/reference/Templates
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2/model"
-//   )
-//   ...
-//   templatesService := templates.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2/model"
+//	)
+//	...
+//	templatesService := templates.New(esignCredential)
 package templates // import "github.com/jfcote87/esignv2/templates"
 
 import (

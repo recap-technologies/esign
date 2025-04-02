@@ -10,21 +10,20 @@
 //
 // The eSignature API Envelope category includes the resources and methods for sending and managing envelopes and envelope data.
 //
-// Envelopes are the key objects in the DocuSign platform. As a result, they are complex data structures with few required fields. See the [How-to guides](/docs/esign-rest-api/how-to/) for examples and solutions.
+// Envelopes are the key objects in the Docusign platform. As a result, they are complex data structures with few required fields. See the [How-to guides](/docs/esign-rest-api/how-to/) for examples and solutions.
 //
 // To learn more about envelopes, see [Envelopes](/docs/esign-rest-api/esign101/concepts/envelopes/).
-//
 //
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/Envelopes
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   envelopesService := envelopes.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	envelopesService := envelopes.New(esignCredential)
 package envelopes // import "github.com/jfcote87/esignv2.1/envelopes"
 
 import (
@@ -219,7 +218,7 @@ func (op *ChunkedUploadsUpdateOp) Do(ctx context.Context) (*model.ChunkedUploadR
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// AttachmentsCreate adds one or more attachments to a draft or in-process envelope.
+// AttachmentsCreate adds one or more envelope attachments to a draft or in-process envelope.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeattachments/create
 //
@@ -245,7 +244,7 @@ func (op *AttachmentsCreateOp) Do(ctx context.Context) (*model.EnvelopeAttachmen
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// AttachmentsDelete deletes one or more attachments from a draft envelope.
+// AttachmentsDelete deletes one or more envelope attachments from a draft envelope.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeattachments/delete
 //
@@ -271,7 +270,7 @@ func (op *AttachmentsDeleteOp) Do(ctx context.Context) (*model.EnvelopeAttachmen
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// AttachmentsGet retrieves an attachment from an envelope.
+// AttachmentsGet retrieves an envelope attachment from an envelope.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeattachments/get
 //
@@ -290,11 +289,12 @@ func (s *Service) AttachmentsGet(attachmentID string, envelopeID string) *Attach
 type AttachmentsGetOp esign.Op
 
 // Do executes the op.  A nil context will return error.
-func (op *AttachmentsGetOp) Do(ctx context.Context) error {
-	return ((*esign.Op)(op)).Do(ctx, nil)
+func (op *AttachmentsGetOp) Do(ctx context.Context) (*esign.Download, error) {
+	var res *esign.Download
+	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// AttachmentsList returns a list of attachments associated with a specified envelope
+// AttachmentsList returns a list of envelope attachments associated with a specified envelope.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeattachments/list
 //
@@ -319,7 +319,7 @@ func (op *AttachmentsListOp) Do(ctx context.Context) (*model.EnvelopeAttachments
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// AttachmentsUpdate adds an attachment to a draft or in-process envelope.
+// AttachmentsUpdate updates an envelope attachment in a draft or in-process envelope.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeattachments/update
 //
@@ -897,7 +897,7 @@ func (op *DocumentsGetOp) DocumentsByUserid(val string) *DocumentsGetOp {
 	return op
 }
 
-// Encoding reserved for DocuSign.
+// Encoding reserved for Docusign.
 func (op *DocumentsGetOp) Encoding(val string) *DocumentsGetOp {
 	if op != nil {
 		op.QueryOpts.Set("encoding", val)
@@ -905,7 +905,7 @@ func (op *DocumentsGetOp) Encoding(val string) *DocumentsGetOp {
 	return op
 }
 
-// Encrypt when **true,** the PDF bytes returned in the response are encrypted for all the key managers configured on your DocuSign account. You can decrypt the documents by using the Key Manager DecryptDocument API method. For more information about Key Manager, see the DocuSign Security Appliance Installation Guide that your organization received from DocuSign.
+// Encrypt when **true,** the PDF bytes returned in the response are encrypted for all the key managers configured on your Docusign account. You can decrypt the documents by using the Key Manager DecryptDocument API method. For more information about Key Manager, see the Docusign Security Appliance Installation Guide that your organization received from Docusign.
 func (op *DocumentsGetOp) Encrypt() *DocumentsGetOp {
 	if op != nil {
 		op.QueryOpts.Set("encrypt", "true")
@@ -932,7 +932,7 @@ func (op *DocumentsGetOp) RecipientID(val string) *DocumentsGetOp {
 // SharedUserID is the ID of a shared user that you want to impersonate in order to
 // retrieve their view of the list of documents. This parameter is
 // used in the context of a shared inbox (i.e., when you share
-// envelopes from one user to another through the DocuSign Admin console).
+// envelopes from one user to another through the Docusign Admin console).
 func (op *DocumentsGetOp) SharedUserID(val string) *DocumentsGetOp {
 	if op != nil {
 		op.QueryOpts.Set("shared_user_id", val)
@@ -989,6 +989,14 @@ func (op *DocumentsListOp) DocumentsByUserid(val string) *DocumentsListOp {
 	return op
 }
 
+// IncludeDocgenFormfields reserved for Docusign.
+func (op *DocumentsListOp) IncludeDocgenFormfields(val string) *DocumentsListOp {
+	if op != nil {
+		op.QueryOpts.Set("include_docgen_formfields", val)
+	}
+	return op
+}
+
 // IncludeMetadata when **true,** the response includes metadata that indicates which properties the sender can edit.
 func (op *DocumentsListOp) IncludeMetadata(val string) *DocumentsListOp {
 	if op != nil {
@@ -997,7 +1005,7 @@ func (op *DocumentsListOp) IncludeMetadata(val string) *DocumentsListOp {
 	return op
 }
 
-// IncludeTabs when **true,** information about the tabs, including prefill tabs, associated with the documents are included in the response.
+// IncludeTabs reserved for Docusign.
 func (op *DocumentsListOp) IncludeTabs(val string) *DocumentsListOp {
 	if op != nil {
 		op.QueryOpts.Set("include_tabs", val)
@@ -1016,7 +1024,7 @@ func (op *DocumentsListOp) RecipientID(val string) *DocumentsListOp {
 // SharedUserID is the ID of a shared user that you want to impersonate in order to
 // retrieve their view of the list of documents. This parameter is
 // used in the context of a shared inbox (i.e., when you share
-// envelopes from one user to another through the DocuSign Admin console).
+// envelopes from one user to another through the Docusign Admin console).
 func (op *DocumentsListOp) SharedUserID(val string) *DocumentsListOp {
 	if op != nil {
 		op.QueryOpts.Set("shared_user_id", val)
@@ -1025,17 +1033,16 @@ func (op *DocumentsListOp) SharedUserID(val string) *DocumentsListOp {
 }
 
 // DocumentsUpdate adds or replaces a document in an existing envelope.
-// If media is an io.ReadCloser, Do() will close media.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopedocuments/update
 //
 // SDK Method Envelopes::updateDocument
-func (s *Service) DocumentsUpdate(documentID string, envelopeID string, media io.Reader, mimeType string) *DocumentsUpdateOp {
+func (s *Service) DocumentsUpdate(documentID string, envelopeID string, documentFileBytes []byte) *DocumentsUpdateOp {
 	return &DocumentsUpdateOp{
 		Credential: s.credential,
 		Method:     "PUT",
 		Path:       strings.Join([]string{"envelopes", envelopeID, "documents", documentID}, "/"),
-		Payload:    &esign.UploadFile{Reader: media, ContentType: mimeType},
+		Payload:    documentFileBytes,
 		Accept:     "application/json",
 		QueryOpts:  make(url.Values),
 		Version:    esign.APIv21,
@@ -1335,8 +1342,6 @@ func (op *RecipientTabsCreateOp) Do(ctx context.Context) (*model.Tabs, error) {
 // `templateLocked` property set to true.
 // This property corresponds to the **Restrict changes** option in the web app.
 //
-//
-//
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/enveloperecipienttabs/delete
 //
 // SDK Method Envelopes::deleteTabs
@@ -1403,8 +1408,6 @@ func (op *RecipientTabsListOp) IncludeMetadata(val string) *RecipientTabsListOp 
 }
 
 // RecipientTabsUpdate updates the tabs for a recipient.
-//
-//
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/enveloperecipienttabs/update
 //
@@ -1607,7 +1610,7 @@ func (op *RecipientsUpdateOp) Do(ctx context.Context) (*model.RecipientsUpdateSu
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// CombineSameOrderRecipients when **true,** recipients are combined or merged with matching recipients. Recipient matching occurs as part of [template matching](https://support.docusign.com/en/guides/ndse-user-guide-manage-automatic-template-matching), and is based on Recipient Role and Routing Order.
+// CombineSameOrderRecipients when **true,** recipients are combined or merged with matching recipients. Recipient matching occurs as part of [template matching](https://support.docusign.com/s/document-item?bundleId=jux1643235969954&topicId=fxo1578456612662.html), and is based on Recipient Role and Routing Order.
 func (op *RecipientsUpdateOp) CombineSameOrderRecipients(val string) *RecipientsUpdateOp {
 	if op != nil {
 		op.QueryOpts.Set("combine_same_order_recipients", val)
@@ -1742,7 +1745,7 @@ func (op *TemplatesDeleteOp) Do(ctx context.Context) error {
 	return ((*esign.Op)(op)).Do(ctx, nil)
 }
 
-// TemplatesList get List of Templates used in an Envelope
+// TemplatesList gets templates used in an envelope.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopetemplates/list
 //
@@ -1767,7 +1770,11 @@ func (op *TemplatesListOp) Do(ctx context.Context) (*model.TemplateInformation, 
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Include is the possible value is `matching_applied`, which returns template matching information for the template.
+// Include filters the results by template type. Valid values:
+// * `applied`: Returns the templates applied to an envelope.
+// * `matching`: Returns the [matching templates](https://support.docusign.com/s/document-item?language=en_US&bundleId=jux1643235969954&topicId=far1578456612069.html&_LANG=enus) for an envelope.
+//
+// The default value is `applied`.
 func (op *TemplatesListOp) Include(val string) *TemplatesListOp {
 	if op != nil {
 		op.QueryOpts.Set("include", val)
@@ -1812,7 +1819,7 @@ func (op *TemplatesListByDocumentOp) Include(val ...string) *TemplatesListByDocu
 	return op
 }
 
-// ViewsCreateConsole returns a URL to the authentication view UI.
+// ViewsCreateConsole returns a URL to the Docusign eSignature web application.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createconsole
 //
@@ -1837,17 +1844,17 @@ func (op *ViewsCreateConsoleOp) Do(ctx context.Context) (*model.ViewURL, error) 
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// ViewsCreateCorrect returns a URL to the envelope correction UI.
+// ViewsCreateCorrect returns a URL to the envelope correction UI. Use after an envelope has been sent.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createcorrect
 //
 // SDK Method Envelopes::createCorrectView
-func (s *Service) ViewsCreateCorrect(envelopeID string, correctViewRequest *model.CorrectViewRequest) *ViewsCreateCorrectOp {
+func (s *Service) ViewsCreateCorrect(envelopeID string, envelopeViewRequest *model.EnvelopeViewRequest) *ViewsCreateCorrectOp {
 	return &ViewsCreateCorrectOp{
 		Credential: s.credential,
 		Method:     "POST",
 		Path:       strings.Join([]string{"envelopes", envelopeID, "views", "correct"}, "/"),
-		Payload:    correctViewRequest,
+		Payload:    envelopeViewRequest,
 		QueryOpts:  make(url.Values),
 		Version:    esign.APIv21,
 	}
@@ -1862,17 +1869,17 @@ func (op *ViewsCreateCorrectOp) Do(ctx context.Context) (*model.ViewURL, error) 
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// ViewsCreateEdit returns a URL to the edit view UI.
+// ViewsCreateEdit returns a URL to the edit view UI. Use before an envelope has been sent.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createedit
 //
 // SDK Method Envelopes::createEditView
-func (s *Service) ViewsCreateEdit(envelopeID string, returnURLRequest *model.ReturnURLRequest) *ViewsCreateEditOp {
+func (s *Service) ViewsCreateEdit(envelopeID string, envelopeViewRequest *model.EnvelopeViewRequest) *ViewsCreateEditOp {
 	return &ViewsCreateEditOp{
 		Credential: s.credential,
 		Method:     "POST",
 		Path:       strings.Join([]string{"envelopes", envelopeID, "views", "edit"}, "/"),
-		Payload:    returnURLRequest,
+		Payload:    envelopeViewRequest,
 		QueryOpts:  make(url.Values),
 		Version:    esign.APIv21,
 	}
@@ -1887,7 +1894,7 @@ func (op *ViewsCreateEditOp) Do(ctx context.Context) (*model.ViewURL, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// ViewsCreateRecipient returns a URL to the recipient view UI.
+// ViewsCreateRecipient returns a URL to the recipient view UI. For signer recipients, returns the embedded signing view. Can also be used for other recipient types.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createrecipient
 //
@@ -1912,17 +1919,17 @@ func (op *ViewsCreateRecipientOp) Do(ctx context.Context) (*model.ViewURL, error
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// ViewsCreateSender returns a URL to the sender view UI.
+// ViewsCreateSender returns a URL to the sender view UI. Used before an envelope has been sent.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createsender
 //
 // SDK Method Envelopes::createSenderView
-func (s *Service) ViewsCreateSender(envelopeID string, returnURLRequest *model.ReturnURLRequest) *ViewsCreateSenderOp {
+func (s *Service) ViewsCreateSender(envelopeID string, envelopeViewRequest *model.EnvelopeViewRequest) *ViewsCreateSenderOp {
 	return &ViewsCreateSenderOp{
 		Credential: s.credential,
 		Method:     "POST",
 		Path:       strings.Join([]string{"envelopes", envelopeID, "views", "sender"}, "/"),
-		Payload:    returnURLRequest,
+		Payload:    envelopeViewRequest,
 		QueryOpts:  make(url.Values),
 		Version:    esign.APIv21,
 	}
@@ -1964,7 +1971,7 @@ func (op *CreateOp) Do(ctx context.Context) (*model.EnvelopeSummary, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// CdseMode reserved for DocuSign.
+// CdseMode reserved for Docusign.
 func (op *CreateOp) CdseMode(val string) *CreateOp {
 	if op != nil {
 		op.QueryOpts.Set("cdse_mode", val)
@@ -1980,7 +1987,7 @@ func (op *CreateOp) ChangeRoutingOrder() *CreateOp {
 	return op
 }
 
-// CompletedDocumentsOnly reserved for DocuSign.
+// CompletedDocumentsOnly reserved for Docusign.
 func (op *CreateOp) CompletedDocumentsOnly(val string) *CreateOp {
 	if op != nil {
 		op.QueryOpts.Set("completed_documents_only", val)
@@ -1990,7 +1997,7 @@ func (op *CreateOp) CompletedDocumentsOnly(val string) *CreateOp {
 
 // MergeRolesOnDraft when **true,** template roles will be merged, and empty recipients will be removed. This parameter applies when you create a draft envelope with multiple templates. (To create a draft envelope, the `status` field is set to `created`.)
 //
-// **Note:** DocuSign recommends that this parameter should be set to **true** whenever you create a draft envelope with multiple templates.
+// **Note:** Docusign recommends that this parameter should be set to **true** whenever you create a draft envelope with multiple templates.
 func (op *CreateOp) MergeRolesOnDraft() *CreateOp {
 	if op != nil {
 		op.QueryOpts.Set("merge_roles_on_draft", "true")
@@ -2063,12 +2070,21 @@ func (op *GetOp) AdvancedUpdate() *GetOp {
 // - `folders`: The folder where the envelope exists.
 // - `recipients`: The recipients associated with the envelope.
 // - `powerform`: The PowerForms associated with the envelope.
+// - `prefill_tabs`: The pre-filled tabs associated with the envelope.
 // - `tabs`: The tabs associated with the envelope.
 // - `payment_tabs`: The payment tabs associated with the envelope.
 // - `workflow`: The workflow definition associated with the envelope.
 func (op *GetOp) Include(val string) *GetOp {
 	if op != nil {
 		op.QueryOpts.Set("include", val)
+	}
+	return op
+}
+
+// IncludeAnchorTabLocations when **true,** all tabs with anchor tab properties are included in the response. The default value is **false.**
+func (op *GetOp) IncludeAnchorTabLocations(val string) *GetOp {
+	if op != nil {
+		op.QueryOpts.Set("include_anchor_tab_locations", val)
 	}
 	return op
 }
@@ -2259,7 +2275,7 @@ func (op *GetRecipientInitialsImageOp) Do(ctx context.Context) (*esign.Download,
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// IncludeChrome is the added line and identifier around the initial image. Note: Older envelopes might only have chromed images. If getting the non-chromed image fails, try getting the chromed image.
+// IncludeChrome obsolete. The chrome is included in the image if it's present in the envelope.
 func (op *GetRecipientInitialsImageOp) IncludeChrome() *GetRecipientInitialsImageOp {
 	if op != nil {
 		op.QueryOpts.Set("include_chrome", "true")
@@ -2316,7 +2332,7 @@ func (op *GetRecipientSignatureImageOp) Do(ctx context.Context) (*esign.Download
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// IncludeChrome when **true,** the response includes the chromed version of the signature image.
+// IncludeChrome obsolete. The chrome is included in the image if it's present in the envelope.
 func (op *GetRecipientSignatureImageOp) IncludeChrome() *GetRecipientSignatureImageOp {
 	if op != nil {
 		op.QueryOpts.Set("include_chrome", "true")
@@ -2423,8 +2439,8 @@ func (op *ListStatusOp) Email(val string) *ListStatusOp {
 // EnvelopeIds is the envelope IDs to include in the results.
 //
 // The value of this property can be:
-// - A comma-separated list of envelope IDs
-// - The special value `request_body`. In this case, the method uses the envelope IDs in the request body.
+// * For the `GET` implementation of this method, use a comma-separated list of envelope IDs.
+// * For the `PUT` implementation of this method, use the `request_body` value, and include the envelope IDs in the request body.
 func (op *ListStatusOp) EnvelopeIds(val string) *ListStatusOp {
 	if op != nil {
 		op.QueryOpts.Set("envelope_ids", val)
@@ -2443,7 +2459,6 @@ func (op *ListStatusOp) FromDate(val time.Time) *ListStatusOp {
 }
 
 // FromToStatus is the envelope status that you are checking for. Possible values are:
-//
 //
 // - `Changed` (default)
 // - `Completed`
@@ -2563,7 +2578,17 @@ func (op *ListStatusChangesOp) Do(ctx context.Context) (*model.EnvelopesInformat
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// AcStatus specifies the Authoritative Copy Status for the envelopes. Valid values: Unknown, Original, Transferred, AuthoritativeCopy, AuthoritativeCopyExportPending, AuthoritativeCopyExported, DepositPending, Deposited, DepositedEO, or DepositFailed.
+// AcStatus specifies the authoritative copy status for the envelopes. Valid values:
+// * `Unknown`
+// * `Original`
+// * `Transferred`
+// * `AuthoritativeCopy`
+// * `AuthoritativeCopyExportPending`
+// * `AuthoritativeCopyExported`
+// * `DepositPending`
+// * `Deposited`
+// * `DepositedEO`
+// * `DepositFailed`
 func (op *ListStatusChangesOp) AcStatus(val string) *ListStatusChangesOp {
 	if op != nil {
 		op.QueryOpts.Set("ac_status", val)
@@ -2571,7 +2596,7 @@ func (op *ListStatusChangesOp) AcStatus(val string) *ListStatusChangesOp {
 	return op
 }
 
-// Block reserved for DocuSign.
+// Block reserved for Docusign.
 func (op *ListStatusChangesOp) Block(val string) *ListStatusChangesOp {
 	if op != nil {
 		op.QueryOpts.Set("block", val)
@@ -2579,7 +2604,7 @@ func (op *ListStatusChangesOp) Block(val string) *ListStatusChangesOp {
 	return op
 }
 
-// CdseMode reserved for DocuSign.
+// CdseMode reserved for Docusign.
 func (op *ListStatusChangesOp) CdseMode(val string) *ListStatusChangesOp {
 	if op != nil {
 		op.QueryOpts.Set("cdse_mode", val)
@@ -2587,7 +2612,7 @@ func (op *ListStatusChangesOp) CdseMode(val string) *ListStatusChangesOp {
 	return op
 }
 
-// ContinuationToken is a token returned in the response to a previous API call that is used to resume a search query from a specific point.
+// ContinuationToken reserved for Docusign.
 func (op *ListStatusChangesOp) ContinuationToken(val string) *ListStatusChangesOp {
 	if op != nil {
 		op.QueryOpts.Set("continuation_token", val)
@@ -2597,7 +2622,7 @@ func (op *ListStatusChangesOp) ContinuationToken(val string) *ListStatusChangesO
 
 // Count is the maximum number of results to return.
 //
-// Use `start_position` to specify the number of results to skip.
+// The maximum value is 1000. To get the next or previous set of envelopes, use `nextUri` or `previousUri` from the response.
 func (op *ListStatusChangesOp) Count(val int) *ListStatusChangesOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
@@ -2637,7 +2662,9 @@ func (op *ListStatusChangesOp) EnvelopeIds(val ...string) *ListStatusChangesOp {
 	return op
 }
 
-// Exclude excludes information from the response. Enter  as a comma-separated list (e.g., `folders,powerforms`). Valid values are:
+// Exclude excludes information from the response. Enter as a comma-separated list (e.g., `folders,powerforms`).
+//
+// Valid values:
 //
 // - `recipients`
 // - `powerforms`
@@ -2649,7 +2676,7 @@ func (op *ListStatusChangesOp) Exclude(val string) *ListStatusChangesOp {
 	return op
 }
 
-// FolderIds returns the envelopes from specific folders. Enter as a comma-separated list of either valid folder Guids or the following values:
+// FolderIds returns the envelopes from specific folders. Enter as a comma-separated list of either valid folder GUIDs or the following values:
 //
 // - `awaiting_my_signature`
 // - `completed`
@@ -2668,7 +2695,7 @@ func (op *ListStatusChangesOp) FolderIds(val ...string) *ListStatusChangesOp {
 	return op
 }
 
-// FolderTypes is a comma-separated list of folder types you want to retrieve envelopes from. Valid values are:
+// FolderTypes returns the envelopes from folders of a specific type. Enter as a comma-separated list of the following values:
 //
 // - `normal`
 // - `inbox`
@@ -2682,11 +2709,7 @@ func (op *ListStatusChangesOp) FolderTypes(val string) *ListStatusChangesOp {
 	return op
 }
 
-// FromDate specifies the date and time
-// to start looking for status changes.
-// This parameter is required
-// unless `envelopeIds` or `transactionIds`
-// are set.
+// FromDate specifies the date and time to start looking for status changes. This parameter is required unless `envelopeIds` or `transactionIds` are set.
 func (op *ListStatusChangesOp) FromDate(val time.Time) *ListStatusChangesOp {
 	if op != nil {
 		op.QueryOpts.Set("from_date", val.Format(time.RFC3339))
@@ -2694,9 +2717,20 @@ func (op *ListStatusChangesOp) FromDate(val time.Time) *ListStatusChangesOp {
 	return op
 }
 
-// FromToStatus this is the status type checked for in the `from_date`/`to_date` period. If `changed` is specified, then envelopes that changed status during the period are found. If for example, `created` is specified, then envelopes created during the period are found. Default is `changed`.
+// FromToStatus this is the status type checked for in the `from_date`/`to_date` period. For example, if `Created` is specified, then envelopes created during the period are found. If `Changed` is specified, then envelopes that changed status during the period are returned. The default value is `Changed`.
 //
-// Possible values are: Voided, Changed, Created, Deleted, Sent, Delivered, Signed, Completed, Declined, TimedOut and Processing.
+// Valid values:
+// * `Changed`
+// * `Voided`
+// * `Created`
+// * `Deleted`
+// * `Sent`
+// * `Delivered`
+// * `Signed`
+// * `Completed`
+// * `Declined`
+// * `TimedOut`
+// * `Processing`
 func (op *ListStatusChangesOp) FromToStatus(val string) *ListStatusChangesOp {
 	if op != nil {
 		op.QueryOpts.Set("from_to_status", val)
@@ -2714,7 +2748,6 @@ func (op *ListStatusChangesOp) FromToStatus(val string) *ListStatusChangesOp {
 // - `extensions`: Information about the email settings associated with the envelope.
 // - `folders`: The folders where the envelope exists.
 // - `recipients`: The recipients associated with the envelope.
-// - `powerform`: The PowerForms associated with the envelope.
 // - `payment_tabs`: The payment tabs associated with the envelope.
 func (op *ListStatusChangesOp) Include(val string) *ListStatusChangesOp {
 	if op != nil {
@@ -2731,7 +2764,7 @@ func (op *ListStatusChangesOp) IncludePurgeInformation(val string) *ListStatusCh
 	return op
 }
 
-// IntersectingFolderIds is a comma-separated list of folders that you want want to get envelopes from. Valid values are:
+// IntersectingFolderIds is a comma-separated list of folders from which you want to get envelopes. Valid values:
 //
 // - `normal`
 // - `inbox`
@@ -2763,7 +2796,7 @@ func (op *ListStatusChangesOp) Order(val string) *ListStatusChangesOp {
 	return op
 }
 
-// OrderBy sorts results according to a specific property. Valid values are:
+// OrderBy sorts results according to a specific property. Valid values:
 //
 // - `last_modified`
 // - `action_required`
@@ -2809,6 +2842,14 @@ func (op *ListStatusChangesOp) RequesterDateFormat(val string) *ListStatusChange
 	return op
 }
 
+// SearchMode set the call query parameter search_mode
+func (op *ListStatusChangesOp) SearchMode(val string) *ListStatusChangesOp {
+	if op != nil {
+		op.QueryOpts.Set("search_mode", val)
+	}
+	return op
+}
+
 // SearchText free text search criteria that you can use to filter the list of envelopes that is returned.
 func (op *ListStatusChangesOp) SearchText(val string) *ListStatusChangesOp {
 	if op != nil {
@@ -2831,7 +2872,7 @@ func (op *ListStatusChangesOp) StartPosition(val int) *ListStatusChangesOp {
 	return op
 }
 
-// Status is a comma-separated list of current envelope statuses to included in the response. Possible values are:
+// Status is a comma-separated list of current envelope statuses to be included in the response. Valid values:
 //
 // * `completed`
 // * `created`
@@ -2862,11 +2903,11 @@ func (op *ListStatusChangesOp) ToDate(val time.Time) *ListStatusChangesOp {
 	return op
 }
 
-// TransactionIds if included in the query string, this is a comma separated list of envelope `transactionId`s.
+// TransactionIds is a comma-separated list of envelope transaction IDs.
 //
-// If included in the `request_body`, this is a list of envelope `transactionId`s.
+// Getting envelope status by transaction IDs is useful for offline signing situations to determine if an envelope was created or not. It can be used for the cases where a network connection was lost before the envelope status could be returned.
 //
-// ###### Note: `transactionId`s are only valid in the DocuSign system for seven days.
+// **Note:** Transaction IDs are only valid in the Docusign system for seven days.
 func (op *ListStatusChangesOp) TransactionIds(val ...string) *ListStatusChangesOp {
 	if op != nil {
 		op.QueryOpts.Set("transaction_ids", strings.Join(val, ","))
@@ -2962,6 +3003,14 @@ func (op *UpdateOp) Do(ctx context.Context) (*model.EnvelopeUpdateSummary, error
 func (op *UpdateOp) AdvancedUpdate() *UpdateOp {
 	if op != nil {
 		op.QueryOpts.Set("advanced_update", "true")
+	}
+	return op
+}
+
+// RecycleOnVoid set the call query parameter recycle_on_void
+func (op *UpdateOp) RecycleOnVoid(val string) *UpdateOp {
+	if op != nil {
+		op.QueryOpts.Set("recycle_on_void", val)
 	}
 	return op
 }
@@ -3159,8 +3208,7 @@ func (op *DocumentResponsiveHTMLPreviewCreateOp) Do(ctx context.Context) (*model
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// DocumentHTMLDefinitionsGet gets the Original HTML Definition used to
-// generate the Responsive HTML for a given document.
+// DocumentHTMLDefinitionsGet retrieves the HTML definition used to generate a dynamically sized responsive document.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopedocumenthtmldefinitions/get
 //
@@ -3259,31 +3307,6 @@ type DocumentTabsUpdateOp esign.Op
 // Do executes the op.  A nil context will return error.
 func (op *DocumentTabsUpdateOp) Do(ctx context.Context) (*model.Tabs, error) {
 	var res *model.Tabs
-	return res, ((*esign.Op)(op)).Do(ctx, &res)
-}
-
-// DocumentsUpdateRegenDocument retrieves a PDF document from the envelope with no CoC.
-//
-// https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopedocuments/updateregendocument
-//
-// SDK Method Envelopes::updateRegenDocument
-func (s *Service) DocumentsUpdateRegenDocument(envelopeID string, regenDocumentID string, document *model.Document) *DocumentsUpdateRegenDocumentOp {
-	return &DocumentsUpdateRegenDocumentOp{
-		Credential: s.credential,
-		Method:     "PUT",
-		Path:       strings.Join([]string{"envelopes", envelopeID, "documents", regenDocumentID, "regen"}, "/"),
-		Payload:    document,
-		QueryOpts:  make(url.Values),
-		Version:    esign.APIv21,
-	}
-}
-
-// DocumentsUpdateRegenDocumentOp implements DocuSign API SDK Envelopes::updateRegenDocument
-type DocumentsUpdateRegenDocumentOp esign.Op
-
-// Do executes the op.  A nil context will return error.
-func (op *DocumentsUpdateRegenDocumentOp) Do(ctx context.Context) (*esign.Download, error) {
-	var res *esign.Download
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
@@ -3412,6 +3435,14 @@ type RecipientsCreateRecipientProofFileResourceTokenOp esign.Op
 func (op *RecipientsCreateRecipientProofFileResourceTokenOp) Do(ctx context.Context) (*model.IDEvidenceResourceToken, error) {
 	var res *model.IDEvidenceResourceToken
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
+}
+
+// TokenScopes set the call query parameter token_scopes
+func (op *RecipientsCreateRecipientProofFileResourceTokenOp) TokenScopes(val string) *RecipientsCreateRecipientProofFileResourceTokenOp {
+	if op != nil {
+		op.QueryOpts.Set("token_scopes", val)
+	}
+	return op
 }
 
 // TransferRulesCreate creates an envelope transfer rule.
@@ -4279,7 +4310,7 @@ func (op *ResponsiveHTMLPreviewCreateOp) Do(ctx context.Context) (*model.Documen
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// TabsBlobGetTabsBlob gets encrypted tabs for envelope.
+// TabsBlobGetTabsBlob reserved for Docusign.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/tabsblob/gettabsblob
 //
@@ -4302,7 +4333,7 @@ func (op *TabsBlobGetTabsBlobOp) Do(ctx context.Context) error {
 	return ((*esign.Op)(op)).Do(ctx, nil)
 }
 
-// TabsBlobPutTabsBlob updates encrypted tabs for envelope.
+// TabsBlobPutTabsBlob reserved for Docusign.
 // If media is an io.ReadCloser, Do() will close media.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/tabsblob/puttabsblob

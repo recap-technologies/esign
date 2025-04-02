@@ -8,22 +8,21 @@
 // Package notary implements the DocuSign SDK
 // category Notary.
 //
-// DocuSign eNotary makes the notarization process fully digital
+// Docusign eNotary makes the notarization process fully digital
 // for senders, signers, and notaries.
 // It enables a notary public to act as an in-person witness
 // to electronic signing of documents.
-//
 //
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/Notary
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   notaryService := notary.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	notaryService := notary.New(esignCredential)
 package notary // import "github.com/jfcote87/esignv2.1/notary"
 
 import (

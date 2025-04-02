@@ -16,17 +16,16 @@
 // * Add users to, and delete users from, your groups.
 // * Manage the brand information associated with a group.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/UserGroups
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   usergroupsService := usergroups.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	usergroupsService := usergroups.New(esignCredential)
 package usergroups // import "github.com/jfcote87/esignv2.1/usergroups"
 
 import (
@@ -181,7 +180,8 @@ func (op *GroupUsersListOp) Do(ctx context.Context) (*model.UsersResponse, error
 //
 // Use `start_position` to specify the number of results to skip.
 //
-// Valid values: `1` to `100`
+// Valid values: `1` to `100`<br>
+// Default: `50`
 func (op *GroupUsersListOp) Count(val int) *GroupUsersListOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))
@@ -317,7 +317,11 @@ func (op *GroupsListOp) Count(val int) *GroupsListOp {
 	return op
 }
 
-// GroupType set the call query parameter group_type
+// GroupType is the type of group to return. Valid values:
+//
+// * `AdminGroup`
+// * `CustomGroup`
+// * `EveryoneGroup`
 func (op *GroupsListOp) GroupType(val string) *GroupsListOp {
 	if op != nil {
 		op.QueryOpts.Set("group_type", val)

@@ -17,17 +17,16 @@
 // * Add delete users.
 // * Add and delete the intials and signature images for a user.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/v2/reference/Users
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2/model"
-//   )
-//   ...
-//   usersService := users.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2/model"
+//	)
+//	...
+//	usersService := users.New(esignCredential)
 package users // import "github.com/jfcote87/esignv2/users"
 
 import (

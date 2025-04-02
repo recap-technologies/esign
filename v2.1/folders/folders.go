@@ -11,17 +11,16 @@
 // Use the Folders category to organize envelopes and templates.
 // You can list the folder contents and move envelopes and templates between folders.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/reference/Folders
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2.1/model"
-//   )
-//   ...
-//   foldersService := folders.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2.1/model"
+//	)
+//	...
+//	foldersService := folders.New(esignCredential)
 package folders // import "github.com/jfcote87/esignv2.1/folders"
 
 import (
@@ -45,7 +44,7 @@ func New(cred esign.Credential) *Service {
 	return &Service{credential: cred}
 }
 
-// List gets a list of the folders for the account.
+// List returns a list of the account's folders.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/folders/folders/list
 //
@@ -68,6 +67,14 @@ type ListOp esign.Op
 func (op *ListOp) Do(ctx context.Context) (*model.FoldersResponse, error) {
 	var res *model.FoldersResponse
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
+}
+
+// Count is the maximum number of results to return.
+func (op *ListOp) Count(val string) *ListOp {
+	if op != nil {
+		op.QueryOpts.Set("count", val)
+	}
+	return op
 }
 
 // Include is a comma-separated list of folder types to include in the response.
@@ -102,6 +109,15 @@ func (op *ListOp) StartPosition(val int) *ListOp {
 	return op
 }
 
+// SubFolderDepth if missing or any value other than `-1`, the returned list contains only the top-level folders.
+// A value of `-1` returns the complete folder hierarchy.
+func (op *ListOp) SubFolderDepth(val string) *ListOp {
+	if op != nil {
+		op.QueryOpts.Set("sub_folder_depth", val)
+	}
+	return op
+}
+
 // Template this parameter is deprecated as of version 2.1. Use `include` instead.
 func (op *ListOp) Template(val string) *ListOp {
 	if op != nil {
@@ -122,7 +138,7 @@ func (op *ListOp) UserFilter(val string) *ListOp {
 	return op
 }
 
-// ListItems gets information about the specified folder.
+// ListItems gets information about items in a specified folder.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/folders/folders/listitems
 //
@@ -147,7 +163,7 @@ func (op *ListItemsOp) Do(ctx context.Context) (*model.FolderItemsResponse, erro
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// FromDate reserved for DocuSign.
+// FromDate reserved for Docusign.
 func (op *ListItemsOp) FromDate(val time.Time) *ListItemsOp {
 	if op != nil {
 		op.QueryOpts.Set("from_date", val.Format(time.RFC3339))
@@ -163,7 +179,7 @@ func (op *ListItemsOp) IncludeItems(val string) *ListItemsOp {
 	return op
 }
 
-// OwnerEmail reserved for DocuSign.
+// OwnerEmail reserved for Docusign.
 func (op *ListItemsOp) OwnerEmail(val string) *ListItemsOp {
 	if op != nil {
 		op.QueryOpts.Set("owner_email", val)
@@ -171,7 +187,7 @@ func (op *ListItemsOp) OwnerEmail(val string) *ListItemsOp {
 	return op
 }
 
-// OwnerName reserved for DocuSign.
+// OwnerName reserved for Docusign.
 func (op *ListItemsOp) OwnerName(val string) *ListItemsOp {
 	if op != nil {
 		op.QueryOpts.Set("owner_name", val)
@@ -179,7 +195,7 @@ func (op *ListItemsOp) OwnerName(val string) *ListItemsOp {
 	return op
 }
 
-// SearchText reserved for DocuSign.
+// SearchText reserved for Docusign.
 func (op *ListItemsOp) SearchText(val string) *ListItemsOp {
 	if op != nil {
 		op.QueryOpts.Set("search_text", val)
@@ -187,7 +203,7 @@ func (op *ListItemsOp) SearchText(val string) *ListItemsOp {
 	return op
 }
 
-// StartPosition reserved for DocuSign.
+// StartPosition reserved for Docusign.
 func (op *ListItemsOp) StartPosition(val int) *ListItemsOp {
 	if op != nil {
 		op.QueryOpts.Set("start_position", fmt.Sprintf("%d", val))
@@ -195,7 +211,7 @@ func (op *ListItemsOp) StartPosition(val int) *ListItemsOp {
 	return op
 }
 
-// Status reserved for DocuSign.
+// Status reserved for Docusign.
 func (op *ListItemsOp) Status(val string) *ListItemsOp {
 	if op != nil {
 		op.QueryOpts.Set("status", val)
@@ -203,7 +219,7 @@ func (op *ListItemsOp) Status(val string) *ListItemsOp {
 	return op
 }
 
-// ToDate reserved for DocuSign.
+// ToDate reserved for Docusign.
 func (op *ListItemsOp) ToDate(val time.Time) *ListItemsOp {
 	if op != nil {
 		op.QueryOpts.Set("to_date", val.Format(time.RFC3339))
@@ -211,7 +227,7 @@ func (op *ListItemsOp) ToDate(val time.Time) *ListItemsOp {
 	return op
 }
 
-// MoveEnvelopes moves an envelope from its current folder to the specified folder.
+// MoveEnvelopes moves a set of envelopes from their current folder to another folder.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/folders/folders/moveenvelopes
 //
@@ -237,7 +253,7 @@ func (op *MoveEnvelopesOp) Do(ctx context.Context) (*model.FoldersResponse, erro
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// Search gets a list of envelopes in folders matching the specified criteria.
+// Search deprecated. Use Envelopes: listStatusChanges.
 //
 // https://developers.docusign.com/docs/esign-rest-api/reference/folders/folders/search
 //

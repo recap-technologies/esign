@@ -10,17 +10,16 @@
 //
 // Methods to import and export users and accounts.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/admin-api/reference/BulkOperations
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/admin"
-//   )
-//   ...
-//   bulkoperationsService := bulkoperations.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/admin"
+//	)
+//	...
+//	bulkoperationsService := bulkoperations.New(esignCredential)
 package bulkoperations // import "github.com/jfcote87/esignadmin/bulkoperations"
 
 import (

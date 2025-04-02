@@ -8,19 +8,16 @@
 // Package roomfolders implements the DocuSign SDK
 // category RoomFolders.
 //
-//
-//
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/rooms-api/reference/RoomFolders
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/rooms"
-//   )
-//   ...
-//   roomfoldersService := roomfolders.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/rooms"
+//	)
+//	...
+//	roomfoldersService := roomfolders.New(esignCredential)
 package roomfolders // import "github.com/jfcote87/esignrooms//roomfolders"
 
 import (
@@ -68,7 +65,7 @@ func (op *GetRoomFoldersOp) Do(ctx context.Context) (*rooms.RoomFolderList, erro
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// StartPosition position of the first item in the total results. Defaults to 0.
+// StartPosition is the starting zero-based index position of the results set. When this property is used as a query parameter, the default value is `0`.
 func (op *GetRoomFoldersOp) StartPosition(val int) *GetRoomFoldersOp {
 	if op != nil {
 		op.QueryOpts.Set("startPosition", fmt.Sprintf("%d", val))
@@ -76,7 +73,7 @@ func (op *GetRoomFoldersOp) StartPosition(val int) *GetRoomFoldersOp {
 	return op
 }
 
-// Count number of room folders to return. Defaults to the maximum which is 100.
+// Count is the number of results. When this property is used as a request parameter specifying the number of results to return, the value must be a number between `1` and `100` (default).
 func (op *GetRoomFoldersOp) Count(val int) *GetRoomFoldersOp {
 	if op != nil {
 		op.QueryOpts.Set("count", fmt.Sprintf("%d", val))

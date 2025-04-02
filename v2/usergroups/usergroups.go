@@ -16,17 +16,16 @@
 // * Add users to, and delete users from, your groups.
 // * Manage the brand information associated with a group.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/v2/reference/UserGroups
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2/model"
-//   )
-//   ...
-//   usergroupsService := usergroups.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2/model"
+//	)
+//	...
+//	usergroupsService := usergroups.New(esignCredential)
 package usergroups // import "github.com/jfcote87/esignv2/usergroups"
 
 import (
@@ -76,7 +75,6 @@ func (op *GroupBrandsDeleteOp) Do(ctx context.Context) (*model.BrandsResponse, e
 }
 
 // GroupBrandsGet gets group brand ID Information.
-//
 //
 // https://developers.docusign.com/docs/esign-rest-api/v2/reference/usergroups/groupbrands/get
 //

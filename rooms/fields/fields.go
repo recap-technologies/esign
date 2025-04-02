@@ -10,17 +10,16 @@
 //
 // Information about field sets.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/rooms-api/reference/Fields
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/rooms"
-//   )
-//   ...
-//   fieldsService := fields.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/rooms"
+//	)
+//	...
+//	fieldsService := fields.New(esignCredential)
 package fields // import "github.com/jfcote87/esignrooms//fields"
 
 import (
@@ -67,7 +66,7 @@ func (op *GetFieldSetOp) Do(ctx context.Context) (*rooms.FieldSet, error) {
 	return res, ((*esign.Op)(op)).Do(ctx, &res)
 }
 
-// FieldsCustomDataFilters (Optional) An comma-separated list that limits the fields to return:
+// FieldsCustomDataFilters is an comma-separated list that limits the fields to return:
 //
 // - `IsRequiredOnCreate`: include fields that are required in room creation.
 // - `IsRequiredOnSubmit`: include fields that are required when submitting a room for review.

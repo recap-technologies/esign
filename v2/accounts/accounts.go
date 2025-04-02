@@ -18,17 +18,16 @@
 // The Account category also includes end points for
 // * Listing the recipient names associated with an email address that was used by the account. For example, a single email address is often shared by mulitple members of a family.
 //
-//
 // Service Api documentation may be found at:
 // https://developers.docusign.com/docs/esign-rest-api/v2/reference/Accounts
 // Usage example:
 //
-//   import (
-//       "github.com/jfcote87/esign"
-//       "github.com/jfcote87/esign/v2/model"
-//   )
-//   ...
-//   accountsService := accounts.New(esignCredential)
+//	import (
+//	    "github.com/jfcote87/esign"
+//	    "github.com/jfcote87/esign/v2/model"
+//	)
+//	...
+//	accountsService := accounts.New(esignCredential)
 package accounts // import "github.com/jfcote87/esignv2/accounts"
 
 import (
